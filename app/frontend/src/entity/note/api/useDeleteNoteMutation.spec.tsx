@@ -1,48 +1,42 @@
-import { renderHook, waitFor } from '@testing-library/react'
-import { useDeleteNoteMutation } from './useDeleteNoteMutation'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import type React from 'react'
+import { waitFor } from '@testing-library/react'
 import { server } from '@/shared/testing/msw/node'
 import { http, HttpResponse } from 'msw'
-
-function renderHookWithProviders() {
-  const testQueryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: false,
-      },
-      mutations: {
-        retry: false,
-      },
-    },
-  })
-
-  const wrapper = ({ children }: { children: React.ReactNode }) => {
-    return <QueryClientProvider client={testQueryClient}>{children}</QueryClientProvider>
-  }
-
-  return renderHook(() => useDeleteNoteMutation(), { wrapper })
-}
+import { renderHookWithProviders } from '@/shared/testing/test-utils'
+import { useDeleteNoteMutation } from './useDeleteNoteMutation'
 
 describe('deleting notes', () => {
-  const noteId = '01928d73-d8ed-7211-a314-7081d763272c'
+  const noteId = '01928d73-d8ed-7211-a314-7081d763271c'
 
-  it('should call DELETE /api/v1/notes/:id with the provided noteId', async () => {
-    const { result } = renderHookWithProviders()
-    let id: string | undefined
+  it('should delete note and invalidate cache on success', async () => {
+    const { result, queryClient } = renderHookWithProviders(useDeleteNoteMutation)
+
+    const deleteHandler = vi.fn()
+    const invalidateSpy = vi.spyOn(queryClient, 'invalidateQueries')
+
     server.use(
       http.delete<{ id?: string }>(`*/api/v1/notes/:id`, async ({ params }) => {
-        id = params.id as string
+        deleteHandler(params.id)
         return HttpResponse.json({ message: 'Success' })
       })
     )
     result.current.mutate(noteId)
 
-    await waitFor(() => expect(result.current.isSuccess).toBe(true))
-    await waitFor(() => expect(id).toBe(noteId))
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+    expect(deleteHandler).toHaveBeenCalledWith(noteId)
+    expect(invalidateSpy).toHaveBeenCalledTimes(1)
   })
 
-  it.todo('should invalidate ["notes"] query on success', () => {})
+  it('should handle mutation failure', async () => {
+    const { result } = renderHookWithProviders(useDeleteNoteMutation)
 
-  it.todo('should handle mutation failure', () => {})
+    server.use(
+      http.delete<{ id: string }>(`*/api/v1/notes/:id`, async () => {
+        return HttpResponse.json({ error: 'server' }, { status: 500 })
+      })
+    )
+
+    result.current.mutate(noteId)
+
+    await waitFor(() => expect(result.current.isError).toBeTruthy())
+  })
 })

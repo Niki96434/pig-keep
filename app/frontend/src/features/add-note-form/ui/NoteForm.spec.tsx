@@ -67,9 +67,7 @@ describe('integration tests for NoteForm', () => {
         })
       )
 
-      await waitFor(() => {
-        expect(screen.queryByPlaceholderText(/название/i)).not.toBeInTheDocument()
-      })
+      expect(screen.queryByPlaceholderText(/название/i)).not.toBeInTheDocument()
 
       await user.click(screen.getByPlaceholderText(/заметка/i))
       expect(await screen.findByPlaceholderText(/название/i)).toHaveValue('')
@@ -137,9 +135,7 @@ describe('integration tests for NoteForm', () => {
         expect(getRequestBody()).toMatchObject({ title: titleNote, content: '   ' })
       )
 
-      await waitFor(() => {
-        expect(screen.queryByPlaceholderText(/название/i)).not.toBeInTheDocument()
-      })
+      expect(screen.queryByPlaceholderText(/название/i)).not.toBeInTheDocument()
     })
   })
 })
