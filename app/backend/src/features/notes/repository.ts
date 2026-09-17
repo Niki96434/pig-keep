@@ -1,5 +1,5 @@
 import type { NoteCreateIn, NoteUpdateIn } from '@shared/notes/types'
-import { db } from './../../core/db/index'
+import { db } from '../../core/db/'
 import { notesTable } from './schema'
 import { eq } from 'drizzle-orm'
 

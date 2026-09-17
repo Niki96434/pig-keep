@@ -1,6 +1,6 @@
 import { controller } from './controller'
 import { repository } from './repository'
-import { db } from './../../core/db/index'
+import { db } from '../../core/db/'
 import express from 'express'
 import { validateSchemas } from '../../core/middlewares/validateSchemas'
 import {

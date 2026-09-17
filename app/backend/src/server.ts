@@ -1,7 +1,7 @@
 import { app } from './app'
 import path from 'path'
 import { migrate } from 'drizzle-orm/node-postgres/migrator'
-import { db } from './core/db/index'
+import { db } from './core/db/'
 
 const port = Number(process.env.PORT) || 3000
 
