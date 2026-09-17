@@ -1,8 +1,8 @@
 import { screen, waitFor } from '@testing-library/react'
 import { NoteForm } from './NoteForm'
-import { renderWithProviders } from '@/shared/utils/test-utils'
+import { renderWithProviders } from '@/shared/testing/test-utils'
 import { http, HttpResponse } from 'msw'
-import { server } from '@/shared/api/msw/node'
+import { server } from '@/shared/testing/msw/node'
 import type { NoteCreateIn } from '@shared/notes/types'
 
 async function setupForm() {
