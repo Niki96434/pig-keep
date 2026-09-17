@@ -1,8 +1,8 @@
 import { screen, waitFor } from '@testing-library/react'
 import { NoteForm } from './NoteForm'
-import { renderWithProviders } from '@/shared/utils/test-utils'
+import { renderWithProviders } from '@/shared/testing/test-utils'
 import { http, HttpResponse } from 'msw'
-import { server } from '@/shared/api/msw/node'
+import { server } from '@/shared/testing/msw/node'
 import type { NoteCreateIn } from '@shared/notes/types'
 
 async function setupForm() {
@@ -67,9 +67,7 @@ describe('integration tests for NoteForm', () => {
         })
       )
 
-      await waitFor(() => {
-        expect(screen.queryByPlaceholderText(/название/i)).not.toBeInTheDocument()
-      })
+      expect(screen.queryByPlaceholderText(/название/i)).not.toBeInTheDocument()
 
       await user.click(screen.getByPlaceholderText(/заметка/i))
       expect(await screen.findByPlaceholderText(/название/i)).toHaveValue('')
@@ -137,9 +135,7 @@ describe('integration tests for NoteForm', () => {
         expect(getRequestBody()).toMatchObject({ title: titleNote, content: '   ' })
       )
 
-      await waitFor(() => {
-        expect(screen.queryByPlaceholderText(/название/i)).not.toBeInTheDocument()
-      })
+      expect(screen.queryByPlaceholderText(/название/i)).not.toBeInTheDocument()
     })
   })
 })

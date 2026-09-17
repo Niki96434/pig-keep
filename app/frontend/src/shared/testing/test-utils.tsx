@@ -1,5 +1,5 @@
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
-import { render } from '@testing-library/react'
+import { render, renderHook } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 export const renderWithProviders = (ui: React.ReactElement) => {
@@ -20,4 +20,23 @@ export const renderWithProviders = (ui: React.ReactElement) => {
       </QueryClientProvider>
     ),
   }
+}
+
+export function renderHookWithProviders<Result, Props = unknown>(hook: (props: Props) => Result) {
+  const testQueryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+      mutations: {
+        retry: false,
+      },
+    },
+  })
+
+  const wrapper = ({ children }: { children: React.ReactNode }) => {
+    return <QueryClientProvider client={testQueryClient}>{children}</QueryClientProvider>
+  }
+
+  return { queryClient: testQueryClient, ...renderHook((props: Props) => hook(props), { wrapper }) }
 }
