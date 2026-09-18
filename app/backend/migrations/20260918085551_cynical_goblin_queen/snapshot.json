@@ -1,9 +1,9 @@
 {
   "version": "8",
   "dialect": "postgres",
-  "id": "2ff9357d-afeb-40ee-b480-56e05df34e0c",
+  "id": "ba7b9af7-9e6e-4b6c-929c-2c140ab77328",
   "prevIds": [
-    "00000000-0000-0000-0000-000000000000"
+    "06f4daf5-7fcf-4be7-bd78-26fd2fc075b0"
   ],
   "ddl": [
     {
@@ -17,7 +17,7 @@
       "typeSchema": null,
       "notNull": true,
       "dimensions": 0,
-      "default": "uuidv7()",
+      "default": "gen_random_uuid()",
       "generated": null,
       "identity": null,
       "name": "id",
@@ -30,7 +30,7 @@
       "typeSchema": null,
       "notNull": true,
       "dimensions": 0,
-      "default": "uuidv7()",
+      "default": "gen_random_uuid()",
       "generated": null,
       "identity": null,
       "name": "user_id",

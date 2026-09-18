@@ -8,12 +8,12 @@ export function globalErrorHandler(err: Error, _req: Request, res: Response, nex
   }
 
   if (err instanceof z.ZodError) {
-    res.status(400).json({ error: 'Validation error' })
+    return res.status(400).json({ error: 'Validation error' })
   }
 
   if (err instanceof DatabaseError) {
-    res.status(400).json({ error: 'Database error' })
+    return res.status(500).json({ error: 'Database error' })
   }
 
-  res.status(500).json({ message: 'Internal server error' })
+  res.status(500).json({ error: 'Internal server error' })
 }

@@ -75,8 +75,10 @@ export type NoteCreateOut = Note;
 npx drizzle-kit generate
 ```
 
-С помощью cli-команд перед запуском приложения или тестов нужно применить миграции:
+С помощью cli-команд перед запуском приложения или тестов нужно применить миграции(для боевой и тестовой базы):
 
 ```
-npx drizzle-kit migrate
+npx drizzle-kit migrate --config=drizzle.config.ts
+npx drizzle-kit migrate --config=drizzle-test.config.ts
+
 ```

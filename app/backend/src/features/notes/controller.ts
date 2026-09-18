@@ -5,19 +5,22 @@ import type {
   Note,
   NoteUpdateOut,
   NoteUpdateIn,
+  NotePatchIn,
 } from '@shared/notes/types'
 
 interface RepositoryType {
   repo: {
     getNotesFromDB: () => Promise<Note[]>
     createNoteFromDB: (noteData: NoteCreateIn) => Promise<NoteCreateOut | undefined>
-    updateNoteFromDB: (noteId: string, noteData: NoteUpdateIn) => Promise<NoteUpdateOut | undefined>
+    putNoteFromDB: (noteId: string, noteData: NoteUpdateIn) => Promise<NoteUpdateOut | undefined>
+    patchNoteFromDB: (noteId: string, noteData: NotePatchIn) => Promise<NoteUpdateOut | undefined>
     deleteNoteFromDB: (noteId: string) => Promise<number | null>
   }
 }
 
 export function controller({ repo }: RepositoryType) {
-  const { getNotesFromDB, createNoteFromDB, updateNoteFromDB, deleteNoteFromDB } = repo
+  const { getNotesFromDB, createNoteFromDB, putNoteFromDB, patchNoteFromDB, deleteNoteFromDB } =
+    repo
 
   const getNotes = async (_req: Request, res: Response) => {
     const notes = await getNotesFromDB()
@@ -36,10 +39,22 @@ export function controller({ repo }: RepositoryType) {
     return res.status(201).json({ note })
   }
 
-  const updateNote = async (req: Request<{ id: string }>, res: Response) => {
+  const putNote = async (req: Request<{ id: string }>, res: Response) => {
     const noteId = req.params.id
     const noteData = req.body
-    const note = await updateNoteFromDB(noteId, noteData)
+    const note = await putNoteFromDB(noteId, noteData)
+
+    if (!note) {
+      return res.status(404).json({ error: 'Not found' })
+    }
+
+    return res.status(200).json({ note })
+  }
+
+  const patchNote = async (req: Request<{ id: string }>, res: Response) => {
+    const noteId = req.params.id
+    const noteData = req.body
+    const note = await patchNoteFromDB(noteId, noteData)
 
     if (!note) {
       return res.status(404).json({ error: 'Not found' })
@@ -59,5 +74,5 @@ export function controller({ repo }: RepositoryType) {
     return res.status(400).json({ error: 'Bad request' })
   }
 
-  return { getNotes, createNote, updateNote, deleteNote }
+  return { getNotes, createNote, putNote, patchNote, deleteNote }
 }
