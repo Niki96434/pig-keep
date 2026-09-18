@@ -62,6 +62,49 @@ describe('update note', () => {
         .send({ title: 'Обновленная заметка', content: 'Новый контент' })
     ).resolves.toHaveProperty('status', 404)
   })
+
+  it('should return a 400 status code if the id is not of type UUID', async () => {
+    const id = '123'
+    const errorMessage = 'Validation error'
+
+    const res = await request(app).put(`${BASE_URL}${id}`).send({
+      title: 'Заметка',
+      content: 'Новая-приновая',
+    })
+
+    expect(res.status).toEqual(400)
+    expect(JSON.parse(res.text).error).toBe(errorMessage)
+  })
+})
+
+describe('patch note', () => {
+  it('should change title field without clear content field', async () => {
+    const title = 'Тестовая заметка'
+    const content = 'Контентиище'
+
+    const note = await request(app).post(BASE_URL).send({ title: title, content: 'Контентиище' })
+
+    const noteId = JSON.parse(note.text).note.id
+
+    const res = await request(app).patch(`${BASE_URL}${noteId}`).send({ title: 'Новая заметка' })
+
+    expect(JSON.parse(res.text).note.title).toBe('Новая заметка')
+    expect(JSON.parse(res.text).note.content).toBe(content)
+  })
+
+  it('should change content field without clear title field', async () => {
+    const title = 'Тестовая заметка'
+    const content = 'Контентиище'
+
+    const note = await request(app).post(BASE_URL).send({ title: title, content: content })
+
+    const noteId = JSON.parse(note.text).note.id
+
+    const res = await request(app).patch(`${BASE_URL}${noteId}`).send({ content: 'Новая заметка' })
+
+    expect(JSON.parse(res.text).note.content).toBe('Новая заметка')
+    expect(JSON.parse(res.text).note.title).toBe(title)
+  })
 })
 
 describe('delete note', () => {
