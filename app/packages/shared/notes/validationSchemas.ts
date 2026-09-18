@@ -17,10 +17,14 @@ export const NotePutInSchema = z.object({
   content: z.string().trim().max(1_000).optional(),
 });
 
-export const NotePatchInSchema = z.object({
-  title: z.string().trim().max(255).optional(),
-  content: z.string().trim().max(1_000).optional(),
-});
+export const NotePatchInSchema = z
+  .object({
+    title: z.string().trim().max(255).optional(),
+    content: z.string().trim().max(1_000).optional(),
+  })
+  .refine((data) => data.title !== undefined || data.content !== undefined, {
+    message: "At least one field must be specified: title or content",
+  });
 
 export const NoteIdSchema = z.object({
   id: z.uuid(),
