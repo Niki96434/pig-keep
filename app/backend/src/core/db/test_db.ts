@@ -6,7 +6,7 @@ import path from 'node:path'
 
 dotenv.config({ path: path.resolve(process.cwd(), './../../../.env.test') })
 
-const test_pool = new Pool({
+export const test_pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 })
 

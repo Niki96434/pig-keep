@@ -4,36 +4,50 @@ import { test_db } from '../../core/db/test_db'
 import { sql } from 'drizzle-orm'
 import { notesTable } from './schema'
 import { randomUUID } from 'node:crypto'
+import { test_pool } from './../../core/db/test_db'
+import { mockData } from './fixtures'
 
-const BASE_URL = '/api/v1/notes/'
+const BASE_URL = '/api/v1/notes'
 
 beforeEach(async () => {
   await test_db.execute(sql`TRUNCATE TABLE ${notesTable}`)
 })
 
+afterAll(async () => await test_pool.end())
+
 describe('get notes', () => {
   it('should return empty array', async () => {
-    const response = await request(app).get(BASE_URL)
-    expect(response.status).toBe(200)
-    expect(response.body.notes).toEqual([])
+    const res = await request(app).get(BASE_URL)
+
+    expect(res.status).toBe(200)
+    expect(res.body.notes).toEqual([])
+  })
+
+  it('should return non-empty array', async () => {
+    await request(app).post(BASE_URL).send({ title: 'Тестовая заметка', content: 'Контент' })
+
+    const res = await request(app).get(BASE_URL)
+
+    expect(res.body.notes[0].title).toBe('Тестовая заметка')
+    expect(res.body.notes[0].content).toBe('Контент')
   })
 })
 
 describe('create note', () => {
   it('should create note', async () => {
-    const response = await request(app)
+    const res = await request(app)
       .post(BASE_URL)
       .send({ title: 'Тестовая заметка', content: 'Контент' })
 
-    expect(response.status).toBe(201)
-    expect(response.body.note.title).toBe('Тестовая заметка')
+    expect(res.status).toBe(201)
+    expect(res.body.note.title).toBe('Тестовая заметка')
   })
 
   it('should return status code 400 if title and content are empty', async () => {
-    const response = await request(app).post(BASE_URL).send({ title: null, content: null })
+    const res = await request(app).post(BASE_URL).send({ title: null, content: null })
 
-    expect(response.status).toBe(400)
-    expect(response.body.error).toBe('Validation error')
+    expect(res.status).toBe(400)
+    expect(res.body.error).toBe('Validation error')
   })
 })
 
@@ -45,35 +59,67 @@ describe('update note', () => {
 
     const id = createRes.body.note.id
 
-    const response = await request(app)
-      .put(`${BASE_URL}${id}`)
+    const res = await request(app)
+      .put(`${BASE_URL}/${id}`)
       .send({ title: 'Обновленная заметка', content: 'Новый контент' })
 
-    expect(response.status).toBe(200)
-    expect(response.body.note.title).toBe('Обновленная заметка')
-  }, 10_000)
+    expect(res.status).toBe(200)
+    expect(res.body.note.title).toBe('Обновленная заметка')
+  })
 
   it('should return status code 404 if note id is not exist', async () => {
     const id = randomUUID()
 
-    await expect(
-      request(app)
-        .put(`${BASE_URL}${id}`)
-        .send({ title: 'Обновленная заметка', content: 'Новый контент' })
-    ).resolves.toHaveProperty('status', 404)
+    const res = await request(app)
+      .put(`${BASE_URL}/${id}`)
+      .send({ title: 'Обновленная заметка', content: 'Новый контент' })
+
+    expect(res.status).toBe(404)
   })
 
   it('should return a 400 status code if the id is not of type UUID', async () => {
     const id = '123'
     const errorMessage = 'Validation error'
 
-    const res = await request(app).put(`${BASE_URL}${id}`).send({
+    const res = await request(app).put(`${BASE_URL}/${id}`).send({
       title: 'Заметка',
       content: 'Новая-приновая',
     })
 
-    expect(res.status).toEqual(400)
-    expect(JSON.parse(res.text).error).toBe(errorMessage)
+    expect(res.status).toBe(400)
+    expect(res.body.error).toBe(errorMessage)
+  })
+
+  it('empty strings should be sent, and a 200 status code should be returned.', async () => {
+    const createRes = await request(app)
+      .post(BASE_URL)
+      .send({ title: 'Тестовое заметище', content: 'Контентище' })
+
+    const id = createRes.body.note.id
+
+    const res = await request(app).put(`${BASE_URL}/${id}`).send({ title: '', content: '' })
+
+    expect(res.status).toBe(200)
+    expect(res.body.note.title).toBe('')
+    expect(res.body.note.content).toBe('')
+  })
+
+  it('should return an error due to exceeding the limits for title(255) and content(1000)', async () => {
+    const createRes = await request(app)
+      .post(BASE_URL)
+      .send({ title: 'Тестовое заметище', content: 'Контентище' })
+
+    const id = createRes.body.note.id
+
+    const res = await request(app)
+      .put(`${BASE_URL}/${id}`)
+      .send({ title: mockData.title, content: mockData.content })
+
+    expect(res.status).toBe(400)
+
+    const testQuery = await request(app).get(`${BASE_URL}/${id}`)
+
+    expect(testQuery.status).toBe(404)
   })
 })
 
@@ -84,12 +130,12 @@ describe('patch note', () => {
 
     const note = await request(app).post(BASE_URL).send({ title: title, content: 'Контентиище' })
 
-    const noteId = JSON.parse(note.text).note.id
+    const noteId = note.body.note.id
 
-    const res = await request(app).patch(`${BASE_URL}${noteId}`).send({ title: 'Новая заметка' })
+    const res = await request(app).patch(`${BASE_URL}/${noteId}`).send({ title: 'Новая заметка' })
 
-    expect(JSON.parse(res.text).note.title).toBe('Новая заметка')
-    expect(JSON.parse(res.text).note.content).toBe(content)
+    expect(res.body.note.title).toBe('Новая заметка')
+    expect(res.body.note.content).toBe(content)
   })
 
   it('should change content field without clear title field', async () => {
@@ -98,12 +144,12 @@ describe('patch note', () => {
 
     const note = await request(app).post(BASE_URL).send({ title: title, content: content })
 
-    const noteId = JSON.parse(note.text).note.id
+    const noteId = note.body.note.id
 
-    const res = await request(app).patch(`${BASE_URL}${noteId}`).send({ content: 'Новая заметка' })
+    const res = await request(app).patch(`${BASE_URL}/${noteId}`).send({ content: 'Новая заметка' })
 
-    expect(JSON.parse(res.text).note.content).toBe('Новая заметка')
-    expect(JSON.parse(res.text).note.title).toBe(title)
+    expect(res.body.note.content).toBe('Новая заметка')
+    expect(res.body.note.title).toBe(title)
   })
 })
 
@@ -114,9 +160,13 @@ describe('delete note', () => {
       .send({ title: 'Тестовая заметка для удаления', content: 'Контент' })
 
     const id = createRes.body.note.id
-    const response = await request(app).delete(`${BASE_URL}${id}`)
+    const res = await request(app).delete(`${BASE_URL}/${id}`)
 
-    expect(response.status).toBe(200)
-    expect(response.body.message).toBe('Success')
+    expect(res.status).toBe(200)
+    expect(res.body.message).toBe('Success')
+
+    const testQuery = await request(app).get(`${BASE_URL}/${id}`)
+
+    expect(testQuery.status).toBe(404)
   })
 })
