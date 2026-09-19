@@ -1,4 +1,4 @@
-import type { NoteCreateIn, NotePatchIn, NoteUpdateIn } from '@shared/notes/types'
+import type { NoteCreateIn, NotePatchIn, NotePutIn } from '@shared/notes/types'
 import { db } from '../../core/db/'
 import { notesTable } from './schema'
 import { eq } from 'drizzle-orm'
@@ -20,7 +20,7 @@ export function repository({ db }: DBType) {
     return note
   }
 
-  const putNoteFromDB = async (noteId: string, noteData: NoteUpdateIn) => {
+  const putNoteFromDB = async (noteId: string, noteData: NotePutIn) => {
     if (Object.keys(noteData).length === 0) {
       const [note] = await db.select().from(notesTable).where(eq(notesTable.id, noteId))
       return note
@@ -34,7 +34,7 @@ export function repository({ db }: DBType) {
     return note
   }
 
-  const patchNoteFromDB = async (noteId: string, noteData: NoteUpdateIn | NotePatchIn) => {
+  const patchNoteFromDB = async (noteId: string, noteData: NotePutIn | NotePatchIn) => {
     if (Object.keys(noteData).length === 0) {
       const [note] = await db.select().from(notesTable).where(eq(notesTable.id, noteId))
       return note

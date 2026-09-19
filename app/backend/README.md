@@ -42,7 +42,7 @@ export type NoteGetOut = Note;
 Формат тела запроса:
 
 ```
-export type NoteUpdateIn = Partial<Pick<Note, "title" | "content">>;
+export type NotePutIn = Partial<Pick<Note, "title" | "content">>;
 ```
 
 Контракт выходных данных:

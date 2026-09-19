@@ -4,7 +4,7 @@ import type {
   NoteCreateOut,
   Note,
   NoteUpdateOut,
-  NoteUpdateIn,
+  NotePutIn,
   NotePatchIn,
 } from '@shared/notes/types'
 
@@ -12,7 +12,7 @@ interface RepositoryType {
   repo: {
     getNotesFromDB: () => Promise<Note[]>
     createNoteFromDB: (noteData: NoteCreateIn) => Promise<NoteCreateOut | undefined>
-    putNoteFromDB: (noteId: string, noteData: NoteUpdateIn) => Promise<NoteUpdateOut | undefined>
+    putNoteFromDB: (noteId: string, noteData: NotePutIn) => Promise<NoteUpdateOut | undefined>
     patchNoteFromDB: (noteId: string, noteData: NotePatchIn) => Promise<NoteUpdateOut | undefined>
     deleteNoteFromDB: (noteId: string) => Promise<number | null>
   }

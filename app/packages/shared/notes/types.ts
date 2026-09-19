@@ -1,9 +1,9 @@
 import z from "zod";
 import {
-  NoteUpdateInSchema,
+  NotePutInSchema,
+  NotePatchInSchema,
   NoteSchema,
   NoteCreateInSchema,
-  NotePatchInSchema,
 } from "./validationSchemas";
 
 export type Note = z.output<typeof NoteSchema>;
@@ -16,7 +16,7 @@ export type NoteCreateIn = z.input<typeof NoteCreateInSchema>;
 
 export type NoteCreateOut = Note;
 
-export type NoteUpdateIn = z.input<typeof NoteUpdateInSchema>;
+export type NotePutIn = z.input<typeof NotePutInSchema>;
 
 export type NotePatchIn = z.input<typeof NotePatchInSchema>;
 
