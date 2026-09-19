@@ -22,6 +22,12 @@
   /* pig's color */
   --border-color: #ff8b94;
   --background-pig: #f4abba;
+  /* modal`s style */
+  --modal-b-radius: 12px;
+  --modal-color: white;
+  --soft-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  /* background color for modals*/
+  --back-color: rgba(0, 0, 0, 0.4);
 }
 
 * {
