@@ -11,24 +11,28 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/ui/menu/dropdown-menu'
 import { useDeleteNoteMutation } from '../api/useDeleteNoteMutation'
-import { useMutation } from '@tanstack/react-query'
-import { axiosInstance, queryClient } from '@/shared/api'
+import { useEditNoteStore } from '@/stores/edit-note/editNoteStore'
+import { type MouseEvent } from 'react'
 
 type NoteProps = Pick<Note, 'id' | 'title' | 'content'>
 
-function useEditNoteMutation() {
-  return useMutation({
-    mutationFn: (id: Note['id']) => axiosInstance.put(`/api/v1/notes/${id}`),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['notes'] }),
-  })
-}
-
 export function Note({ id, title, content }: NoteProps) {
-  const editMutation = useEditNoteMutation()
+  const actions = useEditNoteStore((state) => state.actions)
+
+  function openEditForm(id: string) {
+    actions.setOpenEditForm()
+    actions.setId(id)
+  }
+
+  function closeEditForm(e: MouseEvent<HTMLDivElement>) {
+    actions.setCloseEditForm()
+    actions.removeId()
+  }
+
   const delMutation = useDeleteNoteMutation()
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={() => openEditForm(id)}>
       <p className={styles.title}>{title}</p>
       <p className={styles.content}>{content}</p>
       <DropdownMenu>
@@ -41,12 +45,9 @@ export function Note({ id, title, content }: NoteProps) {
         />
         <DropdownMenuContent>
           <DropdownMenuGroup>
-            <DropdownMenuItem
-              onClick={() => editMutation.mutate(id)}
-              disabled={editMutation.isPending}
-            >
+            <DropdownMenuItem>
               <PencilIcon />
-              {editMutation.isPending ? 'Редактируется...' : 'Редактировать'}
+              {'Добавить в ярлык'}
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />

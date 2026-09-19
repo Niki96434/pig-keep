@@ -2,7 +2,7 @@ import { Button, Textarea } from '@/shared/ui'
 import { Controller } from 'react-hook-form'
 import { useNoteFormLogic } from './../model/useNoteFormLogic'
 
-function NoteForm() {
+function AddNoteForm() {
   const { formRef, isOpenForm, openForm, handleSubmit, onSubmit, control } = useNoteFormLogic()
 
   return (
@@ -55,4 +55,4 @@ function NoteForm() {
   )
 }
 
-export { NoteForm }
+export { AddNoteForm }
