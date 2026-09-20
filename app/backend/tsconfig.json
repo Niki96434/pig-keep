@@ -3,6 +3,9 @@
   "compilerOptions": {
     "module": "esnext",
     "target": "esnext",
+    // For build:
+    "rootDir": ".",
+    "outDir": "./dist",
     // For nodejs:
     "lib": ["esnext"],
     "types": ["node", "vitest/globals"],

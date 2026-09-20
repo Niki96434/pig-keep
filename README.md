@@ -18,7 +18,7 @@ MVP веб-приложение с виртуальным питомцем, ос
 
 ## Перечень используемых технологий (с их обоснованием)
 
-- React 19, Typescript, Vite, Eslint, Prettier, Vitest, RTL, MSW, RTQuery, Zod
+- React 19, Typescript, Vite, Eslint, Prettier, Vitest, RTL, MSW, RTQuery, Zod, Zustand
 - Express.js, Supertest, Drizzle ORM
 - PostgreSQL 18
 
@@ -27,11 +27,15 @@ MVP веб-приложение с виртуальным питомцем, ос
 - apps/frontend/src - React-приложение
 - apps/backend/core - Инициализация базы данных, глобальный обработчик ошибок, мидлвары
 - apps/backend/features - feature-based модульная архитектура
-- apps/backend/migrations - схемы PostgreSQL
+- apps/backend/migrations - миграции PostgreSQL
 - apps/packages/shared - общие типы и схемы контракта
 - apps/docs - таблица с описанием эндпоинтов(REST), описание решения, диаграммы компонентов и развёртывания, скриншоты дизайна мобильного интерфейса, на планшете и десктоп
 
 ## Инструкция по запуску(развёрнутый проект по ссылке и локальный)
+
+```
+cp .env.example .env
+```
 
 ## Особенности реализации
 
