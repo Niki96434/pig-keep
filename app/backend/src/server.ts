@@ -3,7 +3,9 @@ import path from 'path'
 import { migrate } from 'drizzle-orm/node-postgres/migrator'
 import { db } from './core/db/'
 
-const port = Number(process.env.PORT) || 3000
+const DEFAULT_PORT = 3000
+
+const port = Number(process.env.PORT) || DEFAULT_PORT
 
 const bootstrap = async () => {
   const migrationsFolder = path.resolve(process.cwd(), 'migrations')

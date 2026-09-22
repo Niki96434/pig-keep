@@ -29,6 +29,7 @@ export const renderWithProviders = (ui: React.ReactElement) => {
   }
 }
 
+// eslint-disable-next-line no-unused-vars
 export function renderHookWithProviders<Result, Props = unknown>(hook: (props: Props) => Result) {
   const testQueryClient = createTestQueryClient()
 

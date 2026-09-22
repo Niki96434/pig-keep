@@ -7,6 +7,7 @@ import type {
   NotePutIn,
   NotePatchIn,
 } from '@shared/notes/types'
+import { HttpStatus } from '@shared/constants/httpStatus'
 
 interface RepositoryType {
   repo: {
@@ -25,7 +26,7 @@ export function controller({ repo }: RepositoryType) {
   const getNotes = async (_req: Request, res: Response) => {
     const notes = await getNotesFromDB()
 
-    return res.status(200).json({ notes })
+    return res.status(HttpStatus.OK).json({ notes })
   }
 
   const createNote = async (req: Request, res: Response) => {
@@ -33,10 +34,10 @@ export function controller({ repo }: RepositoryType) {
 
     const note = await createNoteFromDB(noteData)
     if (!note) {
-      return res.status(400).json({ error: 'Bad request' })
+      return res.status(HttpStatus.BAD_REQUEST).json({ error: 'Bad request' })
     }
 
-    return res.status(201).json({ note })
+    return res.status(HttpStatus.CREATED).json({ note })
   }
 
   const putNote = async (req: Request<{ id: string }>, res: Response) => {
@@ -45,10 +46,10 @@ export function controller({ repo }: RepositoryType) {
     const note = await putNoteFromDB(noteId, noteData)
 
     if (!note) {
-      return res.status(404).json({ error: 'Not found' })
+      return res.status(HttpStatus.NOT_FOUND).json({ error: 'Not found' })
     }
 
-    return res.status(200).json({ note })
+    return res.status(HttpStatus.OK).json({ note })
   }
 
   const patchNote = async (req: Request<{ id: string }>, res: Response) => {
@@ -57,10 +58,10 @@ export function controller({ repo }: RepositoryType) {
     const note = await patchNoteFromDB(noteId, noteData)
 
     if (!note) {
-      return res.status(404).json({ error: 'Not found' })
+      return res.status(HttpStatus.NOT_FOUND).json({ error: 'Not found' })
     }
 
-    return res.status(200).json({ note })
+    return res.status(HttpStatus.OK).json({ note })
   }
 
   const deleteNote = async (req: Request<{ id: string }>, res: Response) => {
@@ -68,10 +69,10 @@ export function controller({ repo }: RepositoryType) {
     const deletedRowCount = await deleteNoteFromDB(noteId)
 
     if (deletedRowCount && deletedRowCount > 0) {
-      return res.status(200).json({ message: 'Success' })
+      return res.status(HttpStatus.OK).json({ message: 'Success' })
     }
 
-    return res.status(400).json({ error: 'Bad request' })
+    return res.status(HttpStatus.BAD_REQUEST).json({ error: 'Bad request' })
   }
 
   return { getNotes, createNote, putNote, patchNote, deleteNote }

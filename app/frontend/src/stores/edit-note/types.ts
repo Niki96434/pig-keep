@@ -6,6 +6,7 @@ export interface EditNoteState {
 export interface EditNoteActions {
   setOpenEditForm: () => void
   setCloseEditForm: () => void
+  // eslint-disable-next-line no-unused-vars
   setId: (id: string) => void
   removeId: () => void
 }
