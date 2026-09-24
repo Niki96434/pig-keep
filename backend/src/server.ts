@@ -11,7 +11,6 @@ const bootstrap = async () => {
   app.listen(port)
 }
 
-bootstrap().catch((err: Error) => {
-  console.log(err)
+bootstrap().catch((_err: Error) => {
   process.exit(1)
 })

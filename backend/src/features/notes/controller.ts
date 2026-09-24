@@ -6,7 +6,7 @@ import type {
   NoteUpdateOut,
   NotePutIn,
   NotePatchIn,
-} from '@shared/notes/types'
+} from '@app/shared/types'
 
 interface RepositoryType {
   repo: {

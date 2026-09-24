@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "include": ["src/**/*"],
+  "exclude": ["src/**/*.spec.ts", "src/core/db/test_db.ts"],
+  "compilerOptions": {
+    "outDir": "build",
+    "removeComments": true,
+    "noEmitOnError": true
+  }
+}

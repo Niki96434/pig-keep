@@ -12,9 +12,10 @@ MVP веб-приложение с виртуальным питомцем, ос
 
 ## Документация
 
-- Описание решения: [docs/SOLUTION.md](https://github.com/Niki96434/google-keep/blob/front/app/docs/SOLUTION.md)
-- Пользовательский путь: [docs/RULES.md](https://github.com/Niki96434/google-keep/blob/front/app/docs/RULES.md)
-- Тестирование: [doc/TESTING.md](https://github.com/Niki96434/google-keep/blob/front/app/docs/TESTING.md)
+- Описание решения: [docs/SOLUTION.md](https://github.com/Niki96434/google-keep/blob/dev/app/docs/SOLUTION.md)
+- Пользовательский путь: [docs/RULES.md](https://github.com/Niki96434/google-keep/blob/dev/app/docs/RULES.md)
+- Тестирование: [docs/TESTING.md](https://github.com/Niki96434/google-keep/blob/dev/app/docs/TESTING.md)
+- Руководство по работе с Docker: [docs/DOCKER.md](https://github.com/Niki96434/google-keep/blob/dev/app/docs/DOCKER.md)
 
 ## Перечень используемых технологий (с их обоснованием)
 
@@ -31,20 +32,22 @@ MVP веб-приложение с виртуальным питомцем, ос
 - apps/packages/shared - общие типы и схемы контракта
 - apps/docs - таблица с описанием эндпоинтов(REST), описание решения, диаграммы компонентов и развёртывания, скриншоты дизайна мобильного интерфейса, на планшете и десктоп
 
-## Инструкция по запуску(развёрнутый проект по ссылке и локальный)
+## Запуск проекта (Локально)
 
-```
-cp .env.example .env
-```
+Проект полностью контейнеризирован. Для быстрого запуска убедитесь, что у вас установлен Docker и плагин `docker compose`.
+
+1. Скопируйте файл переменных окружения: `cp .env.example .env` (и заполните его).
+2. Запустите стек:
+   ```bash
+   docker compose up -d --build
 
 ## Особенности реализации
 
+1. Backend:
 - Codebase-first подход для изменения схем БД(миграции) с помощью drizzle-kit.(Схема как источник истины).
   Создается схема Drizzle для TS, с помощью `drizzle-kit generate` создается migration.sql на основе обновленной схемы. Чтобы применить её к самой БД, используется `drizzle-kit migrate`.
 
-## Доп функционал(интеграция ИИ, auth)
-
-## Декомпозиция(архитектура и API)
+- Multi-staged сборка для Dockerfile. Она изменяет размер конечного образа за счет избавления от зависимостей, нужных для сборки приложения.
 
 ## Использование сниппетов
 
@@ -52,6 +55,10 @@ cp .env.example .env
 
 - Simple React snippets
 - Vitest Snippets
+
+## Доп функционал(интеграция ИИ, auth)
+
+## Декомпозиция(архитектура и API)
 
 ## История коммитов
 

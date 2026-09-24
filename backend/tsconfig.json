@@ -5,7 +5,7 @@
     "target": "esnext",
     // For build:
     "rootDir": ".",
-    "outDir": "./dist",
+    "outDir": "dist",
     // For nodejs:
     "lib": ["esnext"],
     "types": ["node", "vitest/globals"],
@@ -25,15 +25,11 @@
     // "noPropertyAccessFromIndexSignature": true,
     // Recommended Options
     "strict": true,
-    "jsx": "react-jsx",
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "moduleResolution": "bundler",
-    "skipLibCheck": true,
-    "paths": {
-      "@shared/*": ["./../packages/shared/*"]
-    }
+    "skipLibCheck": true
   }
 }

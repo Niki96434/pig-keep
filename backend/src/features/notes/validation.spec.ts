@@ -6,7 +6,7 @@ import {
   NotePatchInSchema,
   NoteIdSchema,
   NoteSchema,
-} from '@shared/notes/validationSchemas'
+} from '@app/shared/validationSchemas'
 
 describe('NoteCreateInSchema', () => {
   it('should succeed with valid title and content', () => {
