@@ -1,0 +1,27 @@
+services:
+  db:
+    image: postgres:18.4
+    environment:
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_DB: ${PGDATABASE}
+      POSTGRES_PASSWORD_FILE: /run/secrets/pg-password
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - db-data:/var/lib/postgresql
+    env_file:
+      - ./backend/.env
+    secrets:
+      - pg-password
+  # backend:
+  # Todo
+  # frontend:
+  # Todo
+volumes:
+  db-data:
+secrets:
+  pg-password:
+    file: ./backend/db_password.txt

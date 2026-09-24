@@ -19,6 +19,9 @@ export default defineConfig([
     ],
     languageOptions: {
       globals: globals.browser,
+      parserOptions: {
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
     rules: {
       'no-console': ['warn', { allow: ['warn', 'error'] }],
