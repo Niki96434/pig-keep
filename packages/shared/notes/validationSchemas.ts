@@ -16,8 +16,8 @@ export const NoteCreateInSchema = z
   );
 
 export const NotePutInSchema = z.object({
-  title: z.string().trim().max(MAX_NOTE_TITLE_LENGTH).optional(),
-  content: z.string().trim().max(MAX_NOTE_CONTENT_LENGTH).optional(),
+  title: z.string().trim().max(MAX_NOTE_TITLE_LENGTH),
+  content: z.string().trim().max(MAX_NOTE_CONTENT_LENGTH),
 });
 
 export const NotePatchInSchema = z
