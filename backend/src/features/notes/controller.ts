@@ -10,6 +10,7 @@ import { HttpStatus } from '@app/shared/constants/httpStatus'
 interface RepositoryType {
   repo: {
     getNotesFromDB: () => Promise<Note[]>
+    getNoteByIdFromDB: (noteId: string) => Promise<Note | undefined>
     createNoteFromDB: (noteData: NoteCreateIn) => Promise<Note | undefined>
     putNoteFromDB: (noteId: string, noteData: NotePutIn) => Promise<Note | undefined>
     patchNoteFromDB: (noteId: string, noteData: NotePatchIn) => Promise<Note | undefined>
@@ -18,13 +19,30 @@ interface RepositoryType {
 }
 
 export function controller({ repo }: RepositoryType) {
-  const { getNotesFromDB, createNoteFromDB, putNoteFromDB, patchNoteFromDB, deleteNoteFromDB } =
-    repo
+  const {
+    getNotesFromDB,
+    getNoteByIdFromDB,
+    createNoteFromDB,
+    putNoteFromDB,
+    patchNoteFromDB,
+    deleteNoteFromDB,
+  } = repo
 
   const getNotes = async (_req: Request, res: Response) => {
     const notes = await getNotesFromDB()
 
     return res.status(HttpStatus.OK).json({ notes })
+  }
+
+  const getNoteById = async (req: Request<{ id: string }>, res: Response) => {
+    const noteId = req.params.id
+    const note = await getNoteByIdFromDB(noteId)
+
+    if (!note) {
+      return res.status(HttpStatus.NOT_FOUND).json({ error: 'Not found' })
+    }
+
+    return res.status(HttpStatus.OK).json({ note })
   }
 
   const createNote = async (req: Request, res: Response) => {
@@ -73,5 +91,5 @@ export function controller({ repo }: RepositoryType) {
     return res.status(HttpStatus.BAD_REQUEST).json({ error: 'Bad request' })
   }
 
-  return { getNotes, createNote, putNote, patchNote, deleteNote }
+  return { getNotes, getNoteById, createNote, putNote, patchNote, deleteNote }
 }

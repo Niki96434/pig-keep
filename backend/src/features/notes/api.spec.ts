@@ -53,6 +53,37 @@ describe('GET /api/v1/notes', () => {
   })
 })
 
+describe('GET /api/v1/notes/:id', () => {
+  it('should return note and 200 when note exists', async () => {
+    const note = await seedNote()
+
+    const res = await request(app).get(`${BASE_URL}/${note?.id}`)
+
+    expect(res.status).toBe(200)
+    expect(res.body.note).toMatchObject({
+      id: note?.id,
+      title: note?.title,
+      content: note?.content,
+    })
+  })
+
+  it('should return status code 404 if note id does not exist', async () => {
+    const nonExistentId = randomUUID()
+
+    const res = await request(app).get(`${BASE_URL}/${nonExistentId}`)
+
+    expect(res.status).toBe(404)
+    expect(res.body.error).toBe('Not found')
+  })
+
+  it('should return a 400 status code if the id is not of type UUID', async () => {
+    const res = await request(app).get(`${BASE_URL}/${INVALID_UUID}`)
+
+    expect(res.status).toBe(400)
+    expect(res.body.error).toBe(VALIDATION_ERROR)
+  })
+})
+
 describe('POST /api/v1/notes', () => {
   it('should create note and return 201', async () => {
     const res = await request(app).post(BASE_URL).send(defaultPayload)

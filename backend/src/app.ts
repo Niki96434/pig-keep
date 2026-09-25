@@ -2,7 +2,7 @@ import express from 'express'
 import { notesRouter } from './features/notes/router'
 import { globalErrorHandler } from './core/globalErrorHandler'
 import cors from 'cors'
-import { HttpStatus } from '@shared/constants/httpStatus'
+import { HttpStatus } from '@app/shared/constants/httpStatus'
 
 export const app = express()
 

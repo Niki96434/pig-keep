@@ -6,7 +6,7 @@ import {
   NotePatchInSchema,
   NoteIdSchema,
   NoteSchema,
-} from '@app/shared/validationSchemas'
+} from '@app/shared/notes/validationSchemas'
 
 describe('NoteCreateInSchema', () => {
   it('should succeed with valid title and content', () => {
@@ -102,11 +102,11 @@ describe('NotePutInSchema', () => {
     }
   })
 
-  it('should allow empty object', () => {
+  it('should fail on empty object', () => {
     const input = {}
     const result = NotePutInSchema.safeParse(input)
 
-    expect(result.success).toBe(true)
+    expect(result.success).toBe(false)
   })
 
   it('should trim whitespace from fields', () => {

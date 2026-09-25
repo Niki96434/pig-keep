@@ -1,7 +1,7 @@
 import type { Request, Response, NextFunction } from 'express'
 import * as z from 'zod'
 import { DatabaseError } from 'pg'
-import { HttpStatus } from '@shared/constants/httpStatus'
+import { HttpStatus } from '@app/shared/constants/httpStatus'
 
 export function globalErrorHandler(err: Error, _req: Request, res: Response, next: NextFunction) {
   if (res.headersSent) {

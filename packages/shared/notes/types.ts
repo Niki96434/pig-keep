@@ -15,6 +15,10 @@ export type NotesGetOut = {
   notes: Note[];
 };
 
+export type NoteGetByIdOut = {
+  note: Note;
+};
+
 export type NoteCreateIn = z.input<typeof NoteCreateInSchema>;
 
 export type NoteCreateOut = Note;
