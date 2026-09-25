@@ -1,12 +1,12 @@
 import { screen, waitFor } from '@testing-library/react'
-import { NoteForm } from './NoteForm'
+import { AddNoteForm } from './AddNoteForm'
 import { renderWithProviders } from '@/shared/testing/test-utils'
 import { http, HttpResponse } from 'msw'
 import { server } from '@/shared/testing/msw/node'
 import type { NoteCreateIn } from '@shared/notes/types'
 
 async function setupForm() {
-  const { user } = renderWithProviders(<NoteForm />)
+  const { user } = renderWithProviders(<AddNoteForm />)
 
   const input = screen.getByPlaceholderText(/заметка/i)
   await user.click(input)

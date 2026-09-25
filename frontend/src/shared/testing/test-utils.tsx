@@ -2,16 +2,23 @@ import { QueryClientProvider, QueryClient } from '@tanstack/react-query'
 import { render, renderHook } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-export const renderWithProviders = (ui: React.ReactElement) => {
-  const user = userEvent.setup()
-  const testQueryClient = new QueryClient({
+const createTestQueryClient = () => {
+  return new QueryClient({
     defaultOptions: {
       queries: {
         retry: false,
         refetchOnWindowFocus: false,
       },
+      mutations: {
+        retry: false,
+      },
     },
   })
+}
+
+export const renderWithProviders = (ui: React.ReactElement) => {
+  const user = userEvent.setup()
+  const testQueryClient = createTestQueryClient()
   return {
     user,
     ...render(
@@ -22,17 +29,9 @@ export const renderWithProviders = (ui: React.ReactElement) => {
   }
 }
 
+// eslint-disable-next-line no-unused-vars
 export function renderHookWithProviders<Result, Props = unknown>(hook: (props: Props) => Result) {
-  const testQueryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        retry: false,
-      },
-      mutations: {
-        retry: false,
-      },
-    },
-  })
+  const testQueryClient = createTestQueryClient()
 
   const wrapper = ({ children }: { children: React.ReactNode }) => {
     return <QueryClientProvider client={testQueryClient}>{children}</QueryClientProvider>

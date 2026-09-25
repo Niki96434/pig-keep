@@ -1,1 +1,1 @@
-export { NoteForm } from './ui/NoteForm'
+export { AddNoteForm } from './ui/AddNoteForm'

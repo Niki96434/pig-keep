@@ -6,8 +6,12 @@
   "type": "module",
   "exports":{
     "./*": {
-      "types": "./notes/*.ts",
-      "default": "./notes/*.ts"
+      "types": "./*.ts",
+      "default": "./*.ts"
+    },
+    "./*/*": {
+      "types": "./*/*.ts",
+      "default": "./*/*.ts"
     }
   },
   "scripts": {

@@ -1,10 +1,13 @@
 import z from "zod";
 import {
+  NoteCreateInSchema,
+  NoteSchema,
   NotePutInSchema,
   NotePatchInSchema,
-  NoteSchema,
-  NoteCreateInSchema,
+  NoteIdSchema
 } from "./validationSchemas";
+
+export type NoteId = z.input<typeof NoteIdSchema>;
 
 export type Note = z.output<typeof NoteSchema>;
 
@@ -15,6 +18,10 @@ export type NotesGetOut = {
 export type NoteCreateIn = z.input<typeof NoteCreateInSchema>;
 
 export type NoteCreateOut = Note;
+
+export interface NoteUpdateIn extends NotePutIn {
+  id: NoteId;
+}
 
 export type NotePutIn = z.input<typeof NotePutInSchema>;
 
