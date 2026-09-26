@@ -39,3 +39,9 @@ export const NoteSchema = z.object({
   title: z.string().max(MAX_NOTE_TITLE_LENGTH),
   content: z.string().max(MAX_NOTE_CONTENT_LENGTH),
 });
+
+export const SearchParamsSchema = z.object({
+  query: {
+    search: z.string().optional(),
+  },
+});

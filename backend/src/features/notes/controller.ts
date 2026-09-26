@@ -1,15 +1,10 @@
 import type { Request, Response } from 'express'
-import type {
-  NoteCreateIn,
-  Note,
-  NotePutIn,
-  NotePatchIn,
-} from '@app/shared/notes/types'
+import type { NoteCreateIn, Note, NotePutIn, NotePatchIn } from '@app/shared/notes/types'
 import { HttpStatus } from '@app/shared/constants/httpStatus'
 
 interface RepositoryType {
   repo: {
-    getNotesFromDB: () => Promise<Note[]>
+    getNotesFromDB: (search: string | undefined) => Promise<Note[]>
     getNoteByIdFromDB: (noteId: string) => Promise<Note | undefined>
     createNoteFromDB: (noteData: NoteCreateIn) => Promise<Note | undefined>
     putNoteFromDB: (noteId: string, noteData: NotePutIn) => Promise<Note | undefined>
@@ -28,8 +23,12 @@ export function controller({ repo }: RepositoryType) {
     deleteNoteFromDB,
   } = repo
 
-  const getNotes = async (_req: Request, res: Response) => {
-    const notes = await getNotesFromDB()
+  const getNotes = async (req: Request, res: Response) => {
+    const search =
+      typeof req.query.search === 'string' && req.query.search.trim()
+        ? req.query.search.trim()
+        : undefined
+    const notes = await getNotesFromDB(search)
 
     return res.status(HttpStatus.OK).json({ notes })
   }

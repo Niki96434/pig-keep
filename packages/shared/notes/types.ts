@@ -4,7 +4,8 @@ import {
   NoteSchema,
   NotePutInSchema,
   NotePatchInSchema,
-  NoteIdSchema
+  NoteIdSchema,
+  SearchParamsSchema,
 } from "./validationSchemas";
 
 export type NoteId = z.input<typeof NoteIdSchema>;

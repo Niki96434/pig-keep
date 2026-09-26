@@ -12,10 +12,11 @@ MVP веб-приложение с виртуальным питомцем, ос
 
 ## Документация
 
-- Описание решения: [docs/SOLUTION.md](https://github.com/Niki96434/google-keep/blob/dev/app/docs/SOLUTION.md)
-- Пользовательский путь: [docs/RULES.md](https://github.com/Niki96434/google-keep/blob/dev/app/docs/RULES.md)
-- Тестирование: [docs/TESTING.md](https://github.com/Niki96434/google-keep/blob/dev/app/docs/TESTING.md)
-- Руководство по работе с Docker: [docs/DOCKER.md](https://github.com/Niki96434/google-keep/blob/dev/app/docs/DOCKER.md)
+- Описание решения: [docs/SOLUTION.md](https://github.com/Niki96434/google-keep/blob/main/docs/SOLUTION.md)
+- Пользовательский путь: [docs/RULES.md](https://github.com/Niki96434/google-keep/blob/main/docs/RULES.md)
+- Тестирование: [docs/TESTING.md](https://github.com/Niki96434/google-keep/blob/main/docs/TESTING.md)
+- Руководство по работе с Docker: [docs/DOCKER.md](https://github.com/Niki96434/google-keep/blob/main/docs/DOCKER.md)
+- Полнотекстовый поиск с функциями PostgreSQL: [docs/FULLTEXT-SEARCH.md](https://github.com/Niki96434/google-keep/blob/main/docs/FULLTEXT-SEARCH.md)
 
 ## Перечень используемых технологий (с их обоснованием)
 
@@ -50,6 +51,8 @@ MVP веб-приложение с виртуальным питомцем, ос
   Создается схема Drizzle для TS, с помощью `drizzle-kit generate` создается migration.sql на основе обновленной схемы. Чтобы применить её к самой БД, используется `drizzle-kit migrate`.
 
 - Multi-staged сборка для Dockerfile. Она изменяет размер конечного образа за счет избавления от зависимостей, нужных для сборки приложения.
+
+- Full-text search(полнотекстовый поиск). Он реализован для более гибкого поиска(не по точному совпадению) с помощью встроенных функций PostgreSQL. В отличие от ILIKE(LIKE), полнотекстовый поиск в PG поддерживает словоформы, упорядочивает список по релевантности и из-за отсутствия индексов(приходится проверять весь список) обычно медленнее.
 
 2. Frontend
 
