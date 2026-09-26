@@ -112,5 +112,23 @@ describe('edit note mutation', () => {
     await waitFor(() => expect(result.current.isError).toBeTruthy())
   })
 
-  it.todo('should return error if note is not found') // 404
+  it('should return error if note is not found', async () => {
+    const { result, queryClient } = renderHookWithProviders(useEditNoteMutation)
+    const invalidateSpy = vi.spyOn(queryClient, 'invalidateQueries')
+
+    server.use(
+      http.put<{ id: string }>(`*/api/v1/notes/:id`, async () => {
+        return HttpResponse.json({ error: 'Not found' }, { status: 404 })
+      })
+    )
+
+    result.current.mutate({
+      id: noteId,
+      title: 'Заметка',
+      content: 'Описание заметки',
+    })
+
+    await waitFor(() => expect(result.current.isError).toBeTruthy())
+    expect(invalidateSpy).not.toHaveBeenCalled()
+  })
 })
