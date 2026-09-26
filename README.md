@@ -40,14 +40,20 @@ MVP веб-приложение с виртуальным питомцем, ос
 2. Запустите стек:
    ```bash
    docker compose up -d --build
+   ```
 
 ## Особенности реализации
 
 1. Backend:
+
 - Codebase-first подход для изменения схем БД(миграции) с помощью drizzle-kit.(Схема как источник истины).
   Создается схема Drizzle для TS, с помощью `drizzle-kit generate` создается migration.sql на основе обновленной схемы. Чтобы применить её к самой БД, используется `drizzle-kit migrate`.
 
 - Multi-staged сборка для Dockerfile. Она изменяет размер конечного образа за счет избавления от зависимостей, нужных для сборки приложения.
+
+2. Frontend
+
+- Реализован [api-модуль](https://github.com/Niki96434/google-keep/blob/main/frontend/src/shared/api/notesApi.ts) для инкапсуляции сетевых запросов и изоляции логики работы с сетью от UI.(Separation of Concerns)
 
 ## Использование сниппетов
 
