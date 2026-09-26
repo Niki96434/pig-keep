@@ -1,4 +1,4 @@
-import { axiosInstance } from '@/shared/api'
+import { api } from '@/shared/api'
 import type { Note, NotePutIn } from '@shared/notes/types'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
@@ -10,10 +10,7 @@ export function useEditNoteMutation() {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: async ({ id, title, content }: EditNoteParams) => {
-      const res = await axiosInstance.put<NotePutIn>(`/api/v1/notes/${id}`, { title, content })
-      return res.data
-    },
+    mutationFn: ({ id, ...body }: EditNoteParams) => api.notes.updateNote(id, body),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['notes'] }),
   })
 }

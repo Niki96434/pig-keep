@@ -1,15 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { axiosInstance } from '@/shared/api'
-import type { NoteCreateIn, NoteCreateOut } from '@shared/notes/types'
+import { api } from '@/shared/api'
+import type { NoteCreateIn } from '@shared/notes/types'
 
 export function useCreateNoteMutation() {
   const queryClient = useQueryClient()
 
   const mutation = useMutation({
-    mutationFn: async ({ title, content }: NoteCreateIn) => {
-      const res = await axiosInstance.post<NoteCreateOut>('/api/v1/notes', { title, content })
-      return res.data
-    },
+    mutationFn: (data: NoteCreateIn) => api.notes.createNote(data),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['notes'] }),
   })
 
