@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from 'react'
-import { useForm } from 'react-hook-form'
+import { useForm, type SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { NotePutInSchema } from '@shared/notes/validationSchemas'
 import type { NotePutIn } from '@shared/notes/types'
@@ -16,7 +16,7 @@ export function useEditNoteForm() {
   const { data } = useGetNotesQuery()
   const currentNote = data?.notes.find((note) => note.id === id)
 
-  const { control, handleSubmit, reset, getValues } = useForm<NotePutIn>({
+  const { control, handleSubmit, reset } = useForm<NotePutIn>({
     resolver: zodResolver(NotePutInSchema),
     defaultValues: {
       title: '',
@@ -38,17 +38,27 @@ export function useEditNoteForm() {
     actions.removeId()
   }, [actions])
 
-  const onSubmit = useCallback(() => {
-    const formValues = getValues()
-    if (id && (formValues.title?.trim() !== '' || formValues.content?.trim() !== '')) {
-      editMutation.mutate({
-        id,
-        title: formValues.title?.trim() || '',
-        content: formValues.content?.trim() || '',
-      })
-    }
-    closeEditForm()
-  }, [id, getValues, editMutation, closeEditForm])
+  const onSubmit: SubmitHandler<NotePutIn> = useCallback(
+    (formValues) => {
+      if (!id) {
+        closeEditForm()
+        return
+      }
+
+      const title = formValues.title.trim()
+      const content = formValues.content.trim()
+
+      if (title !== currentNote?.title.trim() || content !== currentNote?.content.trim()) {
+        editMutation.mutate({
+          id,
+          title: formValues.title?.trim() || '',
+          content: formValues.content?.trim() || '',
+        })
+      }
+      closeEditForm()
+    },
+    [id, editMutation, closeEditForm, currentNote]
+  )
 
   const isOpen = Boolean(isOpenForm && id)
 
