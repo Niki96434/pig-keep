@@ -5,7 +5,7 @@ import {
   NotePutInSchema,
   NotePatchInSchema,
   NoteIdSchema,
-  SearchParamsSchema,
+  SearchQuerySchema,
 } from "./validationSchemas";
 
 export type NoteId = z.input<typeof NoteIdSchema>;
@@ -33,3 +33,5 @@ export type NotePutIn = z.input<typeof NotePutInSchema>;
 export type NotePatchIn = z.input<typeof NotePatchInSchema>;
 
 export type NoteUpdateOut = Note;
+
+export type SearchQuery = z.input<typeof SearchQuerySchema>;
