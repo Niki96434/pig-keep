@@ -4,7 +4,6 @@ import styles from './NoteList.module.css'
 
 export function NoteList() {
   const { data, status } = useGetNotesQuery()
-
   if (status === 'error' || !data) {
     return <p>Ошибка загрузки</p>
   }

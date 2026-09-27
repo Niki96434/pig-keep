@@ -25,7 +25,7 @@ export function NoteForm<T extends FieldValues = NoteFormValues>({
     <form
       onSubmit={onSubmit}
       className={cn(
-        'flex flex-col rounded-2xl border border-border/80 bg-card shadow-lg p-3 gap-1 transition-all bg-white',
+        'flex flex-col rounded-md border border-transparent bg-white shadow-sm p-3 gap-1 transition-all focus-within:border-transparent focus-within:ring-0 outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0',
         className
       )}
     >
@@ -36,7 +36,7 @@ export function NoteForm<T extends FieldValues = NoteFormValues>({
           <Textarea
             {...field}
             placeholder="Название"
-            className="border-none bg-transparent shadow-none focus-visible:ring-0 text-base font-semibold px-3 py-2 placeholder:text-muted-foreground/60"
+            className="border-none bg-transparent shadow-none outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0 focus:border-transparent focus-visible:border-transparent focus-visible:ring-transparent text-base font-semibold px-3 py-2 placeholder:text-muted-foreground/60"
           />
         )}
       />
@@ -47,7 +47,7 @@ export function NoteForm<T extends FieldValues = NoteFormValues>({
           <Textarea
             {...field}
             placeholder="Заметка..."
-            className="border-none bg-transparent shadow-none focus-visible:ring-0 text-sm px-3 py-2 placeholder:text-muted-foreground/60"
+            className="border-none bg-transparent shadow-none outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0 focus:border-transparent focus-visible:border-transparent focus-visible:ring-transparent text-sm px-3 py-2 placeholder:text-muted-foreground/60"
           />
         )}
       />
