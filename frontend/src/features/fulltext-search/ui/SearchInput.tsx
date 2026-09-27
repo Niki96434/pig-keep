@@ -6,11 +6,20 @@ import {
 } from '@/shared/ui/search/input-group'
 import { Search, X } from 'lucide-react'
 import { cn } from '@/shared/utils/utils'
+import { useSearchStore } from '@/stores/fulltext-search/searchStore'
+import type { ChangeEvent } from 'react'
 
 function SearchInput() {
-  const value = '123'
-  const onChange = () => {}
-  const onClear = () => {}
+  const { value, setSearchValue } = useSearchStore()
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const changedValue = e.target.value
+    setSearchValue(changedValue)
+  }
+
+  const handleClear = () => {
+    setSearchValue('')
+  }
 
   return (
     <InputGroup
@@ -20,20 +29,22 @@ function SearchInput() {
     >
       <InputGroupInput
         placeholder="Поиск"
-        value={value}
-        onChange={onChange}
+        value={value ?? ''}
+        onChange={handleChange}
         className="h-full border-none outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0 focus:border-transparent focus-visible:border-transparent focus-visible:ring-transparent"
       />
       <InputGroupAddon align={'inline-start'}>
         <Search />
       </InputGroupAddon>
-      <InputGroupButton
-        size={'sm'}
-        onClick={onClear}
-        className="rounded-md outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0 focus-visible:border-transparent focus-visible:ring-transparent"
-      >
-        <X />
-      </InputGroupButton>
+      {typeof value === 'string' ? (
+        <InputGroupButton
+          size={'sm'}
+          onClick={handleClear}
+          className="rounded-md outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0 focus-visible:border-transparent focus-visible:ring-transparent"
+        >
+          <X />
+        </InputGroupButton>
+      ) : null}
     </InputGroup>
   )
 }

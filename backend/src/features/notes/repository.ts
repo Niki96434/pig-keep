@@ -14,7 +14,7 @@ export function repository({ db }: DBType) {
         .select()
         .from(notesTable)
         .where(
-          sql`to_tsvector('russian', coalesce(${notesTable.title}, '') || ' ' || coalesce(${notesTable.content}, '') @@ websearch_to_tsquery('russian', ${search})`
+          sql`to_tsvector('russian', coalesce(${notesTable.title}, '') || ' ' || coalesce(${notesTable.content}, '')) @@ websearch_to_tsquery('russian', ${search})`
         )
         .limit(10)
     }

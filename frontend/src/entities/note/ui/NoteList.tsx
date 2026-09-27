@@ -1,9 +1,11 @@
 import { useGetNotesQuery } from '../api/useGetNotes'
 import { Note } from './Note'
 import styles from './NoteList.module.css'
+import { useSearchStore } from '@/stores/fulltext-search/searchStore'
 
 export function NoteList() {
-  const { data, status } = useGetNotesQuery()
+  const searchValue = useSearchStore((state) => state.value)
+  const { data, status } = useGetNotesQuery(searchValue ?? undefined)
   if (status === 'error' || !data) {
     return <p>Ошибка загрузки</p>
   }
