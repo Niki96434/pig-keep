@@ -51,6 +51,65 @@ describe('GET /api/v1/notes', () => {
       content: seeded?.content,
     })
   })
+
+  describe('search query', () => {
+    it('should return all notes when search is undefined (no query parameter)', async () => {
+      await seedNote({ title: 'Первая заметка', content: 'Купить молоко' })
+      await seedNote({ title: 'Вторая заметка', content: 'Почитать книгу' })
+
+      const res = await request(app).get(BASE_URL)
+
+      expect(res.status).toBe(200)
+      expect(res.body.notes).toHaveLength(2)
+    })
+
+    it('should return all notes when search query is an empty string or whitespace only', async () => {
+      await seedNote({ title: 'Купить продукты', content: 'Сыр, макароны' })
+      await seedNote({ title: 'Планы на вечер', content: 'сериал Озарк' })
+
+      const resEmpty = await request(app).get(`${BASE_URL}?search=`)
+      expect(resEmpty.status).toBe(200)
+      expect(resEmpty.body.notes).toHaveLength(2)
+
+      const resWhitespace = await request(app).get(`${BASE_URL}?search=%20%20%20`)
+      expect(resWhitespace.status).toBe(200)
+      expect(resWhitespace.body.notes).toHaveLength(2)
+    })
+
+    it('should filter notes by matching search string in title or content', async () => {
+      const note1 = await seedNote({ title: 'Купить молоко', content: 'в магните' })
+      await seedNote({ title: 'Прочитать книгу', content: 'алгоритмы и структуры данных' })
+      const note2 = await seedNote({ title: 'Рецепт пирога', content: 'нужны молоко и мука' })
+
+      const res = await request(app).get(`${BASE_URL}?search=молоко`)
+
+      expect(res.status).toBe(200)
+      expect(res.body.notes).toHaveLength(2)
+      const ids = res.body.notes.map((n: { id: string }) => n.id)
+      expect(ids).toContain(note1?.id)
+      expect(ids).toContain(note2?.id)
+    })
+
+    it('should match notes using word stems', async () => {
+      const note = await seedNote({ title: 'Покупки', content: 'купить свинью' })
+      await seedNote({ title: 'Отдых', content: 'поехать на дачу' })
+
+      const res = await request(app).get(`${BASE_URL}?search=покупка`)
+
+      expect(res.status).toBe(200)
+      expect(res.body.notes).toHaveLength(1)
+      expect(res.body.notes[0].id).toBe(note?.id)
+    })
+
+    it('should return empty array when no notes match search query', async () => {
+      await seedNote({ title: 'Заметка 1', content: 'Текст 1' })
+
+      const res = await request(app).get(`${BASE_URL}?search=несуществующаязаметка123`)
+
+      expect(res.status).toBe(200)
+      expect(res.body.notes).toEqual([])
+    })
+  })
 })
 
 describe('GET /api/v1/notes/:id', () => {

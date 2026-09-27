@@ -24,7 +24,7 @@ function SearchInput() {
   return (
     <InputGroup
       className={cn(
-        'w-full h-10 lg:w-180 lg:h-12.5 rounded-md shadow-sm border-transparent focus-within:border-transparent focus-within:ring-0 has-[[data-slot=input-group-control]:focus-visible]:border-transparent has-[[data-slot=input-group-control]:focus-visible]:ring-0 outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0'
+        'px-2 w-full h-10 lg:w-180 lg:h-12.5 rounded-md shadow-sm border-transparent focus-within:border-transparent focus-within:ring-0 has-[[data-slot=input-group-control]:focus-visible]:border-transparent has-[[data-slot=input-group-control]:focus-visible]:ring-0 outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0'
       )}
     >
       <InputGroupInput
@@ -38,9 +38,9 @@ function SearchInput() {
       </InputGroupAddon>
       {typeof value === 'string' ? (
         <InputGroupButton
-          size={'sm'}
+          size={'icon-sm'}
           onClick={handleClear}
-          className="rounded-md outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0 focus-visible:border-transparent focus-visible:ring-transparent"
+          className="cursor-pointer rounded-full hover:bg-gray-100 transition-colors outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0 focus-visible:border-transparent focus-visible:ring-transparent"
         >
           <X />
         </InputGroupButton>
