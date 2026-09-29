@@ -1,14 +1,23 @@
 import type { NoteCreateIn, NotePatchIn, NotePutIn } from '@app/shared/notes/types'
 import { db } from '../../core/db/'
 import { notesTable } from './schema'
-import { eq } from 'drizzle-orm'
+import { eq, sql } from 'drizzle-orm'
 
 interface DBType {
   db: typeof db
 }
 
 export function repository({ db }: DBType) {
-  const getNotesFromDB = async () => {
+  const getNotesFromDB = async (search: string | undefined) => {
+    if (search) {
+      return await db
+        .select()
+        .from(notesTable)
+        .where(
+          sql`to_tsvector('russian', coalesce(${notesTable.title}, '') || ' ' || coalesce(${notesTable.content}, '')) @@ websearch_to_tsquery('russian', ${search})`
+        )
+        .limit(10)
+    }
     return await db.select().from(notesTable)
   }
 

@@ -1,5 +1,5 @@
 import { Textarea } from '@/shared/ui'
-import { NoteForm } from '@/entity/note/ui/NoteForm'
+import { NoteForm } from '@/entities/note/ui/NoteForm'
 import { useNoteFormLogic } from './../model/useNoteFormLogic'
 
 function AddNoteForm() {
@@ -8,11 +8,11 @@ function AddNoteForm() {
   return (
     <div ref={formRef} className="w-full max-w-150 mx-auto my-8 text-left">
       {isOpenForm === false && (
-        <div className="rounded-2xl border border-border/80 bg-card shadow-sm hover:shadow-md transition-shadow p-1 cursor-pointer">
+        <div className="rounded-md border border-transparent bg-white shadow-sm hover:shadow-md transition-shadow p-1 cursor-pointer">
           <Textarea
             placeholder="Заметка..."
             onClick={openForm}
-            className="border-none bg-transparent shadow-none focus-visible:ring-0 text-base font-medium px-4 py-2.5 cursor-pointer placeholder:text-muted-foreground/70"
+            className="border-none bg-transparent shadow-none outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0 focus:border-transparent focus-visible:border-transparent focus-visible:ring-transparent text-base font-medium px-4 py-2.5 cursor-pointer placeholder:text-muted-foreground/70"
           />
         </div>
       )}
