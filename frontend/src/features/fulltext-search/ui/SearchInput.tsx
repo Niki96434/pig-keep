@@ -10,7 +10,8 @@ import { useSearchStore } from '@/stores/fulltext-search/searchStore'
 import type { ChangeEvent } from 'react'
 
 function SearchInput() {
-  const { value, actions } = useSearchStore()
+  const value = useSearchStore((state) => state.value)
+  const actions = useSearchStore((state) => state.actions)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const changedValue = e.target.value
@@ -40,6 +41,7 @@ function SearchInput() {
         <InputGroupButton
           size={'icon-sm'}
           onClick={handleClear}
+          aria-label="Очистить поиск"
           className="cursor-pointer rounded-full hover:bg-gray-100 transition-colors outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 focus-visible:ring-0 focus-visible:border-transparent focus-visible:ring-transparent"
         >
           <X />
