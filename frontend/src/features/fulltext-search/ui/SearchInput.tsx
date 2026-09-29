@@ -10,15 +10,15 @@ import { useSearchStore } from '@/stores/fulltext-search/searchStore'
 import type { ChangeEvent } from 'react'
 
 function SearchInput() {
-  const { value, setSearchValue } = useSearchStore()
+  const { value, actions } = useSearchStore()
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const changedValue = e.target.value
-    setSearchValue(changedValue)
+    actions.setSearchValue(changedValue)
   }
 
   const handleClear = () => {
-    setSearchValue('')
+    actions.setClearSearch()
   }
 
   return (

@@ -7,5 +7,8 @@ const defaultState: defaultStateType = {
 
 export const useSearchStore = create<SearchStoreType>((set) => ({
   ...defaultState,
-  setSearchValue: (search: string) => set({ value: search }),
+  actions: {
+    setSearchValue: (search: string) => set({ value: search }),
+    setClearSearch: () => set({ value: null }),
+  },
 }))
