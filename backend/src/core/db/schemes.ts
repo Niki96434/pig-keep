@@ -26,10 +26,10 @@ export const noteTagsTable = pgTable(
   {
     note_id: uuid('note_id')
       .notNull()
-      .references(() => notesTable.id),
+      .references(() => notesTable.id, { onDelete: 'cascade' }),
     tag_id: uuid('tag_id')
       .notNull()
-      .references(() => tagsTable.id),
+      .references(() => tagsTable.id, { onDelete: 'cascade' }),
   },
   (table) => [primaryKey({ columns: [table.tag_id, table.note_id] })]
 )

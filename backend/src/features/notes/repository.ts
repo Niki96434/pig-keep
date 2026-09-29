@@ -1,6 +1,6 @@
 import type { NoteCreateIn, NotePatchIn, NotePutIn } from '@app/shared/notes/types'
 import { db } from '../../core/db/'
-import { notesTable } from './schema'
+import { notesTable } from '../../core/db/schemes'
 import { eq, sql } from 'drizzle-orm'
 
 interface DBType {

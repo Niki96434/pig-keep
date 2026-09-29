@@ -79,9 +79,10 @@ npx drizzle-kit generate
 
 ```
 npx drizzle-kit migrate --config=drizzle.config.ts
+npx drizzle-kit migrate --config=drizzle-test.config.ts
 ```
 
-Для локальной тестовой базы данных нам не так важна история изменений, поэтому синхронизировать схему с тестовой бд можно с помощью `push`:
+Для локальной тестовой базы данных нам не так важна история изменений, поэтому синхронизировать схему с тестовой бд можно с помощью `push`, в случае проблем:
 
 ```
 npx drizzle-kit push --config=drizzle-test.config.ts --force
