@@ -25,7 +25,7 @@ const seedNote = async (data: Partial<typeof notesTable.$inferInsert> = {}) => {
 }
 
 beforeEach(async () => {
-  await test_db.execute(sql`TRUNCATE TABLE ${notesTable}`)
+  await test_db.execute(sql`TRUNCATE TABLE ${notesTable} CASCADE`)
 })
 
 afterAll(async () => await test_pool.end())
