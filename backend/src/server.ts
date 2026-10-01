@@ -9,7 +9,11 @@ const port = Number(process.env.PORT) || DEFAULT_PORT
 
 const bootstrap = async () => {
   const migrationsFolder = path.resolve(process.cwd(), 'migrations')
-  await migrate(db, { migrationsFolder })
+  await migrate(db, {
+    migrationsFolder,
+    migrationsTable: 'migrations_table',
+    migrationsSchema: 'migrations_schema',
+  })
   app.listen(port)
 }
 

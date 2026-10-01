@@ -3,7 +3,7 @@ import { sql } from 'drizzle-orm'
 import request from 'supertest'
 import { app } from '../../app'
 import { test_db, test_pool } from '../../core/db/test_db'
-import { notesTable } from '../../core/db/schemes'
+import { notesTable } from '../../core/db/schema'
 
 const BASE_URL = '/api/v1/notes'
 const VALIDATION_ERROR = 'Validation error'

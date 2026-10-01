@@ -6,13 +6,13 @@ dotenv.config({ path: path.resolve(process.cwd(), '.env.test'), override: true }
 
 export default defineConfig({
   dialect: 'postgresql',
-  schema: './src/core/db/schemes.ts',
+  schema: './src/core/db/schema.ts',
   out: './migrations',
   dbCredentials: {
     url: process.env.DATABASE_URL!,
   },
   migrations: {
-    table: 'migrations-table',
-    schema: 'migrations-schema',
+    table: 'migrations_table',
+    schema: 'migrations_schema',
   },
 })

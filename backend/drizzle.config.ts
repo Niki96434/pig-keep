@@ -3,13 +3,13 @@ import { defineConfig } from 'drizzle-kit'
 
 export default defineConfig({
   out: './migrations',
-  schema: './src/core/db/schemes.ts',
+  schema: './src/core/db/schema.ts',
   dialect: 'postgresql',
   dbCredentials: {
     url: process.env.DATABASE_URL!,
   },
   migrations: {
-    table: 'migrations-table',
-    schema: 'migrations-schema',
+    table: 'migrations_table',
+    schema: 'migrations_schema',
   },
 })

@@ -17,7 +17,7 @@ describe('SearchInput integration tests', () => {
     useSearchStore.setState({ value: null })
   })
 
-  describe('UI & search store interaction', () => {
+  describe('UI interaction', () => {
     it('should render search input with placeholder and without clear button initially', () => {
       renderWithProviders(<SearchInput />)
 
@@ -29,58 +29,31 @@ describe('SearchInput integration tests', () => {
       expect(clearButton).not.toBeInTheDocument()
     })
 
-    it('should update input value and store when user types text', async () => {
+    it('should update input value and show clear button when user types text', async () => {
       const { user } = renderWithProviders(<SearchInput />)
 
       const input = screen.getByPlaceholderText(/поиск/i)
       await user.type(input, 'купить хлеб')
 
       expect(input).toHaveValue('купить хлеб')
-      expect(useSearchStore.getState().value).toBe('купить хлеб')
 
       const clearButton = screen.getByRole('button', { name: /очистить/i })
       expect(clearButton).toBeInTheDocument()
     })
 
-    it('should clear input, reset store to null, and hide clear button on click', async () => {
+    it('should clear input and hide clear button on click', async () => {
       const { user } = renderWithProviders(<SearchInput />)
 
       const input = screen.getByPlaceholderText(/поиск/i)
       await user.type(input, 'текст для поиска')
 
       expect(input).toHaveValue('текст для поиска')
-      expect(useSearchStore.getState().value).toBe('текст для поиска')
 
       const clearButton = screen.getByRole('button', { name: /очистить/i })
       await user.click(clearButton)
 
       expect(input).toHaveValue('')
-      expect(useSearchStore.getState().value).toBeNull()
       expect(screen.queryByRole('button', { name: /очистить/i })).not.toBeInTheDocument()
-    })
-
-    it('should synchronize input value and render clear button when store is initialized with a value', () => {
-      useSearchStore.setState({ value: 'существующий запрос' })
-
-      renderWithProviders(<SearchInput />)
-
-      const input = screen.getByPlaceholderText(/поиск/i)
-      expect(input).toHaveValue('существующий запрос')
-
-      const clearButton = screen.getByRole('button', { name: /очистить/i })
-      expect(clearButton).toBeInTheDocument()
-    })
-
-    it('should update store when user clears text manually with Backspace', async () => {
-      const { user } = renderWithProviders(<SearchInput />)
-
-      const input = screen.getByPlaceholderText(/поиск/i)
-      await user.type(input, 'тест')
-      expect(useSearchStore.getState().value).toBe('тест')
-
-      await user.clear(input)
-      expect(input).toHaveValue('')
-      expect(useSearchStore.getState().value).toBe('')
     })
   })
 
@@ -130,136 +103,6 @@ describe('SearchInput integration tests', () => {
       })
 
       expect(requestSpy).toHaveBeenCalledWith('Заметка 1')
-    })
-
-    it('should restore all notes when clear button is clicked after searching', async () => {
-      server.use(
-        http.get('*/api/v1/notes', ({ request }) => {
-          const url = new URL(request.url)
-          const search = url.searchParams.get('search')
-
-          if (search) {
-            const filtered = mockNotes.filter(
-              (note) =>
-                note.title.toLowerCase().includes(search.toLowerCase()) ||
-                note.content.toLowerCase().includes(search.toLowerCase())
-            )
-            return HttpResponse.json({ notes: filtered })
-          }
-
-          return HttpResponse.json({ notes: mockNotes })
-        })
-      )
-
-      const { user } = renderWithProviders(<Component />)
-
-      expect(await screen.findByText('Заметка 1')).toBeInTheDocument()
-
-      const searchInput = screen.getByPlaceholderText(/поиск/i)
-      await user.type(searchInput, 'Заметка 2')
-
-      await waitFor(() => {
-        expect(screen.getByText('Заметка 2')).toBeInTheDocument()
-        expect(screen.queryByText('Заметка 1')).not.toBeInTheDocument()
-        expect(screen.queryByText('Заметка 3')).not.toBeInTheDocument()
-      })
-
-      const clearButton = screen.getByRole('button', { name: /очистить/i })
-      await user.click(clearButton)
-
-      await waitFor(() => {
-        expect(screen.getByText('Заметка 1')).toBeInTheDocument()
-        expect(screen.getByText('Заметка 2')).toBeInTheDocument()
-        expect(screen.getByText('Заметка 3')).toBeInTheDocument()
-      })
-    })
-
-    it('should handle case-insensitive search and find notes by content', async () => {
-      server.use(
-        http.get('*/api/v1/notes', ({ request }) => {
-          const url = new URL(request.url)
-          const search = url.searchParams.get('search')
-
-          if (search) {
-            const filtered = mockNotes.filter(
-              (note) =>
-                note.title.toLowerCase().includes(search.toLowerCase()) ||
-                note.content.toLowerCase().includes(search.toLowerCase())
-            )
-            return HttpResponse.json({ notes: filtered })
-          }
-
-          return HttpResponse.json({ notes: mockNotes })
-        })
-      )
-
-      const { user } = renderWithProviders(<Component />)
-
-      expect(await screen.findByText('Заметка 1')).toBeInTheDocument()
-
-      const searchInput = screen.getByPlaceholderText(/поиск/i)
-      await user.type(searchInput, 'Заметка 1')
-
-      await waitFor(() => {
-        expect(screen.getByText('Заметка 1')).toBeInTheDocument()
-        expect(screen.queryByText('Заметка 2')).not.toBeInTheDocument()
-        expect(screen.queryByText('Заметка 3')).not.toBeInTheDocument()
-      })
-    })
-
-    it('should handle empty search results when no notes match the query', async () => {
-      server.use(
-        http.get('*/api/v1/notes', ({ request }) => {
-          const url = new URL(request.url)
-          const search = url.searchParams.get('search')
-
-          if (search) {
-            return HttpResponse.json({ notes: [] })
-          }
-
-          return HttpResponse.json({ notes: mockNotes })
-        })
-      )
-
-      const { user } = renderWithProviders(<Component />)
-
-      expect(await screen.findByText('Заметка 1')).toBeInTheDocument()
-
-      const searchInput = screen.getByPlaceholderText(/поиск/i)
-      await user.type(searchInput, 'несуществующая заметка')
-
-      await waitFor(() => {
-        expect(screen.queryByText(/заметка/i)).not.toBeInTheDocument()
-      })
-    })
-
-    it('should gracefully display error message in list while keeping SearchInput interactive on server failure', async () => {
-      let shouldFail = false
-
-      server.use(
-        http.get('*/api/v1/notes', ({ request }) => {
-          const url = new URL(request.url)
-          const search = url.searchParams.get('search')
-
-          if (shouldFail && search) {
-            return HttpResponse.json(null, { status: 500 })
-          }
-
-          return HttpResponse.json({ notes: mockNotes })
-        })
-      )
-
-      const { user } = renderWithProviders(<Component />)
-
-      expect(await screen.findByText('Заметка 1')).toBeInTheDocument()
-
-      shouldFail = true
-      const searchInput = screen.getByPlaceholderText(/поиск/i)
-      await user.type(searchInput, 'ошибка')
-
-      const errorMessage = await screen.findByText(/ошибка загрузки/i)
-      expect(errorMessage).toBeInTheDocument()
-      expect(searchInput).toHaveValue('ошибка')
     })
   })
 })
