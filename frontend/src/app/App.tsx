@@ -1,4 +1,4 @@
-import { HomePage } from '@/pages/ui/HomePage'
+import { HomePage } from '@/pages'
 
 function App() {
   return <HomePage />

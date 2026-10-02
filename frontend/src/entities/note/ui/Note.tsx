@@ -9,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/shared/ui/menu/dropdown-menu'
+} from '@/shared/ui'
 import { useDeleteNoteMutation } from '../api/useDeleteNoteMutation'
 import { useEditNoteStore } from '@/stores/edit-note/editNoteStore'
 

@@ -3,9 +3,9 @@ import {
   InputGroupAddon,
   InputGroupButton,
   InputGroupInput,
-} from '@/shared/ui/search/input-group'
+} from '@/shared/ui'
 import { Search, X } from 'lucide-react'
-import { cn } from '@/shared/utils/utils'
+import { cn } from '@/shared/utils'
 import { useSearchStore } from '@/stores/fulltext-search/searchStore'
 import type { ChangeEvent } from 'react'
 
@@ -51,4 +51,5 @@ function SearchInput() {
   )
 }
 
+export { SearchInput }
 export default SearchInput

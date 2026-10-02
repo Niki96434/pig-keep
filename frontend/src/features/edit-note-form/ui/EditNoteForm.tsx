@@ -1,4 +1,4 @@
-import { NoteForm } from '@/entities/note/ui/NoteForm'
+import { NoteForm } from '@/entities/note'
 import styles from './EditNoteForm.module.css'
 import { useEditNoteForm } from '../model/useEditNoteForm'
 

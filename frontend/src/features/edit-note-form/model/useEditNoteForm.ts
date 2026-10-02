@@ -5,7 +5,7 @@ import { NotePutInSchema } from '@shared/notes/validationSchemas'
 import type { NotePutIn } from '@shared/notes/types'
 import { useEditNoteMutation } from '../api/useEditNoteMutation'
 import { useEditNoteStore } from '@/stores/edit-note/editNoteStore'
-import { useGetNotesQuery } from '@/entities/note/api/useGetNotes'
+import { useGetNotesQuery } from '@/entities/note'
 
 export function useEditNoteForm() {
   const editMutation = useEditNoteMutation()

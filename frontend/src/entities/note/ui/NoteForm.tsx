@@ -1,7 +1,7 @@
 import type { SubmitEventHandler } from 'react'
 import { Controller, type Control, type FieldValues, type Path } from 'react-hook-form'
 import { Button, Textarea } from '@/shared/ui'
-import { cn } from '@/shared/utils/utils'
+import { cn } from '@/shared/utils'
 
 export interface NoteFormValues {
   title?: string

@@ -1,6 +1,6 @@
 import { Textarea } from '@/shared/ui'
-import { NoteForm } from '@/entities/note/ui/NoteForm'
-import { useNoteFormLogic } from './../model/useNoteFormLogic'
+import { NoteForm } from '@/entities/note'
+import { useNoteFormLogic } from '../model/useNoteFormLogic'
 
 function AddNoteForm() {
   const { formRef, isOpenForm, openForm, handleSubmit, onSubmit, control } = useNoteFormLogic()
