@@ -3,7 +3,7 @@ import { SidebarProvider, SidebarTrigger, AppSidebar } from '@/shared/ui'
 export function Sidebar({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar className="shadow-md" />
       <main>
         <SidebarTrigger />
         {children}

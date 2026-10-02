@@ -44,11 +44,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  transition:
+    opacity 0.3s,
+    visibility 0.3s,
+    background-color 0.3s,
+    box-shadow 0.3s;
 }
 
 .wrapper:hover {
   background-color: var(--shadow-color);
-  transition: background-color 0.5s;
+  box-shadow: var(--soft-shadow);
+  transition:
+    background-color 0.3s,
+    box-shadow 0.3s;
 }
 
 .container:hover .wrapper,

@@ -1,12 +1,14 @@
 .container {
   display: flex;
   flex-direction: row;
+  gap: 16px;
 }
 
 .content {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  padding: 16px;
 }
 
 @media (width >= 1024px) {
