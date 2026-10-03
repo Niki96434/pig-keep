@@ -1,9 +1,4 @@
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupButton,
-  InputGroupInput,
-} from '@/shared/ui'
+import { InputGroup, InputGroupAddon, InputGroupButton, InputGroupInput } from '@/shared/ui'
 import { Search, X } from 'lucide-react'
 import { cn } from '@/shared/utils'
 import { useSearchStore } from '@/stores/fulltext-search/searchStore'

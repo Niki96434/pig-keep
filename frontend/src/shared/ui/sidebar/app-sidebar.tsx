@@ -11,8 +11,11 @@ import {
 } from '@/shared/ui/sidebar/sidebar'
 import { Archive, NotebookPen, Pencil, TextAlignJustify, Trash } from 'lucide-react'
 import { TagList } from '@/widgets/sidebar'
+import { useTagsModalStore } from '@/stores/manage-tags/tagsModalStore'
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const openTagsModal = useTagsModalStore((state) => state.open)
+
   return (
     <Sidebar collapsible="icon" variant="inset" {...props}>
       <SidebarHeader>
@@ -42,7 +45,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             <SidebarMenuItem>
               <SidebarMenuButton
                 tooltip="Создать тег"
-                render={<Link to="/create-tags" className="font-medium" />}
+                onClick={openTagsModal}
+                className="font-medium cursor-pointer"
               >
                 <Pencil className="size-4" />
                 <span>Создать тег</span>

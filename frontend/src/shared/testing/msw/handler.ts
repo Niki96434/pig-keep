@@ -40,4 +40,7 @@ export const handlers = [
   http.delete<{ id: string }>(`${url}/api/v1/notes/${noteId}`, async () => {
     return HttpResponse.json({ message: 'Success' }, { status: HttpStatus.OK })
   }),
+  http.get(`${url}/api/v1/tags`, () => {
+    return HttpResponse.json({ tags: [] }, { status: HttpStatus.OK })
+  }),
 ]
