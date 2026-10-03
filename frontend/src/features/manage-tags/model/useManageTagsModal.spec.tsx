@@ -159,4 +159,87 @@ describe('useManageTagsModal hook', () => {
 
     await waitFor(() => expect(deleteHandler).toHaveBeenCalledWith('tag-id-123'))
   })
+
+  it('should start, cancel, and save edit properly', async () => {
+    const updateHandler = vi.fn()
+    server.use(
+      http.get('*/api/v1/tags', () => {
+        return HttpResponse.json({
+          tags: [{ id: 'tag-1', name: 'Старый тег' }],
+        })
+      }),
+      http.put('*/api/v1/tags/:id', async ({ params, request }) => {
+        const body = (await request.json()) as { name: string }
+        updateHandler({ id: params.id, body })
+        return HttpResponse.json({
+          tag: { id: params.id, name: body.name },
+        })
+      })
+    )
+
+    const { result } = renderHookWithProviders(useManageTagsModal)
+
+    await waitFor(() => expect(result.current.tags).toHaveLength(1))
+
+    act(() => {
+      result.current.handleStartEdit({ id: 'tag-1', name: 'Старый тег' })
+    })
+
+    expect(result.current.editingTagId).toBe('tag-1')
+    expect(result.current.editingTagName).toBe('Старый тег')
+
+    act(() => {
+      result.current.setEditingTagName('Обновленный тег')
+    })
+
+    act(() => {
+      result.current.handleSaveEdit('tag-1')
+    })
+
+    await waitFor(() =>
+      expect(updateHandler).toHaveBeenCalledWith({
+        id: 'tag-1',
+        body: { name: 'Обновленный тег' },
+      })
+    )
+
+    await waitFor(() => {
+      expect(result.current.editingTagId).toBeNull()
+      expect(result.current.editingTagName).toBe('')
+    })
+  })
+
+  it('should not call update mutation if tag name has not changed', async () => {
+    const updateHandler = vi.fn()
+    server.use(
+      http.get('*/api/v1/tags', () => {
+        return HttpResponse.json({
+          tags: [{ id: 'tag-1', name: 'Старый тег' }],
+        })
+      }),
+      http.put('*/api/v1/tags/:id', async ({ params, request }) => {
+        const body = (await request.json()) as { name: string }
+        updateHandler({ id: params.id, body })
+        return HttpResponse.json({
+          tag: { id: params.id, name: body.name },
+        })
+      })
+    )
+
+    const { result } = renderHookWithProviders(useManageTagsModal)
+
+    await waitFor(() => expect(result.current.tags).toHaveLength(1))
+
+    act(() => {
+      result.current.handleStartEdit({ id: 'tag-1', name: 'Старый тег' })
+    })
+
+    act(() => {
+      result.current.handleSaveEdit('tag-1')
+    })
+
+    expect(updateHandler).not.toHaveBeenCalled()
+    expect(result.current.editingTagId).toBeNull()
+  })
 })
+

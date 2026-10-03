@@ -115,4 +115,72 @@ describe('ManageTagsModal component', () => {
 
     await waitFor(() => expect(deleteHandler).toHaveBeenCalledWith('tag-1'))
   })
+
+  it('should edit tag when clicking edit button, changing name, and clicking save', async () => {
+    const updateHandler = vi.fn()
+    server.use(
+      http.get('*/api/v1/tags', () => {
+        return HttpResponse.json({
+          tags: [{ id: 'tag-1', name: 'Старое имя' }],
+        })
+      }),
+      http.put('*/api/v1/tags/:id', async ({ params, request }) => {
+        const body = (await request.json()) as { name: string }
+        updateHandler({ id: params.id, body })
+        return HttpResponse.json({ tag: { id: params.id, name: body.name } })
+      })
+    )
+
+    useTagsModalStore.getState().open()
+    const { user } = renderWithProviders(<ManageTagsModal />)
+
+    expect(await screen.findByText('Старое имя')).toBeInTheDocument()
+
+    const editButton = screen.getByRole('button', { name: /редактировать тег старое имя/i })
+    await user.click(editButton)
+
+    const editInput = screen.getByRole('textbox', { name: /редактировать название тега/i })
+    expect(editInput).toHaveValue('Старое имя')
+
+    await user.clear(editInput)
+    await user.type(editInput, 'Новое имя')
+
+    const saveButton = screen.getByRole('button', { name: /сохранить тег/i })
+    await user.click(saveButton)
+
+    await waitFor(() =>
+      expect(updateHandler).toHaveBeenCalledWith({
+        id: 'tag-1',
+        body: { name: 'Новое имя' },
+      })
+    )
+  })
+
+  it('should cancel editing when clicking cancel button', async () => {
+    server.use(
+      http.get('*/api/v1/tags', () => {
+        return HttpResponse.json({
+          tags: [{ id: 'tag-1', name: 'Старое имя' }],
+        })
+      })
+    )
+
+    useTagsModalStore.getState().open()
+    const { user } = renderWithProviders(<ManageTagsModal />)
+
+    expect(await screen.findByText('Старое имя')).toBeInTheDocument()
+
+    const editButton = screen.getByRole('button', { name: /редактировать тег старое имя/i })
+    await user.click(editButton)
+
+    const editInput = screen.getByRole('textbox', { name: /редактировать название тега/i })
+    expect(editInput).toBeInTheDocument()
+
+    const cancelButton = screen.getByRole('button', { name: /отменить редактирование/i })
+    await user.click(cancelButton)
+
+    expect(screen.queryByRole('textbox', { name: /редактировать название тега/i })).not.toBeInTheDocument()
+    expect(screen.getByText('Старое имя')).toBeInTheDocument()
+  })
 })
+

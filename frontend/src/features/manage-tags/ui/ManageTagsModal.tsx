@@ -1,4 +1,4 @@
-import { Check, Bookmark, Trash2, Plus } from 'lucide-react'
+import { Check, Bookmark, Trash2, Plus, Pencil, X } from 'lucide-react'
 import { Button } from '@/shared/ui'
 import { useManageTagsModal } from '../model/useManageTagsModal'
 import styles from './ManageTagsModal.module.css'
@@ -10,10 +10,17 @@ export function ManageTagsModal() {
     tags,
     tagName,
     setTagName,
+    editingTagId,
+    editingTagName,
+    setEditingTagName,
+    handleStartEdit,
+    handleCancelEdit,
+    handleSaveEdit,
     handleCreate,
     handleDone,
     handleDelete,
     isCreating,
+    isUpdating,
   } = useManageTagsModal()
 
   if (!isOpen) return null
@@ -43,23 +50,86 @@ export function ManageTagsModal() {
         </form>
 
         <div className={styles.tagList}>
-          {tags.map((tag) => (
-            <div key={tag.id} className={styles.tagItem}>
-              <div className={styles.tagLeft}>
-                <Bookmark className={styles.tagIcon} />
-                <span className={styles.tagName}>{tag.name}</span>
+          {tags.map((tag) => {
+            const isEditing = editingTagId === tag.id
+
+            if (isEditing) {
+              return (
+                <div key={tag.id} className={styles.tagItem}>
+                  <div className={styles.tagLeft}>
+                    <Bookmark className={styles.tagIcon} />
+                    <input
+                      type="text"
+                      className={styles.editInput}
+                      value={editingTagName}
+                      onChange={(e) => setEditingTagName(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter') {
+                          e.preventDefault()
+                          handleSaveEdit(tag.id)
+                        } else if (e.key === 'Escape') {
+                          e.preventDefault()
+                          handleCancelEdit()
+                        }
+                      }}
+                      autoFocus
+                      aria-label="Редактировать название тега"
+                    />
+                  </div>
+                  <div className={styles.tagActions}>
+                    <button
+                      type="button"
+                      onClick={handleCancelEdit}
+                      className={styles.actionBtn}
+                      title="Отменить"
+                      aria-label="Отменить редактирование"
+                    >
+                      <X size={15} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleSaveEdit(tag.id)}
+                      className={styles.actionBtn}
+                      disabled={!editingTagName.trim() || isUpdating}
+                      title="Сохранить"
+                      aria-label="Сохранить тег"
+                    >
+                      <Check size={15} />
+                    </button>
+                  </div>
+                </div>
+              )
+            }
+
+            return (
+              <div key={tag.id} className={styles.tagItem}>
+                <div className={styles.tagLeft}>
+                  <Bookmark className={styles.tagIcon} />
+                  <span className={styles.tagName}>{tag.name}</span>
+                </div>
+                <div className={styles.tagActions}>
+                  <button
+                    type="button"
+                    onClick={() => handleStartEdit(tag)}
+                    className={styles.actionBtn}
+                    title="Редактировать"
+                    aria-label={`Редактировать тег ${tag.name}`}
+                  >
+                    <Pencil size={15} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDelete(tag.id)}
+                    className={styles.deleteBtn}
+                    title="Удалить"
+                    aria-label={`Удалить тег ${tag.name}`}
+                  >
+                    <Trash2 size={15} />
+                  </button>
+                </div>
               </div>
-              <button
-                type="button"
-                onClick={() => handleDelete(tag.id)}
-                className={styles.deleteBtn}
-                title="Удалить"
-                aria-label={`Удалить тег ${tag.name}`}
-              >
-                <Trash2 size={15} />
-              </button>
-            </div>
-          ))}
+            )
+          })}
         </div>
 
         <div className={styles.footer}>
@@ -67,7 +137,7 @@ export function ManageTagsModal() {
             variant="ghost"
             size="sm"
             onClick={handleDone}
-            disabled={isCreating}
+            disabled={isCreating || isUpdating}
           >
             Готово
           </Button>
@@ -76,3 +146,4 @@ export function ManageTagsModal() {
     </div>
   )
 }
+

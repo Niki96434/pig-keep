@@ -125,6 +125,49 @@
   white-space: nowrap;
 }
 
+.tagActions {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.actionBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--text-advanced);
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+  flex-shrink: 0;
+}
+
+.actionBtn:hover:not(:disabled) {
+  background-color: var(--shadow-color);
+  color: var(--text-primary);
+}
+
+.actionBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.editInput {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 14px;
+  color: var(--text-primary);
+  width: 100%;
+  padding: 0;
+  border-bottom: 1px solid var(--border-color, #dadce0);
+}
+
 .deleteBtn {
   display: flex;
   align-items: center;
@@ -151,3 +194,4 @@
   padding-top: 6px;
   border-top: var(--border);
 }
+
