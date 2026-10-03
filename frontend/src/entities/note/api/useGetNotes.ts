@@ -17,6 +17,7 @@ export const useGetNotesQuery = (filters?: NoteFilters) => {
         search: filters?.searchValue,
         tagId: filters?.tagId,
         isArchive: filters?.isArchive,
+        isDeleted: filters?.isDeleted,
       },
     ],
     queryFn: () =>
@@ -24,6 +25,7 @@ export const useGetNotesQuery = (filters?: NoteFilters) => {
         search: filters?.searchValue,
         tagId: filters?.tagId,
         isArchive: filters?.isArchive,
+        isDeleted: filters?.isDeleted,
       }),
     placeholderData: { notes: [] },
   })

@@ -8,6 +8,7 @@ interface RepositoryType {
       search?: string | undefined
       tagId?: string | undefined
       isArchive?: boolean | undefined
+      isDeleted?: boolean | undefined
     }) => Promise<Note[]>
     getNoteByIdFromDB: (noteId: string) => Promise<Note | undefined>
     createNoteFromDB: (noteData: NoteCreateIn) => Promise<Note | undefined>
@@ -34,8 +35,8 @@ export function controller({ repo }: RepositoryType) {
   } = repo
 
   const getNotes = async (req: Request, res: Response) => {
-    const { search, tagId, isArchive } = req.query as SearchQuery
-    const notes = await getNotesFromDB({ search, tagId, isArchive })
+    const { search, tagId, isArchive, isDeleted } = req.query as SearchQuery
+    const notes = await getNotesFromDB({ search, tagId, isArchive, isDeleted })
 
     return res.status(HttpStatus.OK).json({ notes })
   }

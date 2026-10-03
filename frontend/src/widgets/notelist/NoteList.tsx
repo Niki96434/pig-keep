@@ -7,9 +7,10 @@ import { useParams } from 'react-router'
 
 interface NoteListProps {
   isArchive?: boolean
+  isDeleted?: boolean
 }
 
-export function NoteList({ isArchive = false }: NoteListProps) {
+export function NoteList({ isArchive, isDeleted = false }: NoteListProps) {
   const searchValue = useSearchStore((state) => state.value)
   const { search } = useDebounce(searchValue ?? undefined)
   const { tagId } = useParams()
@@ -17,7 +18,8 @@ export function NoteList({ isArchive = false }: NoteListProps) {
   const { data, status } = useGetNotesQuery({
     searchValue: search,
     tagId: tagId,
-    isArchive: isArchive,
+    isArchive: isDeleted ? undefined : (isArchive ?? false),
+    isDeleted: isDeleted,
   })
 
   if (status === 'error' || !data) {
@@ -34,6 +36,7 @@ export function NoteList({ isArchive = false }: NoteListProps) {
             title={note.title}
             content={note.content}
             isArchive={note.isArchive}
+            isDeleted={note.isDeleted ?? isDeleted}
           />
         )
       })}

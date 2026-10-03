@@ -135,6 +135,44 @@ describe('GET /api/v1/notes', () => {
       expect(res.body.notes[0].title).toBe('Архивная молоко')
     })
   })
+
+  describe('isDeleted query', () => {
+    it('should return only deleted notes when isDeleted=true', async () => {
+      await seedNote({ title: 'Активная', content: 'Текст', isDeleted: false })
+      const deleted = await seedNote({ title: 'Удаленная', content: 'Текст', isDeleted: true })
+
+      const res = await request(app).get(`${BASE_URL}?isDeleted=true`)
+
+      expect(res.status).toBe(200)
+      expect(res.body.notes).toHaveLength(1)
+      expect(res.body.notes[0].id).toBe(deleted?.id)
+    })
+
+    it('should return only non-deleted notes when isDeleted=false', async () => {
+      const active = await seedNote({ title: 'Активная', content: 'Текст', isDeleted: false })
+      await seedNote({ title: 'Удаленная', content: 'Текст', isDeleted: true })
+
+      const res = await request(app).get(`${BASE_URL}?isDeleted=false`)
+
+      expect(res.status).toBe(200)
+      expect(res.body.notes).toHaveLength(1)
+      expect(res.body.notes[0].id).toBe(active?.id)
+    })
+
+    it('should return deleted notes including those that were archived', async () => {
+      const deletedArchived = await seedNote({ title: 'Удаленная архивная', content: 'Текст', isArchive: true, isDeleted: true })
+      const deletedRegular = await seedNote({ title: 'Удаленная обычная', content: 'Текст', isArchive: false, isDeleted: true })
+      await seedNote({ title: 'Активная архивная', content: 'Текст', isArchive: true, isDeleted: false })
+
+      const res = await request(app).get(`${BASE_URL}?isDeleted=true`)
+
+      expect(res.status).toBe(200)
+      expect(res.body.notes).toHaveLength(2)
+      const ids = res.body.notes.map((n: { id: string }) => n.id)
+      expect(ids).toContain(deletedArchived?.id)
+      expect(ids).toContain(deletedRegular?.id)
+    })
+  })
 })
 
 describe('GET /api/v1/notes/:id', () => {
@@ -273,6 +311,20 @@ describe('PATCH /api/v1/notes/:id', () => {
     expect(res.body.note).toMatchObject({
       id: note?.id,
       isArchive: true,
+    })
+  })
+
+  it('should change isDeleted field', async () => {
+    const note = await seedNote({ isDeleted: false })
+
+    const res = await request(app)
+      .patch(`${BASE_URL}/${note?.id}`)
+      .send({ isDeleted: true })
+
+    expect(res.status).toBe(200)
+    expect(res.body.note).toMatchObject({
+      id: note?.id,
+      isDeleted: true,
     })
   })
 

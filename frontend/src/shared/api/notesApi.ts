@@ -15,6 +15,7 @@ export interface GetNotesParams {
   search?: string
   tagId?: string
   isArchive?: boolean
+  isDeleted?: boolean
 }
 
 export const notesApi = {
@@ -24,6 +25,7 @@ export const notesApi = {
         search: params?.search?.trim() || undefined,
         tagId: params?.tagId || undefined,
         isArchive: params?.isArchive !== undefined ? params.isArchive : undefined,
+        isDeleted: params?.isDeleted !== undefined ? params.isDeleted : undefined,
       },
     })
     return res.data

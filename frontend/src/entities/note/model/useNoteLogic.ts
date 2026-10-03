@@ -11,9 +11,10 @@ import {
 interface UseNoteLogicProps {
   id: string
   isArchive?: boolean | null
+  isDeleted?: boolean | null
 }
 
-export function useNoteLogic({ id, isArchive }: UseNoteLogicProps) {
+export function useNoteLogic({ id, isArchive, isDeleted }: UseNoteLogicProps) {
   const actions = useEditNoteStore((state) => state.actions)
 
   const delMutation = useDeleteNoteMutation()
@@ -27,6 +28,7 @@ export function useNoteLogic({ id, isArchive }: UseNoteLogicProps) {
   const allTags = allTagsData?.tags ?? []
 
   const handleCardClick = () => {
+    if (isArchive || isDeleted) return
     actions.setOpenEditForm()
     actions.setId(id)
   }
@@ -53,6 +55,22 @@ export function useNoteLogic({ id, isArchive }: UseNoteLogicProps) {
   }
 
   const handleDeleteNote = () => {
+    patchMutation.mutate({
+      id,
+      data: { isDeleted: true },
+    })
+  }
+
+  const handleRestoreNote = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    patchMutation.mutate({
+      id,
+      data: { isDeleted: false },
+    })
+  }
+
+  const handlePermanentDelete = (e: React.MouseEvent) => {
+    e.stopPropagation()
     delMutation.mutate(id)
   }
 
@@ -66,5 +84,7 @@ export function useNoteLogic({ id, isArchive }: UseNoteLogicProps) {
     handleToggleTag,
     handleToggleArchive,
     handleDeleteNote,
+    handleRestoreNote,
+    handlePermanentDelete,
   }
 }

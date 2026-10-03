@@ -59,6 +59,7 @@ export const SearchQuerySchema = z
       .optional(),
     tagId: z.string().uuid().optional(),
     isArchive: z.coerce.boolean().optional(),
+    isDeleted: z.coerce.boolean().optional(),
   })
   .readonly();
 

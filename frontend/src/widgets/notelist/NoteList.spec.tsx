@@ -59,9 +59,9 @@ describe('NoteList', () => {
         http.get('*/api/v1/notes', () => {
           return HttpResponse.json({ notes: currentNotes })
         }),
-        http.delete<{ id: string }>('*/api/v1/notes/:id', ({ params }) => {
+        http.patch<{ id: string }>('*/api/v1/notes/:id', ({ params }) => {
           currentNotes = currentNotes.filter((note) => note.id !== params.id)
-          return HttpResponse.json({ message: 'Success' })
+          return HttpResponse.json({ note: { id: params.id, isDeleted: true } })
         })
       )
 
@@ -84,7 +84,7 @@ describe('NoteList', () => {
 
     it('should keep note in the list if deletion fails', async () => {
       server.use(
-        http.delete('*/api/v1/notes/:id', () => {
+        http.patch('*/api/v1/notes/:id', () => {
           return HttpResponse.json({ error: 'Server error' }, { status: 500 })
         })
       )

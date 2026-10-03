@@ -102,5 +102,47 @@ describe('Note component', () => {
       expect(patchedData).toEqual({ isArchive: true })
     })
   })
+
+  it('should restore note when clicking restore button on deleted note', async () => {
+    let patchedData: unknown = null
+    server.use(
+      http.patch<{ id: string }>(`*/api/v1/notes/:id`, async ({ request }) => {
+        patchedData = await request.json()
+        return HttpResponse.json({ note: { id: noteId, isDeleted: false } })
+      })
+    )
+
+    const { user } = renderWithProviders(
+      <Note id={noteId} title="Тестовый заголовок" content="Тестовый контент" isDeleted={true} />
+    )
+
+    const restoreBtn = screen.getByRole('button', { name: /восстановить/i })
+    await user.click(restoreBtn)
+
+    await waitFor(() => {
+      expect(patchedData).toEqual({ isDeleted: false })
+    })
+  })
+
+  it('should permanently delete note when clicking delete forever button on deleted note', async () => {
+    let deleted = false
+    server.use(
+      http.delete<{ id: string }>(`*/api/v1/notes/:id`, () => {
+        deleted = true
+        return HttpResponse.json({ message: 'Success' })
+      })
+    )
+
+    const { user } = renderWithProviders(
+      <Note id={noteId} title="Тестовый заголовок" content="Тестовый контент" isDeleted={true} />
+    )
+
+    const permanentDeleteBtn = screen.getByRole('button', { name: /удалить навсегда/i })
+    await user.click(permanentDeleteBtn)
+
+    await waitFor(() => {
+      expect(deleted).toBe(true)
+    })
+  })
 })
 
