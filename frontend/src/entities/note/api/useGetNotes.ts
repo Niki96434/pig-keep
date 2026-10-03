@@ -11,8 +11,12 @@ export interface NoteFilters {
 
 export const useGetNotesQuery = (filters?: NoteFilters) => {
   return useQuery<NotesGetOut>({
-    queryKey: ['notes', filters?.searchValue],
-    queryFn: () => api.notes.getNotes(filters?.searchValue),
+    queryKey: ['notes', { search: filters?.searchValue, tagId: filters?.tagId }],
+    queryFn: () =>
+      api.notes.getNotes({
+        search: filters?.searchValue,
+        tagId: filters?.tagId,
+      }),
     placeholderData: { notes: [] },
   })
 }

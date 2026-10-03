@@ -43,5 +43,6 @@ export const NoteSchema = z.object({
 export const SearchQuerySchema = z
   .object({
     search: z.string().optional(),
+    tagId: z.string().uuid().optional(),
   })
   .readonly();

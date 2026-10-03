@@ -8,9 +8,7 @@ function App() {
       <Routes>
         <Route path="/" element={<HomePage />}>
           <Route index element={<NoteList />} />
-          {/* <Route path="/tags/:tagId" element={} /> */}
-          {/* <Route path="/archive" element={} /> */}
-          {/* <Route path="/deleted" element={} /> */}
+          <Route path="tags/:tagId" element={<NoteList />} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -10,11 +10,17 @@ import type {
   NoteUpdateOut,
 } from '@shared/notes/types'
 
+export interface GetNotesParams {
+  search?: string
+  tagId?: string
+}
+
 export const notesApi = {
-  getNotes: async (search?: string): Promise<NotesGetOut> => {
+  getNotes: async (params?: GetNotesParams): Promise<NotesGetOut> => {
     const res = await axiosInstance.get<NotesGetOut>('/api/v1/notes', {
       params: {
-        search: search?.trim() || undefined,
+        search: params?.search?.trim() || undefined,
+        tagId: params?.tagId || undefined,
       },
     })
     return res.data

@@ -4,7 +4,10 @@ import { HttpStatus } from '@app/shared/constants/httpStatus'
 
 interface RepositoryType {
   repo: {
-    getNotesFromDB: (search: string | undefined) => Promise<Note[]>
+    getNotesFromDB: (params?: {
+      search?: string | undefined
+      tagId?: string | undefined
+    }) => Promise<Note[]>
     getNoteByIdFromDB: (noteId: string) => Promise<Note | undefined>
     createNoteFromDB: (noteData: NoteCreateIn) => Promise<Note | undefined>
     putNoteFromDB: (noteId: string, noteData: NotePutIn) => Promise<Note | undefined>
@@ -28,7 +31,11 @@ export function controller({ repo }: RepositoryType) {
       typeof req.query.search === 'string' && req.query.search.trim()
         ? req.query.search.trim()
         : undefined
-    const notes = await getNotesFromDB(search)
+    const tagId =
+      typeof req.query.tagId === 'string' && req.query.tagId.trim()
+        ? req.query.tagId.trim()
+        : undefined
+    const notes = await getNotesFromDB({ search, tagId })
 
     return res.status(HttpStatus.OK).json({ notes })
   }

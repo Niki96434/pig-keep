@@ -1,23 +1,58 @@
 import type { NoteCreateIn, NotePatchIn, NotePutIn } from '@app/shared/notes/types'
 import { db } from '../../core/db/'
-import { notesTable } from '../../core/db/schema'
-import { eq, sql } from 'drizzle-orm'
+import { notesTable, noteTagsTable } from '../../core/db/schema'
+import { and, eq, sql } from 'drizzle-orm'
 
 interface DBType {
   db: typeof db
 }
 
+export interface GetNotesParams {
+  search?: string | undefined
+  tagId?: string | undefined
+}
+
 export function repository({ db }: DBType) {
-  const getNotesFromDB = async (search: string | undefined) => {
+  const getNotesFromDB = async (params?: GetNotesParams) => {
+    const { search, tagId } = params || {}
+    const conditions = []
+
     if (search) {
+      conditions.push(
+        sql`to_tsvector('russian', coalesce(${notesTable.title}, '') || ' ' || coalesce(${notesTable.content}, '')) @@ websearch_to_tsquery('russian', ${search})`
+      )
+    }
+
+    if (tagId) {
+      conditions.push(eq(noteTagsTable.tag_id, tagId))
+
+      const query = db
+        .select({
+          id: notesTable.id,
+          user_id: notesTable.user_id,
+          title: notesTable.title,
+          content: notesTable.content,
+          isArchive: notesTable.isArchive,
+          isDeleted: notesTable.isDeleted,
+        })
+        .from(notesTable)
+        .innerJoin(noteTagsTable, eq(notesTable.id, noteTagsTable.note_id))
+        .where(conditions.length > 1 ? and(...conditions) : conditions[0])
+
+      if (search) {
+        return await query.limit(10)
+      }
+      return await query
+    }
+
+    if (conditions.length > 0) {
       return await db
         .select()
         .from(notesTable)
-        .where(
-          sql`to_tsvector('russian', coalesce(${notesTable.title}, '') || ' ' || coalesce(${notesTable.content}, '')) @@ websearch_to_tsquery('russian', ${search})`
-        )
+        .where(conditions[0])
         .limit(10)
     }
+
     return await db.select().from(notesTable)
   }
 

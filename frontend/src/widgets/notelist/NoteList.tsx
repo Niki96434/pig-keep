@@ -3,12 +3,15 @@ import { Note } from '@/entities/note'
 import { useSearchStore } from '@/stores/fulltext-search/searchStore'
 import { useDebounce } from '@/shared/hooks'
 import styles from './NoteList.module.css'
+import { useParams } from 'react-router'
 
 export function NoteList() {
   const searchValue = useSearchStore((state) => state.value)
   const { search } = useDebounce(searchValue ?? undefined)
+  const { tagId } = useParams()
+  alert(tagId)
 
-  const { data, status } = useGetNotesQuery({ searchValue: search })
+  const { data, status } = useGetNotesQuery({ searchValue: search, tagId: tagId })
 
   if (status === 'error' || !data) {
     return <p>Ошибка загрузки</p>
