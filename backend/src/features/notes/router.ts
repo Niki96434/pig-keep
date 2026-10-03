@@ -27,5 +27,4 @@ notesRouter
   .get(validateSchemas({ params: NoteIdSchema }), getNoteById)
   .put(validateSchemas({ params: NoteIdSchema, body: NotePutInSchema }), putNote)
   .patch(validateSchemas({ params: NoteIdSchema, body: NotePatchInSchema }), patchNote)
-
-notesRouter.delete('/:id', validateSchemas({ params: NoteIdSchema }), deleteNote)
+  .delete(validateSchemas({ params: NoteIdSchema }), deleteNote)

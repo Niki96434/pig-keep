@@ -1,5 +1,6 @@
 import express from 'express'
 import { notesRouter } from './features/notes/router'
+import { tagsRouter } from './features/tags/router'
 import { globalErrorHandler } from './core/globalErrorHandler'
 import cors from 'cors'
 import { HttpStatus } from '@app/shared/constants/httpStatus'
@@ -14,4 +15,5 @@ const corsOptions = {
 app.use(express.json())
 app.use(cors(corsOptions))
 app.use('/api/v1/notes', notesRouter)
+app.use('/api/v1/tags', tagsRouter)
 app.use(globalErrorHandler)
