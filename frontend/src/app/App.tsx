@@ -7,8 +7,9 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />}>
-          <Route index element={<NoteList />} />
-          <Route path="tags/:tagId" element={<NoteList />} />
+          <Route index element={<NoteList isArchive={false} />} />
+          <Route path="archive" element={<NoteList isArchive={true} />} />
+          <Route path="tags/:tagId" element={<NoteList isArchive={false} />} />
         </Route>
       </Routes>
     </BrowserRouter>

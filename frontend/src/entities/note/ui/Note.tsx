@@ -1,7 +1,7 @@
-import type { Note } from '@shared/notes/types'
+import type { Note as NoteType } from '@shared/notes/types'
 import styles from './Note.module.css'
 import menuIcon from './../assets/three-dots.png'
-import { PencilIcon, TrashIcon } from 'lucide-react'
+import { Archive, PencilIcon, TrashIcon } from 'lucide-react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,49 +13,28 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
 } from '@/shared/ui'
-import { useDeleteNoteMutation } from '../api/useDeleteNoteMutation'
-import {
-  useGetNoteTagsQuery,
-  useAddTagToNoteMutation,
-  useRemoveTagFromNoteMutation,
-} from '../api/useNoteTags'
-import { useGetTagsQuery, TagBadge } from '@/entities/tag'
-import { useEditNoteStore } from '@/stores/edit-note/editNoteStore'
+import { TagBadge } from '@/entities/tag'
+import { useNoteLogic } from '../model/useNoteLogic'
 
-type NoteProps = Pick<Note, 'id' | 'title' | 'content'>
+export interface NoteProps extends Pick<NoteType, 'id' | 'title' | 'content'> {
+  isArchive?: boolean | null
+}
 
-export function Note({ id, title, content }: NoteProps) {
-  const actions = useEditNoteStore((state) => state.actions)
-
-  function openEditForm(id: string) {
-    actions.setOpenEditForm()
-    actions.setId(id)
-  }
-
-  const delMutation = useDeleteNoteMutation()
-  const { data: noteTagsData } = useGetNoteTagsQuery(id)
-  const { data: allTagsData } = useGetTagsQuery()
-  const addTagMutation = useAddTagToNoteMutation()
-  const removeTagMutation = useRemoveTagFromNoteMutation()
-
-  const noteTags = noteTagsData?.tags ?? []
-  const allTags = allTagsData?.tags ?? []
-
-  const handleToggleTag = (tagId: string, isAttached: boolean) => {
-    if (isAttached) {
-      removeTagMutation.mutate({ noteId: id, tagId })
-    } else {
-      addTagMutation.mutate({ noteId: id, tagId })
-    }
-  }
-
-  const handleRemoveTag = (tagId: string, e: React.MouseEvent) => {
-    e.stopPropagation()
-    removeTagMutation.mutate({ noteId: id, tagId })
-  }
+export function Note({ id, title, content, isArchive }: NoteProps) {
+  const {
+    noteTags,
+    allTags,
+    isDeleting,
+    isPatching,
+    handleCardClick,
+    handleRemoveTag,
+    handleToggleTag,
+    handleToggleArchive,
+    handleDeleteNote,
+  } = useNoteLogic({ id, isArchive })
 
   return (
-    <div className={styles.container} onClick={() => openEditForm(id)}>
+    <div className={styles.container} onClick={handleCardClick}>
       <div className={styles.body}>
         <p className={styles.title}>{title}</p>
         <p className={styles.content}>{content}</p>
@@ -72,7 +51,18 @@ export function Note({ id, title, content }: NoteProps) {
           ))}
         </div>
 
-        <div onClick={(e) => e.stopPropagation()}>
+        <div className={styles.actions} onClick={(e) => e.stopPropagation()}>
+          <button
+            type="button"
+            className={styles.wrapper}
+            aria-label={isArchive ? 'Разархивировать' : 'Архивировать'}
+            title={isArchive ? 'Разархивировать' : 'В архив'}
+            onClick={handleToggleArchive}
+            disabled={isPatching}
+          >
+            <Archive className={styles.icon} />
+          </button>
+
           <DropdownMenu>
             <DropdownMenuTrigger
               render={
@@ -121,11 +111,11 @@ export function Note({ id, title, content }: NoteProps) {
               <DropdownMenuGroup>
                 <DropdownMenuItem
                   variant="destructive"
-                  onClick={() => delMutation.mutate(id)}
-                  disabled={delMutation.isPending}
+                  onClick={handleDeleteNote}
+                  disabled={isDeleting}
                 >
                   <TrashIcon />
-                  {delMutation.isPending ? 'Удаление...' : 'Удалить'}
+                  {isDeleting ? 'Удаление...' : 'Удалить'}
                 </DropdownMenuItem>
               </DropdownMenuGroup>
             </DropdownMenuContent>

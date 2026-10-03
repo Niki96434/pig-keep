@@ -34,4 +34,5 @@ export type NotePatchIn = z.input<typeof NotePatchInSchema>;
 
 export type NoteUpdateOut = Note;
 
-export type SearchQuery = z.input<typeof SearchQuerySchema>;
+export type SearchQuery = z.output<typeof SearchQuerySchema>;
+

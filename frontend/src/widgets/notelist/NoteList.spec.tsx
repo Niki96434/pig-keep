@@ -70,7 +70,7 @@ describe('NoteList', () => {
       const initialNotes = await screen.findAllByText(/заметка/i)
       expect(initialNotes).toHaveLength(2)
 
-      const menuButtons = await screen.findAllByRole('button')
+      const menuButtons = await screen.findAllByRole('button', { name: /меню заметки/i })
       await user.click(menuButtons[0])
 
       const deleteButton = await screen.findByRole('menuitem', { name: /удалить/i })
@@ -94,7 +94,7 @@ describe('NoteList', () => {
       const notes = await screen.findAllByText(/заметка/i)
       expect(notes).toHaveLength(3)
 
-      const menuButtons = await screen.findAllByRole('button')
+      const menuButtons = await screen.findAllByRole('button', { name: /меню заметки/i })
       await user.click(menuButtons[0])
 
       const deleteButton = await screen.findByRole('menuitem', { name: /удалить/i })

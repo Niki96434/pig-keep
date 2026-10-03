@@ -9,8 +9,8 @@ import {
   NotePutInSchema,
   NoteIdSchema,
   NotePatchInSchema,
+  SearchQuerySchema,
 } from '@app/shared/notes/validationSchemas'
-import type { SearchQuery } from '@app/shared/notes/types'
 
 export const notesRouter = express.Router()
 
@@ -27,8 +27,9 @@ const {
   removeTagFromNote,
 } = controller({ repo })
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-notesRouter.get('/', (req: Request<{}, {}, {}, SearchQuery>, res: Response) => getNotes(req, res))
+notesRouter.get('/', validateSchemas({ query: SearchQuerySchema }), (req: Request, res: Response) =>
+  getNotes(req, res)
+)
 
 notesRouter.post('/', validateSchemas({ body: NoteCreateInSchema }), createNote)
 

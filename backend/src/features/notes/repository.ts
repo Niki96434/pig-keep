@@ -10,12 +10,18 @@ interface DBType {
 export interface GetNotesParams {
   search?: string | undefined
   tagId?: string | undefined
+  isArchive?: boolean | undefined
 }
 
 export function repository({ db }: DBType) {
   const getNotesFromDB = async (params?: GetNotesParams) => {
-    const { search, tagId } = params || {}
+    const { search: rawSearch, tagId, isArchive } = params || {}
+    const search = rawSearch?.trim() || undefined
     const conditions = []
+
+    if (isArchive !== undefined) {
+      conditions.push(eq(notesTable.isArchive, isArchive))
+    }
 
     if (search) {
       conditions.push(
@@ -46,11 +52,15 @@ export function repository({ db }: DBType) {
     }
 
     if (conditions.length > 0) {
-      return await db
+      const query = db
         .select()
         .from(notesTable)
-        .where(conditions[0])
-        .limit(10)
+        .where(conditions.length > 1 ? and(...conditions) : conditions[0])
+
+      if (search) {
+        return await query.limit(10)
+      }
+      return await query
     }
 
     return await db.select().from(notesTable)

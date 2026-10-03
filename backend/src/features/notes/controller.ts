@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express'
-import type { NoteCreateIn, Note, NotePutIn, NotePatchIn } from '@app/shared/notes/types'
+import type { NoteCreateIn, Note, NotePutIn, NotePatchIn, SearchQuery } from '@app/shared/notes/types'
 import { HttpStatus } from '@app/shared/constants/httpStatus'
 
 interface RepositoryType {
@@ -7,6 +7,7 @@ interface RepositoryType {
     getNotesFromDB: (params?: {
       search?: string | undefined
       tagId?: string | undefined
+      isArchive?: boolean | undefined
     }) => Promise<Note[]>
     getNoteByIdFromDB: (noteId: string) => Promise<Note | undefined>
     createNoteFromDB: (noteData: NoteCreateIn) => Promise<Note | undefined>
@@ -33,15 +34,8 @@ export function controller({ repo }: RepositoryType) {
   } = repo
 
   const getNotes = async (req: Request, res: Response) => {
-    const search =
-      typeof req.query.search === 'string' && req.query.search.trim()
-        ? req.query.search.trim()
-        : undefined
-    const tagId =
-      typeof req.query.tagId === 'string' && req.query.tagId.trim()
-        ? req.query.tagId.trim()
-        : undefined
-    const notes = await getNotesFromDB({ search, tagId })
+    const { search, tagId, isArchive } = req.query as SearchQuery
+    const notes = await getNotesFromDB({ search, tagId, isArchive })
 
     return res.status(HttpStatus.OK).json({ notes })
   }

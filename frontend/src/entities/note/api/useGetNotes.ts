@@ -5,17 +5,25 @@ import { useQuery } from '@tanstack/react-query'
 export interface NoteFilters {
   searchValue?: string
   tagId?: string
-  isArchived?: boolean
+  isArchive?: boolean
   isDeleted?: boolean
 }
 
 export const useGetNotesQuery = (filters?: NoteFilters) => {
   return useQuery<NotesGetOut>({
-    queryKey: ['notes', { search: filters?.searchValue, tagId: filters?.tagId }],
+    queryKey: [
+      'notes',
+      {
+        search: filters?.searchValue,
+        tagId: filters?.tagId,
+        isArchive: filters?.isArchive,
+      },
+    ],
     queryFn: () =>
       api.notes.getNotes({
         search: filters?.searchValue,
         tagId: filters?.tagId,
+        isArchive: filters?.isArchive,
       }),
     placeholderData: { notes: [] },
   })

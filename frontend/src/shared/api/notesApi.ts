@@ -14,6 +14,7 @@ import type { Tag } from '@shared/tags/types'
 export interface GetNotesParams {
   search?: string
   tagId?: string
+  isArchive?: boolean
 }
 
 export const notesApi = {
@@ -22,6 +23,7 @@ export const notesApi = {
       params: {
         search: params?.search?.trim() || undefined,
         tagId: params?.tagId || undefined,
+        isArchive: params?.isArchive !== undefined ? params.isArchive : undefined,
       },
     })
     return res.data

@@ -81,4 +81,26 @@ describe('Note component', () => {
       expect(addedTagId).toBe('tag-2')
     })
   })
+
+  it('should toggle archive state when clicking archive button', async () => {
+    let patchedData: unknown = null
+    server.use(
+      http.patch<{ id: string }>(`*/api/v1/notes/:id`, async ({ request }) => {
+        patchedData = await request.json()
+        return HttpResponse.json({ note: { id: noteId, isArchive: true } })
+      })
+    )
+
+    const { user } = renderWithProviders(
+      <Note id={noteId} title="Тестовый заголовок" content="Тестовый контент" isArchive={false} />
+    )
+
+    const archiveBtn = screen.getByRole('button', { name: /архивировать/i })
+    await user.click(archiveBtn)
+
+    await waitFor(() => {
+      expect(patchedData).toEqual({ isArchive: true })
+    })
+  })
 })
+

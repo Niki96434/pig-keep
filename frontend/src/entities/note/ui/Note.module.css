@@ -54,9 +54,21 @@
   align-items: center;
 }
 
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .menu {
   width: 15px;
   height: 15px;
+}
+
+.icon {
+  width: 15px;
+  height: 15px;
+  color: var(--text-primary);
 }
 
 .wrapper {

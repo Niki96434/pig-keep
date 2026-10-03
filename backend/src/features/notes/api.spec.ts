@@ -110,6 +110,31 @@ describe('GET /api/v1/notes', () => {
       expect(res.body.notes).toEqual([])
     })
   })
+
+  describe('isArchive query', () => {
+    it('should return only archived notes when isArchive=true', async () => {
+      await seedNote({ title: 'Активная', content: 'Текст', isArchive: false })
+      const archived = await seedNote({ title: 'Архивная', content: 'Текст', isArchive: true })
+
+      const res = await request(app).get(`${BASE_URL}?isArchive=true`)
+
+      expect(res.status).toBe(200)
+      expect(res.body.notes).toHaveLength(1)
+      expect(res.body.notes[0].id).toBe(archived?.id)
+    })
+
+    it('should filter archived notes by search query', async () => {
+      await seedNote({ title: 'Архивная молоко', content: 'Текст', isArchive: true })
+      await seedNote({ title: 'Архивная хлеб', content: 'Текст', isArchive: true })
+      await seedNote({ title: 'Активная молоко', content: 'Текст', isArchive: false })
+
+      const res = await request(app).get(`${BASE_URL}?isArchive=true&search=молоко`)
+
+      expect(res.status).toBe(200)
+      expect(res.body.notes).toHaveLength(1)
+      expect(res.body.notes[0].title).toBe('Архивная молоко')
+    })
+  })
 })
 
 describe('GET /api/v1/notes/:id', () => {
@@ -234,6 +259,20 @@ describe('PATCH /api/v1/notes/:id', () => {
       id: note?.id,
       title: 'Тестовая заметка',
       content: 'Новая заметка',
+    })
+  })
+
+  it('should change isArchive field', async () => {
+    const note = await seedNote({ isArchive: false })
+
+    const res = await request(app)
+      .patch(`${BASE_URL}/${note?.id}`)
+      .send({ isArchive: true })
+
+    expect(res.status).toBe(200)
+    expect(res.body.note).toMatchObject({
+      id: note?.id,
+      isArchive: true,
     })
   })
 
