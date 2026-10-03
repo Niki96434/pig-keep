@@ -43,4 +43,13 @@ export const handlers = [
   http.get(`${url}/api/v1/tags`, () => {
     return HttpResponse.json({ tags: [] }, { status: HttpStatus.OK })
   }),
+  http.get<{ id: string }>(`${url}/api/v1/notes/:id/tags`, () => {
+    return HttpResponse.json({ tags: [] }, { status: HttpStatus.OK })
+  }),
+  http.post<{ id: string; tagId: string }>(`${url}/api/v1/notes/:id/tags/:tagId`, () => {
+    return HttpResponse.json({ message: 'Success' }, { status: HttpStatus.OK })
+  }),
+  http.delete<{ id: string; tagId: string }>(`${url}/api/v1/notes/:id/tags/:tagId`, () => {
+    return HttpResponse.json({ message: 'Success' }, { status: HttpStatus.OK })
+  }),
 ]

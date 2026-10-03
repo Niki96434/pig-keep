@@ -9,6 +9,7 @@ import type {
   NotePatchIn,
   NoteUpdateOut,
 } from '@shared/notes/types'
+import type { Tag } from '@shared/tags/types'
 
 export interface GetNotesParams {
   search?: string
@@ -48,6 +49,25 @@ export const notesApi = {
 
   deleteNote: async (id: Note['id']): Promise<{ message: string }> => {
     const res = await axiosInstance.delete<{ message: string }>(`/api/v1/notes/${id}`)
+    return res.data
+  },
+
+  getNoteTags: async (noteId: string): Promise<{ tags: Tag[] }> => {
+    const res = await axiosInstance.get<{ tags: Tag[] }>(`/api/v1/notes/${noteId}/tags`)
+    return res.data
+  },
+
+  addTagToNote: async (noteId: string, tagId: string): Promise<{ message: string }> => {
+    const res = await axiosInstance.post<{ message: string }>(
+      `/api/v1/notes/${noteId}/tags/${tagId}`
+    )
+    return res.data
+  },
+
+  removeTagFromNote: async (noteId: string, tagId: string): Promise<{ message: string }> => {
+    const res = await axiosInstance.delete<{ message: string }>(
+      `/api/v1/notes/${noteId}/tags/${tagId}`
+    )
     return res.data
   },
 }

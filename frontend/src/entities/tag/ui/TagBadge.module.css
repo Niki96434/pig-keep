@@ -1,0 +1,49 @@
+.tag {
+  width: 67px;
+  height: 30px;
+  background-color: var(--tag-color, #ffffff);
+  border: var(--border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 6px;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.name {
+  color: var(--text-primary);
+  font-size: 11px;
+  line-height: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 38px;
+}
+
+.deleteBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--text-advanced);
+  border-radius: 50%;
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.deleteBtn:hover {
+  color: #e53935;
+  background-color: var(--shadow-color);
+}
+
+.deleteIcon {
+  width: 10px;
+  height: 10px;
+}

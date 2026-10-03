@@ -1,6 +1,6 @@
 import type { NoteCreateIn, NotePatchIn, NotePutIn } from '@app/shared/notes/types'
 import { db } from '../../core/db/'
-import { notesTable, noteTagsTable } from '../../core/db/schema'
+import { notesTable, noteTagsTable, tagsTable } from '../../core/db/schema'
 import { and, eq, sql } from 'drizzle-orm'
 
 interface DBType {
@@ -102,6 +102,29 @@ export function repository({ db }: DBType) {
     return result.rowCount
   }
 
+  const getNoteTagsFromDB = async (noteId: string) => {
+    return await db
+      .select({ id: tagsTable.id, name: tagsTable.name })
+      .from(tagsTable)
+      .innerJoin(noteTagsTable, eq(tagsTable.id, noteTagsTable.tag_id))
+      .where(eq(noteTagsTable.note_id, noteId))
+  }
+
+  const addTagToNoteInDB = async (noteId: string, tagId: string) => {
+    return await db
+      .insert(noteTagsTable)
+      .values({ note_id: noteId, tag_id: tagId })
+      .onConflictDoNothing()
+      .returning()
+  }
+
+  const removeTagFromNoteInDB = async (noteId: string, tagId: string) => {
+    const result = await db
+      .delete(noteTagsTable)
+      .where(and(eq(noteTagsTable.note_id, noteId), eq(noteTagsTable.tag_id, tagId)))
+    return result.rowCount
+  }
+
   return {
     getNotesFromDB,
     getNoteByIdFromDB,
@@ -109,5 +132,8 @@ export function repository({ db }: DBType) {
     putNoteFromDB,
     patchNoteFromDB,
     deleteNoteFromDB,
+    getNoteTagsFromDB,
+    addTagToNoteInDB,
+    removeTagFromNoteInDB,
   }
 }

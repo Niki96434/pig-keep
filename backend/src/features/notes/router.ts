@@ -15,7 +15,17 @@ import type { SearchQuery } from '@app/shared/notes/types'
 export const notesRouter = express.Router()
 
 const repo = repository({ db })
-const { getNotes, getNoteById, createNote, putNote, patchNote, deleteNote } = controller({ repo })
+const {
+  getNotes,
+  getNoteById,
+  createNote,
+  putNote,
+  patchNote,
+  deleteNote,
+  getNoteTags,
+  addTagToNote,
+  removeTagFromNote,
+} = controller({ repo })
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 notesRouter.get('/', (req: Request<{}, {}, {}, SearchQuery>, res: Response) => getNotes(req, res))
@@ -28,3 +38,7 @@ notesRouter
   .put(validateSchemas({ params: NoteIdSchema, body: NotePutInSchema }), putNote)
   .patch(validateSchemas({ params: NoteIdSchema, body: NotePatchInSchema }), patchNote)
   .delete(validateSchemas({ params: NoteIdSchema }), deleteNote)
+
+notesRouter.get('/:id/tags', validateSchemas({ params: NoteIdSchema }), getNoteTags)
+notesRouter.post('/:id/tags/:tagId', addTagToNote)
+notesRouter.delete('/:id/tags/:tagId', removeTagFromNote)

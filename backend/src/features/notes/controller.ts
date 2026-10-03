@@ -13,6 +13,9 @@ interface RepositoryType {
     putNoteFromDB: (noteId: string, noteData: NotePutIn) => Promise<Note | undefined>
     patchNoteFromDB: (noteId: string, noteData: NotePatchIn) => Promise<Note | undefined>
     deleteNoteFromDB: (noteId: string) => Promise<number | null>
+    getNoteTagsFromDB: (noteId: string) => Promise<{ id: string; name: string }[]>
+    addTagToNoteInDB: (noteId: string, tagId: string) => Promise<{ note_id: string; tag_id: string }[]>
+    removeTagFromNoteInDB: (noteId: string, tagId: string) => Promise<number | null>
   }
 }
 
@@ -24,6 +27,9 @@ export function controller({ repo }: RepositoryType) {
     putNoteFromDB,
     patchNoteFromDB,
     deleteNoteFromDB,
+    getNoteTagsFromDB,
+    addTagToNoteInDB,
+    removeTagFromNoteInDB,
   } = repo
 
   const getNotes = async (req: Request, res: Response) => {
@@ -97,5 +103,33 @@ export function controller({ repo }: RepositoryType) {
     return res.status(HttpStatus.BAD_REQUEST).json({ error: 'Bad request' })
   }
 
-  return { getNotes, getNoteById, createNote, putNote, patchNote, deleteNote }
+  const getNoteTags = async (req: Request<{ id: string }>, res: Response) => {
+    const noteId = req.params.id
+    const tags = await getNoteTagsFromDB(noteId)
+    return res.status(HttpStatus.OK).json({ tags })
+  }
+
+  const addTagToNote = async (req: Request<{ id: string; tagId: string }>, res: Response) => {
+    const { id: noteId, tagId } = req.params
+    await addTagToNoteInDB(noteId, tagId)
+    return res.status(HttpStatus.OK).json({ message: 'Success' })
+  }
+
+  const removeTagFromNote = async (req: Request<{ id: string; tagId: string }>, res: Response) => {
+    const { id: noteId, tagId } = req.params
+    await removeTagFromNoteInDB(noteId, tagId)
+    return res.status(HttpStatus.OK).json({ message: 'Success' })
+  }
+
+  return {
+    getNotes,
+    getNoteById,
+    createNote,
+    putNote,
+    patchNote,
+    deleteNote,
+    getNoteTags,
+    addTagToNote,
+    removeTagFromNote,
+  }
 }
