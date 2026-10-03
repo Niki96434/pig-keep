@@ -1,5 +1,4 @@
 export { Note } from './ui/Note'
-export { NoteList } from './ui/NoteList'
 export { NoteForm, type NoteFormProps, type NoteFormValues } from './ui/NoteForm'
-export { useGetNotesQuery } from './api/useGetNotes'
+export { useGetNotesQuery, type NoteFilters } from './api/useGetNotes'
 export { useDeleteNoteMutation } from './api/useDeleteNoteMutation'

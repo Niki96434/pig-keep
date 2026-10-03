@@ -1,6 +1,6 @@
 import { screen, waitFor } from '@testing-library/react'
 import SearchInput from './SearchInput'
-import { NoteList } from '@/entities/note/ui/NoteList'
+import { NoteList } from '@/widgets/notelist/NoteList'
 import { renderWithProviders } from '@/shared/testing/test-utils'
 import { useSearchStore } from '@/stores/fulltext-search/searchStore'
 import { server } from '@/shared/testing/msw/node'

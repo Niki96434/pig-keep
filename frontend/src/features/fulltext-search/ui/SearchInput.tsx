@@ -14,8 +14,7 @@ function SearchInput() {
   const actions = useSearchStore((state) => state.actions)
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const changedValue = e.target.value
-    actions.setSearchValue(changedValue)
+    actions.setSearchValue(e.target.value)
   }
 
   const handleClear = () => {
@@ -37,7 +36,7 @@ function SearchInput() {
       <InputGroupAddon align={'inline-start'}>
         <Search />
       </InputGroupAddon>
-      {typeof value === 'string' ? (
+      {typeof value === 'string' && value.length > 0 ? (
         <InputGroupButton
           size={'icon-sm'}
           onClick={handleClear}

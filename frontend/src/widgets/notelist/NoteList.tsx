@@ -1,11 +1,15 @@
-import { useGetNotesQuery } from '../api/useGetNotes'
-import { Note } from './Note'
-import styles from './NoteList.module.css'
+import { useGetNotesQuery } from '@/entities/note'
+import { Note } from '@/entities/note'
 import { useSearchStore } from '@/stores/fulltext-search/searchStore'
+import { useDebounce } from '@/shared/hooks'
+import styles from './NoteList.module.css'
 
 export function NoteList() {
   const searchValue = useSearchStore((state) => state.value)
-  const { data, status } = useGetNotesQuery(searchValue ?? undefined)
+  const { search } = useDebounce(searchValue ?? undefined)
+
+  const { data, status } = useGetNotesQuery({ searchValue: search })
+
   if (status === 'error' || !data) {
     return <p>Ошибка загрузки</p>
   }

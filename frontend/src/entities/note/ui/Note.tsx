@@ -42,7 +42,7 @@ export function Note({ id, title, content }: NoteProps) {
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <PencilIcon />
-                {'Добавить в ярлык'}
+                {'Добавить тег'}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />

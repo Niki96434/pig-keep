@@ -1,9 +1,9 @@
 import { AddNoteForm } from '@/features/add-note-form'
 import styles from './HomePage.module.css'
-import { NoteList } from '@/entities/note'
 import { EditNoteForm } from '@/features/edit-note-form'
 import { SearchInput } from '@/features/fulltext-search'
 import { Sidebar } from '@/widgets/sidebar'
+import { Outlet } from 'react-router'
 
 export function HomePage() {
   return (
@@ -12,8 +12,8 @@ export function HomePage() {
         <div className={styles.content}>
           <SearchInput />
           <AddNoteForm />
-          <NoteList />
           <EditNoteForm />
+          <Outlet />
         </div>
       </Sidebar>
     </div>

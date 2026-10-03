@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Link } from 'react-router'
 
 import {
   Sidebar,
@@ -58,23 +59,13 @@ const data: { navMain: NavItem[] } = {
   ],
 }
 
-// function validateTags(title: NavItem['title']) {
-//   switch(item.title) {
-//     case 'Архив':
-//     case 'Удаленные':
-//     case 'Заметки':
-//     case 'Создать ярлык':
-//       break;
-//   }
-// }
-
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" variant="inset" {...props}>
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton size="lg" render={<a href="#" />}>
+            <SidebarMenuButton size="lg" render={<Link to="/" />}>
               <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
                 <TextAlignJustify className="size-4" />
               </div>
@@ -90,22 +81,28 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarGroup>
           <SidebarMenu className="gap-2">
             <SidebarMenuItem>
-              <SidebarMenuButton tooltip="Заметки" render={<a href="#" className="font-medium" />}>
+              <SidebarMenuButton tooltip="Заметки" render={<Link to="/" className="font-medium" />}>
                 <NotebookPen className="size-4" />
                 <span>Заметки</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
-              <SidebarMenuButton tooltip="Создать ярлык" render={<a href="#" className="font-medium" />}>
+              <SidebarMenuButton
+                tooltip="Создать тег"
+                render={<Link to="/create-tags" className="font-medium" />}
+              >
                 <Pencil className="size-4" />
-                <span>Создать ярлык</span>
+                <span>Создать тег</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
             {data.navMain.map(
               (item) =>
                 item.tag && (
                   <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton tooltip={item.title} render={<a href={item.url} className="font-medium" />}>
+                    <SidebarMenuButton
+                      tooltip={item.title}
+                      render={<Link to="/tags/:tagId" className="font-medium" />}
+                    >
                       <Bookmark className="size-4" />
                       <span>{item.title}</span>
                     </SidebarMenuButton>
@@ -113,13 +110,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 )
             )}
             <SidebarMenuItem>
-              <SidebarMenuButton tooltip="Архив" render={<a href="#" className="font-medium" />}>
+              <SidebarMenuButton
+                tooltip="Архив"
+                render={<Link to="/archive" className="font-medium" />}
+              >
                 <Archive className="size-4" />
                 <span>Архив</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
-              <SidebarMenuButton tooltip="Удаленные" render={<a href="#" className="font-medium" />}>
+              <SidebarMenuButton
+                tooltip="Удаленные"
+                render={<Link to="/deleted" className="font-medium" />}
+              >
                 <Trash className="size-4" />
                 <span>Удаленные</span>
               </SidebarMenuButton>

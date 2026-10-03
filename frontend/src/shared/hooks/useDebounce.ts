@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
 
-export const useDebounce = (value?: string) => {
+export function useDebounce(value?: string, delay = 300) {
   const [search, setSearch] = useState<string | undefined>(undefined)
 
   useEffect(() => {
-    const timeoutID = setTimeout(() => {
+    const timeoutId = setTimeout(() => {
       setSearch(value)
-    }, 300)
+    }, delay)
 
-    return () => clearTimeout(timeoutID)
-  }, [value])
+    return () => clearTimeout(timeoutId)
+  }, [value, delay])
 
   return { search }
 }
