@@ -53,4 +53,50 @@ describe('create note mutation', () => {
     await waitFor(() => expect(result.current.isError).toBeTruthy())
     expect(invalidateSpy).not.toHaveBeenCalled()
   })
+
+  it('should create note and attach tag when tagId is provided', async () => {
+    const { result, queryClient } = renderHookWithProviders(useCreateNoteMutation)
+
+    const createHandler = vi.fn()
+    const addTagHandler = vi.fn()
+    const invalidateSpy = vi.spyOn(queryClient, 'invalidateQueries')
+
+    const createdNoteId = '01928d73-d8ed-7211-a314-7081d763282b'
+    const targetTagId = '01928d73-d8ed-7211-a314-7081d7632999'
+
+    server.use(
+      http.post('*/api/v1/notes', async ({ request }) => {
+        const body = (await request.json()) as NoteCreateIn
+        createHandler(body)
+        return HttpResponse.json({
+          note: {
+            id: createdNoteId,
+            user_id: '01928d73-d8ed-7211-a314-7081d763271a',
+            title: body.title,
+            content: body.content,
+          },
+        })
+      }),
+      http.post(`*/api/v1/notes/${createdNoteId}/tags/${targetTagId}`, () => {
+        addTagHandler()
+        return HttpResponse.json({ message: 'Success' })
+      })
+    )
+
+    result.current.mutate({
+      title: 'Тестовая заметка',
+      content: 'Тестовое описание',
+      tagId: targetTagId,
+    })
+
+    await waitFor(() => expect(result.current.isSuccess).toBeTruthy())
+    expect(createHandler).toHaveBeenCalledWith({
+      title: 'Тестовая заметка',
+      content: 'Тестовое описание',
+    })
+    expect(addTagHandler).toHaveBeenCalledTimes(1)
+    expect(invalidateSpy).toHaveBeenCalledTimes(1)
+    expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: ['notes'] })
+  })
 })
+

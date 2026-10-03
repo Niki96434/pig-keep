@@ -1,4 +1,5 @@
 import { screen, waitFor } from '@testing-library/react'
+import { MemoryRouter, Routes, Route } from 'react-router'
 import { AddNoteForm } from './AddNoteForm'
 import { renderWithProviders } from '@/shared/testing/test-utils'
 import { http, HttpResponse } from 'msw'
@@ -103,6 +104,51 @@ describe('integration tests for NoteForm', () => {
       expect(await screen.findByPlaceholderText(/название/i)).toHaveValue('')
       expect(screen.getByPlaceholderText(/заметка/i)).toHaveValue('')
     })
+
+    it('should create note with tag when submitted on a tag page', async () => {
+      const tagId = '01928d73-d8ed-7211-a314-7081d7632999'
+      const addTagSpy = vi.fn()
+
+      server.use(
+        http.post('*/api/v1/notes', async ({ request }) => {
+          const body = (await request.json()) as NoteCreateIn
+          return HttpResponse.json({
+            note: {
+              id: '01928d73-d8ed-7211-a314-7081d763282b',
+              user_id: '12345678-28d73-d8ed-7211-a314-7081d763282d',
+              title: body.title,
+              content: body.content,
+            },
+          })
+        }),
+        http.post(`*/api/v1/notes/:id/tags/${tagId}`, () => {
+          addTagSpy()
+          return HttpResponse.json({ message: 'Success' })
+        })
+      )
+
+      const { user } = renderWithProviders(
+        <MemoryRouter initialEntries={[`/tags/${tagId}`]}>
+          <Routes>
+            <Route path="tags/:tagId" element={<AddNoteForm />} />
+          </Routes>
+        </MemoryRouter>
+      )
+
+      const input = screen.getByPlaceholderText(/заметка/i)
+      await user.click(input)
+
+      const firstTextarea = await screen.findByPlaceholderText(/название/i)
+      const secondTextarea = await screen.findByPlaceholderText(/заметка/i)
+
+      await user.type(firstTextarea, titleNote)
+      await user.type(secondTextarea, textNote)
+
+      const button = await screen.findByRole('button', { name: /закрыть/i })
+      await user.click(button)
+
+      await waitFor(() => expect(addTagSpy).toHaveBeenCalledTimes(1))
+    })
   })
 
   describe('field validation', () => {
@@ -139,3 +185,4 @@ describe('integration tests for NoteForm', () => {
     })
   })
 })
+

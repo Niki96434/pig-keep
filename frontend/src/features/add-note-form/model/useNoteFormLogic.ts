@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState } from 'react'
+import { useParams } from 'react-router'
 import { useOnClickOutside } from '../model/useOnClickOutside'
 import { NoteCreateInSchema } from '@shared/notes/validationSchemas'
 import { useForm } from 'react-hook-form'
@@ -9,6 +10,7 @@ import { useCreateNoteMutation } from '../api/useCreateNoteMutation'
 export function useNoteFormLogic() {
   const [isOpenForm, setOpenForm] = useState<boolean>(false)
   const formRef = useRef<HTMLDivElement | null>(null)
+  const { tagId } = useParams<{ tagId?: string }>()
 
   const { handleSubmit, control, getValues, reset } = useForm<z.infer<typeof NoteCreateInSchema>>({
     resolver: zodResolver(NoteCreateInSchema),
@@ -32,7 +34,7 @@ export function useNoteFormLogic() {
     const data = getValues()
     if (data.title?.trim() !== '' || data.content?.trim() !== '') {
       mutation.mutate(
-        { title: data?.title || '', content: data?.content || '' },
+        { title: data?.title || '', content: data?.content || '', tagId },
         {
           onSuccess: () => reset(),
         }
@@ -40,7 +42,7 @@ export function useNoteFormLogic() {
     }
 
     closeForm()
-  }, [getValues, mutation, reset])
+  }, [getValues, mutation, reset, tagId])
 
   useOnClickOutside({ formRef, onSubmit, isOpenForm })
 
@@ -53,3 +55,4 @@ export function useNoteFormLogic() {
     control,
   }
 }
+
