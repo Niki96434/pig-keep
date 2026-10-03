@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { Link } from 'react-router'
-
 import {
   Sidebar,
   SidebarContent,
@@ -10,54 +9,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/shared/ui/sidebar/sidebar'
-import { Archive, Bookmark, NotebookPen, Pencil, TextAlignJustify, Trash } from 'lucide-react'
-
-type NavItem = {
-  title: string
-  url: string
-  tag?: boolean
-  items?: {
-    title: string
-    url: string
-    isActive?: boolean
-  }[]
-}
-
-const data: { navMain: NavItem[] } = {
-  navMain: [
-    {
-      title: 'Заметки',
-      url: '#',
-    },
-    {
-      title: 'Создать ярлык',
-      url: '#',
-    },
-    {
-      title: 'ДЗ',
-      url: '#',
-      tag: true,
-    },
-    {
-      title: 'Быт',
-      url: '#',
-      tag: true,
-    },
-    {
-      title: 'Дачные дела',
-      url: '#',
-      tag: true,
-    },
-    {
-      title: 'Архив',
-      url: '#',
-    },
-    {
-      title: 'Удаленные',
-      url: '#',
-    },
-  ],
-}
+import { Archive, NotebookPen, Pencil, TextAlignJustify, Trash } from 'lucide-react'
+import { TagList } from '@/widgets/sidebar'
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -71,7 +24,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               </div>
               <div className="flex flex-col gap-0.5 leading-none">
                 <span className="font-medium">Pig Keep</span>
-                <span className="">v1.0.0</span>
+                <span>v1.0.0</span>
               </div>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -95,20 +48,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <span>Создать тег</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
-            {data.navMain.map(
-              (item) =>
-                item.tag && (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton
-                      tooltip={item.title}
-                      render={<Link to="/tags/:tagId" className="font-medium" />}
-                    >
-                      <Bookmark className="size-4" />
-                      <span>{item.title}</span>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                )
-            )}
+            <TagList />
             <SidebarMenuItem>
               <SidebarMenuButton
                 tooltip="Архив"

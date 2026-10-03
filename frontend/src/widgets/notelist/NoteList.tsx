@@ -9,7 +9,6 @@ export function NoteList() {
   const searchValue = useSearchStore((state) => state.value)
   const { search } = useDebounce(searchValue ?? undefined)
   const { tagId } = useParams()
-  alert(tagId)
 
   const { data, status } = useGetNotesQuery({ searchValue: search, tagId: tagId })
 
