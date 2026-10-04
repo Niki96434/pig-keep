@@ -270,7 +270,8 @@
    * `id` (UUID, PK) — идентификатор питомца (по умолчанию `gen_random_uuid()`);
    * `name` (varchar(255)) — имя питомца;
    * `level` (integer, default 1) — текущий уровень;
-   * `progress` (integer, default 0) — накопленный опыт (XP) в рамках текущего уровня.
+   * `progress` (integer, default 0) — накопленный опыт (XP) в рамках текущего уровня;
+   * `pleasure_index` (integer, default 100) — числовой индекс удовольствия (Свинометр) от 0 до 100.
 
 2. **`action_types`** — справочник типов действий:
    * `id` (serial, PK) — идентификатор типа действия;
@@ -283,13 +284,54 @@
    * `action_type_id` (integer, FK -> `action_types.id`, ON DELETE RESTRICT) — ссылка на тип действия;
    * `created_at` (timestamp with time zone, default now()) — дата и время события.
    * **Индексы:**
-     * `idx_action_logs_pet_id` — по полю `pet_id` для быстрой выборки истории питомца;
-     * `idx_action_logs_created_at` — по полю `created_at` для фильтрации по временному окну;
+     * `action_logs_pet_id_idx` — по полю `pet_id` для быстрой выборки истории питомца;
+     * `action_logs_created_at_idx` — по полю `created_at` для фильтрации по временному окну;
      * `idx_action_logs_cron_covering` — составной индекс `(created_at, pet_id, action_type_id)` для Index-Only Scan при агрегации в ночном кроне.
 
 4. **`level_requirements`** — справочник требований опыта:
    * `level` (integer, PK) — уровень питомца;
    * `required_xp` (integer) — количество опыта, необходимое для перехода на следующий уровень.
+
+### Конечные точки
+
+#### GET /api/v1/pets
+Получение данных текущего питомца. Если питомец ещё не создан, система автоматически инициализирует базового питомца («Борис», уровень 1, 0 XP, 100% индекс удовольствия).
+
+* **Ответ (200 OK):**
+```typescript
+{
+  pet: {
+    id: string;            // UUID
+    name: string;          // "Борис"
+    level: number;         // 1
+    progress: number;      // 0 (текущий опыт)
+    requiredXp: number;    // 500 (порог следующего уровня)
+    pleasureIndex: number; // 100 (шкала 0-100)
+    mood: 'happy' | 'neutral' | 'sad' | 'sleeping'; // производное состояние
+  }
+}
+```
+
+#### GET /api/v1/pets/:id
+Получение питомца по идентификатору.
+
+* **Параметры пути:** `id` (UUID).
+* **Ответ (200 OK):** `{ pet: Pet }`
+* **Ошибки:** `400 Bad Request` (невалидный UUID), `404 Not Found`.
+
+#### PATCH /api/v1/pets/:id
+Частичное обновление питомца (имя или индекс удовольствия).
+
+* **Параметры пути:** `id` (UUID).
+* **Тело запроса:**
+```typescript
+{
+  name?: string;
+  pleasureIndex?: number; // 0 - 100
+}
+```
+* **Ответ (200 OK):** `{ pet: Pet }`
+* **Ошибки:** `400 Bad Request`, `404 Not Found`.
 
 ### Фоновый пересчет прогресса (`processDailyPetProgress`)
 

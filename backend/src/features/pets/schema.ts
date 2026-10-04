@@ -16,6 +16,7 @@ export const pets = pgTable('pets', {
   name: varchar('name', { length: 255 }).notNull(),
   level: integer('level').default(1).notNull(),
   progress: integer('progress').default(0).notNull(),
+  pleasureIndex: integer('pleasure_index').default(100).notNull(),
 })
 
 export const actionTypes = pgTable('action_types', {
@@ -41,8 +42,8 @@ export const actionLogs = pgTable(
       .notNull(),
   },
   (table) => [
-    index('idx_action_logs_pet_id').on(table.petId),
-    index('idx_action_logs_created_at').on(table.createdAt),
+    index('action_logs_pet_id_idx').on(table.petId),
+    index('action_logs_created_at_idx').on(table.createdAt),
     index('idx_action_logs_cron_covering').on(
       table.createdAt,
       table.petId,
@@ -81,10 +82,6 @@ export const petsRelations = defineRelations({ pets, actionLogs, actionTypes }, 
   },
 }))
 
-export const petsTable = pets
-export const actionTypesTable = actionTypes
-export const actionLogsTable = actionLogs
-export const levelRequirementsTable = levelRequirements
 
 export type Pet = typeof pets.$inferSelect
 export type NewPet = typeof pets.$inferInsert

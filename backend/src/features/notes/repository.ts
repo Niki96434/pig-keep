@@ -2,6 +2,7 @@ import type { NoteCreateIn, NotePatchIn, NotePutIn } from '@app/shared/notes/typ
 import { db } from '../../core/db/'
 import { notesTable, noteTagsTable, tagsTable } from '../../core/db/schema'
 import { and, eq, sql } from 'drizzle-orm'
+import { repository as petsRepository } from '../pets/repository'
 
 interface DBType {
   db: typeof db
@@ -76,11 +77,20 @@ export function repository({ db }: DBType) {
     return note
   }
 
+  const petRepo = petsRepository({ db })
+
   const createNoteFromDB = async (noteData: NoteCreateIn) => {
     const [note] = await db
       .insert(notesTable)
       .values({ ...noteData })
       .returning()
+    if (note) {
+      try {
+        await petRepo.logAction('create_note')
+      } catch {
+        // Logging error shouldn't block primary user flow
+      }
+    }
     return note
   }
 
@@ -95,6 +105,13 @@ export function repository({ db }: DBType) {
       .where(eq(notesTable.id, noteId))
       .returning()
 
+    if (note) {
+      try {
+        await petRepo.logAction('update_note')
+      } catch {
+        // Logging error shouldn't block primary user flow
+      }
+    }
     return note
   }
 
@@ -109,11 +126,29 @@ export function repository({ db }: DBType) {
       .where(eq(notesTable.id, noteId))
       .returning()
 
+    if (note) {
+      try {
+        const action =
+          'isArchive' in noteData && noteData.isArchive !== undefined
+            ? 'archive_note'
+            : 'update_note'
+        await petRepo.logAction(action)
+      } catch {
+        // Logging error shouldn't block primary user flow
+      }
+    }
     return note
   }
 
   const deleteNoteFromDB = async (noteId: string) => {
     const result = await db.delete(notesTable).where(eq(notesTable.id, noteId))
+    if (result.rowCount) {
+      try {
+        await petRepo.logAction('delete_note')
+      } catch {
+        // Logging error shouldn't block primary user flow
+      }
+    }
     return result.rowCount
   }
 
@@ -126,11 +161,19 @@ export function repository({ db }: DBType) {
   }
 
   const addTagToNoteInDB = async (noteId: string, tagId: string) => {
-    return await db
+    const res = await db
       .insert(noteTagsTable)
       .values({ note_id: noteId, tag_id: tagId })
       .onConflictDoNothing()
       .returning()
+    if (res.length > 0) {
+      try {
+        await petRepo.logAction('add_tag')
+      } catch {
+        // Logging error shouldn't block primary user flow
+      }
+    }
+    return res
   }
 
   const removeTagFromNoteInDB = async (noteId: string, tagId: string) => {

@@ -2,12 +2,15 @@ import type { TagCreateIn, TagPatchIn, TagPutIn } from '@app/shared/tags/types'
 import { db } from '../../core/db/'
 import { tagsTable } from '../../core/db/schema'
 import { eq, sql } from 'drizzle-orm'
+import { repository as petsRepository } from '../pets/repository'
 
 interface DBType {
   db: typeof db
 }
 
 export function repository({ db }: DBType) {
+  const petRepo = petsRepository({ db })
+
   const getTagsFromDB = async (search: string | undefined) => {
     if (search) {
       return await db
@@ -31,6 +34,13 @@ export function repository({ db }: DBType) {
       .insert(tagsTable)
       .values({ ...tagData })
       .returning()
+    if (tag) {
+      try {
+        await petRepo.logAction('create_tag')
+      } catch {
+        // Logging error shouldn't block primary user flow
+      }
+    }
     return tag
   }
 
@@ -64,6 +74,13 @@ export function repository({ db }: DBType) {
 
   const deleteTagFromDB = async (tagId: string) => {
     const result = await db.delete(tagsTable).where(eq(tagsTable.id, tagId))
+    if (result.rowCount) {
+      try {
+        await petRepo.logAction('delete_tag')
+      } catch {
+        // Logging error shouldn't block primary user flow
+      }
+    }
     return result.rowCount
   }
 

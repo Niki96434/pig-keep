@@ -16,6 +16,7 @@ describe('Pets XP Architecture', () => {
       expect(pets.name).toBeDefined()
       expect(pets.level).toBeDefined()
       expect(pets.progress).toBeDefined()
+      expect(pets.pleasureIndex).toBeDefined()
     })
 
     it('should define action_types table with weight', () => {
