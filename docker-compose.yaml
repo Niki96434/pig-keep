@@ -1,9 +1,11 @@
 services:
   db:
     image: postgres:18.4
+    ports:
+      - "${PGPORT:-5432}:5432"
     environment:
-      POSTGRES_USER: ${PGUSER}
-      POSTGRES_DB: ${PGDATABASE}
+      POSTGRES_USER: ${PGUSER:-google_keep}
+      POSTGRES_DB: ${PGDATABASE:-google_keepdb}
       POSTGRES_PASSWORD_FILE: /run/secrets/pg-password
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]

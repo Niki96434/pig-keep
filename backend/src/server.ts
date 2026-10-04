@@ -17,6 +17,8 @@ const bootstrap = async () => {
   app.listen(port)
 }
 
-bootstrap().catch((_err: Error) => {
+bootstrap().catch((err: Error) => {
+  // eslint-disable-next-line no-console
+  console.log(err)
   process.exit(1)
 })

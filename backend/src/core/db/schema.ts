@@ -48,3 +48,6 @@ export const noteTagsRelations = defineRelations({ tagsTable, notesTable, noteTa
     }),
   },
 }))
+
+export * from '../../features/pets/schema'
+
