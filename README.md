@@ -14,6 +14,7 @@ MVP веб-приложение с виртуальным питомцем, ос
 
 - Описание решения: [docs/SOLUTION.md](https://github.com/Niki96434/google-keep/blob/main/docs/SOLUTION.md)
 - Пользовательский путь: [docs/RULES.md](https://github.com/Niki96434/google-keep/blob/main/docs/RULES.md)
+- Индекс удовольствия и ИИ-помощник: [docs/index_pleasure.md](https://github.com/Niki96434/google-keep/blob/main/docs/index_pleasure.md)
 - Тестирование: [docs/TESTING.md](https://github.com/Niki96434/google-keep/blob/main/docs/TESTING.md)
 - Руководство по работе с Docker: [docs/DOCKER.md](https://github.com/Niki96434/google-keep/blob/main/docs/DOCKER.md)
 - Полнотекстовый поиск с функциями PostgreSQL: [docs/FULLTEXT-SEARCH.md](https://github.com/Niki96434/google-keep/blob/main/docs/FULLTEXT-SEARCH.md)
