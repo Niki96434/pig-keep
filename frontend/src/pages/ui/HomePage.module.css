@@ -1,18 +1,60 @@
 .container {
   display: flex;
   flex-direction: row;
-  gap: 16px;
+  width: 100%;
+  min-height: 100vh;
 }
 
 .content {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
   padding: 16px;
+  width: 100%;
 }
 
-@media (width >= 1024px) {
+.searchWrapper {
+  width: 100%;
+  max-width: 640px;
+}
+
+.mainLayout {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.petSidebar {
+  width: 100%;
+}
+
+.notesSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
   .container {
     gap: 32px;
+  }
+
+  .content {
+    padding: 24px;
+  }
+
+  .mainLayout {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 28px;
+  }
+
+  .petSidebar {
+    width: 270px;
+    flex-shrink: 0;
   }
 }
