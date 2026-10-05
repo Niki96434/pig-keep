@@ -17,6 +17,8 @@ MVP веб-приложение с виртуальным питомцем, ос
 - Тестирование: [docs/TESTING.md](https://github.com/Niki96434/google-keep/blob/main/docs/TESTING.md)
 - Руководство по работе с Docker: [docs/DOCKER.md](https://github.com/Niki96434/google-keep/blob/main/docs/DOCKER.md)
 - Полнотекстовый поиск с функциями PostgreSQL: [docs/FULLTEXT-SEARCH.md](https://github.com/Niki96434/google-keep/blob/main/docs/FULLTEXT-SEARCH.md)
+- Документация по фронтенду: [frontend/README.md](https://github.com/Niki96434/google-keep/blob/main/frontend/README.md)
+- Документация по бэкенду: [backend/README.md](https://github.com/Niki96434/google-keep/blob/main/backend/README.md)
 
 ## Перечень используемых технологий (с их обоснованием)
 
@@ -35,12 +37,60 @@ MVP веб-приложение с виртуальным питомцем, ос
 
 ## Запуск проекта (Локально)
 
-Проект полностью контейнеризирован. Для быстрого запуска убедитесь, что у вас установлен Docker и плагин `docker compose`.
+### 1. Запуск всех сервисов в Docker (рекомендуемый способ)
 
-1. Скопируйте файл переменных окружения: `cp .env.example .env` (и заполните его).
-2. Запустите стек:
+Стек полностью контейнеризирован (PostgreSQL, Express backend, Nginx frontend). Для запуска убедитесь, что у вас установлен Docker и плагин `docker compose`.
+
+1. Убедитесь в наличии конфигурации переменных окружения:
+   ```bash
+   cp backend/.env.example backend/.env
+   ```
+2. Запустите все 3 контейнера в фоновом режиме со сборкой:
    ```bash
    docker compose up -d --build
+   ```
+3. Проверьте статус контейнеров:
+   ```bash
+   docker compose ps
+   ```
+4. Просмотр логов:
+   ```bash
+   docker compose logs -f
+   ```
+5. Остановка контейнеров:
+   ```bash
+   docker compose down
+   ```
+
+**Доступные сервисы после запуска:**
+* **Фронтенд**: [http://localhost:8080](http://localhost:8080)
+* **Бэкенд API**: [http://localhost:3000](http://localhost:3000) (проверка: `curl http://localhost:3000/api/v1/notes`)
+* **PostgreSQL**: `localhost:5432`
+
+---
+
+### 2. Запуск в режиме разработки (Dev-режим на хосте)
+
+1. Установите зависимости монорепозитория:
+   ```bash
+   npm ci
+   ```
+2. Запустите контейнер базы данных:
+   ```bash
+   docker compose up -d db
+   ```
+3. Запустите сервисы разработки:
+   * **Бэкенд** (порт 3000):
+     ```bash
+     npm run dev:back
+     ```
+   * **Фронтенд** (порт 5173):
+     ```bash
+     npm run dev:front
+     ```
+4. Запуск тестов:
+   ```bash
+   npm run test
    ```
 
 ## Особенности реализации

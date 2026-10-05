@@ -18,12 +18,35 @@ services:
       - ./backend/.env
     secrets:
       - pg-password
-  # backend:
-  # Todo
-  # frontend:
-  # Todo
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "${PORT:-3000}:3000"
+    env_file:
+      - ./backend/.env
+    environment:
+      - PORT=3000
+      - ORIGIN=${ORIGIN:-http://localhost:8080}
+      - DATABASE_URL=postgres://${PGUSER:-google_keep}:${PGPASSWORD:-p@ssw0rd}@db:5432/${PGDATABASE:-google_keepdb}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend
+
 volumes:
   db-data:
+
 secrets:
   pg-password:
     file: ./backend/db_password.txt
