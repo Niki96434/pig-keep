@@ -119,5 +119,3 @@ MVP веб-приложение с виртуальным питомцем, ос
 
 ![Десктоп](https://github.com/Niki96434/google-keep/blob/dev/docs/design-template/pigkeep-dashboard.pdf)\
 ![Мобильный](https://github.com/Niki96434/google-keep/blob/dev/docs/design-template/pigkeep-mobile.pdf)
-
-## Доп функционал(интеграция ИИ, auth)
