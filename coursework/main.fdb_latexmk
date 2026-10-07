@@ -1,0 +1,23 @@
+# Fdb version 4
+["pdflatex"] 1791237852.42166 "/home/nikki/mdocs/repo/google-keep/coursework/main.tex" "main.pdf" "main" 1791237852.52983 2
+  "/etc/texmf/web2c/texmf.cnf" 1791198196.86775 475 c0e671620eb5563b2130f56340a5fde8 ""
+  "/home/nikki/mdocs/repo/google-keep/coursework/main.tex" 1791237851.99552 84441 ef84c9de84c6265ef1735b511d1b871f ""
+  "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
+  "/usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmr12.tfm" 1136768653 1288 655e228510b4c2a1abe905c368440826 ""
+  "/usr/share/texlive/texmf-dist/tex/latex/base/exscale.sty" 1705352648 2581 8e0df574a0fdf7d67e300be743ad323e ""
+  "/usr/share/texlive/texmf-dist/tex/latex/extsizes/extreport.cls" 1137110130 23786 cbd79291aa0922c48a73753b97cabb5f ""
+  "/usr/share/texlive/texmf-dist/tex/latex/extsizes/size14.clo" 1137110130 6214 cc6d832fdd2fc5f4a20ee1a002f45d0f ""
+  "/usr/share/texlive/texmf-dist/tex/latex/fontspec/fontspec.sty" 1642282977 1656 7e824878bad4df5a3e8bba4e463d9126 ""
+  "/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def" 1704491087 30006 57b07afb710ee2f649c65cfbafda39c1 ""
+  "/usr/share/texlive/texmf-dist/tex/latex/l3kernel/expl3.sty" 1705955748 6565 cfd9fd0a1d5f5ad985151778771ff7a9 ""
+  "/usr/share/texlive/texmf-dist/tex/latex/l3packages/xparse/xparse.sty" 1696969620 9327 c30c00c0072edba199ede5889311aaa9 ""
+  "/usr/share/texlive/texmf-dist/web2c/texmf.cnf" 1707919699 40399 f2c302f7d2af602abb742093540a5834 ""
+  "/usr/share/texmf/web2c/texmf.cnf" 1707919699 40399 f2c302f7d2af602abb742093540a5834 ""
+  "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1791199457 6908114 12ed6b6ff27c3c71b3d46811e81863ce ""
+  "main.aux" 1791237852.42133 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "main.tex" 1791237851.99552 84441 ef84c9de84c6265ef1735b511d1b871f ""
+  (generated)
+  "main.aux"
+  "main.log"
+  "main.pdf"
+  (rewritten before read)

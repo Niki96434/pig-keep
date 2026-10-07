@@ -115,19 +115,9 @@ MVP веб-приложение с виртуальным питомцем, ос
 - Simple React snippets
 - Vitest Snippets
 
-## Доп функционал(интеграция ИИ, auth)
-
-## Декомпозиция(архитектура и API)
-
-## История коммитов
-
-## Дизайн
-
 ### Главный экран
 
-![Десктоп](https://github.com/Niki96434/google-keep/blob/front/app/docs/design-template/pigkeep-dashboard.pdf)\
-![Мобильный](https://github.com/Niki96434/google-keep/blob/front/app/docs/design-template/pigkeep-mobile.pdf)
+![Десктоп](https://github.com/Niki96434/google-keep/blob/dev/docs/design-template/pigkeep-dashboard.pdf)\
+![Мобильный](https://github.com/Niki96434/google-keep/blob/dev/docs/design-template/pigkeep-mobile.pdf)
 
-### Модальное окно сводки за день
-
-## Скриншоты
+## Доп функционал(интеграция ИИ, auth)

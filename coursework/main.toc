@@ -1,0 +1,13 @@
+\babel@toc {russian}{}\relax 
+\contentsline {chapter}{Введение}{3}{chapter*.1}%
+\contentsline {chapter}{\numberline {1}ТЕОРЕТИЧЕСКИЕ ОСНОВЫ И АРХИТЕКТУРНЫЕ ПАТТЕРНЫ ВЕБ-ПРИЛОЖЕНИЙ}{6}{chapter.1}%
+\contentsline {section}{\numberline {1.1.}Архитектурные паттерны и организация приложения}{6}{section.1.1}%
+\contentsline {section}{\numberline {1.2.}Обоснование технологического стека}{10}{section.1.2}%
+\contentsline {chapter}{\numberline {2}ПРОЕКТИРОВАНИЕ И ПРОГРАММНАЯ РЕАЛИЗАЦИЯ СИСТЕМЫ}{13}{chapter.2}%
+\contentsline {section}{\numberline {2.1.}Математическая модель игровой экономики и интеллектуальный помощник}{13}{section.2.1}%
+\contentsline {section}{\numberline {2.2.}Проектирование реляционной схемы базы данных}{14}{section.2.2}%
+\contentsline {section}{\numberline {2.3.}Программная реализация серверной и клиентской логики}{16}{section.2.3}%
+\contentsline {section}{\numberline {2.4.}Обеспечение безопасности и параллельного выполнения}{19}{section.2.4}%
+\contentsline {section}{\numberline {2.5.}Стратегия тестирования и контроль качества}{20}{section.2.5}%
+\contentsline {chapter}{Заключение}{23}{chapter*.5}%
+\contentsline {chapter}{Список использованных источников}{25}{chapter*.6}%
