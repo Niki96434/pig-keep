@@ -25,10 +25,6 @@
   width: 100%;
 }
 
-.petSidebar {
-  width: 100%;
-}
-
 .notesSection {
   display: flex;
   flex-direction: column;
@@ -51,10 +47,5 @@
     flex-direction: row;
     align-items: flex-start;
     gap: 28px;
-  }
-
-  .petSidebar {
-    width: 270px;
-    flex-shrink: 0;
   }
 }

@@ -3,13 +3,12 @@ import { notesRouter } from './features/notes/router'
 import { tagsRouter } from './features/tags/router'
 import { globalErrorHandler } from './core/globalErrorHandler'
 import cors from 'cors'
-import { HttpStatus } from '@app/shared/constants/httpStatus'
 
 export const app = express()
 
 const corsOptions = {
   origin: process.env.ORIGIN,
-  optionsSuccessStatus: HttpStatus.OK,
+  optionsSuccessStatus: 200,
 }
 
 app.use(express.json())

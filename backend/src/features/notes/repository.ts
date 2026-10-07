@@ -2,17 +2,16 @@ import type { NoteCreateIn, NotePatchIn, NotePutIn } from '@app/shared/notes/typ
 import { db } from '../../core/db/'
 import { notesTable, noteTagsTable, tagsTable } from '../../core/db/schema'
 import { and, eq, sql } from 'drizzle-orm'
-import { repository as petsRepository } from '../pets/repository'
 
 interface DBType {
   db: typeof db
 }
 
 export interface GetNotesParams {
-  search?: string | undefined
-  tagId?: string | undefined
-  isArchive?: boolean | undefined
-  isDeleted?: boolean | undefined
+  search?: string
+  tagId?: string
+  isArchive?: boolean
+  isDeleted?: boolean
 }
 
 export function repository({ db }: DBType) {
@@ -74,23 +73,16 @@ export function repository({ db }: DBType) {
 
   const getNoteByIdFromDB = async (noteId: string) => {
     const [note] = await db.select().from(notesTable).where(eq(notesTable.id, noteId))
+
     return note
   }
-
-  const petRepo = petsRepository({ db })
 
   const createNoteFromDB = async (noteData: NoteCreateIn) => {
     const [note] = await db
       .insert(notesTable)
       .values({ ...noteData })
       .returning()
-    if (note) {
-      try {
-        await petRepo.logAction('create_note')
-      } catch {
-        // Logging error shouldn't block primary user flow
-      }
-    }
+
     return note
   }
 
@@ -99,19 +91,13 @@ export function repository({ db }: DBType) {
       const [note] = await db.select().from(notesTable).where(eq(notesTable.id, noteId))
       return note
     }
+
     const [note] = await db
       .update(notesTable)
       .set({ ...noteData })
       .where(eq(notesTable.id, noteId))
       .returning()
 
-    if (note) {
-      try {
-        await petRepo.logAction('update_note')
-      } catch {
-        // Logging error shouldn't block primary user flow
-      }
-    }
     return note
   }
 
@@ -126,29 +112,12 @@ export function repository({ db }: DBType) {
       .where(eq(notesTable.id, noteId))
       .returning()
 
-    if (note) {
-      try {
-        const action =
-          'isArchive' in noteData && noteData.isArchive !== undefined
-            ? 'archive_note'
-            : 'update_note'
-        await petRepo.logAction(action)
-      } catch {
-        // Logging error shouldn't block primary user flow
-      }
-    }
     return note
   }
 
   const deleteNoteFromDB = async (noteId: string) => {
     const result = await db.delete(notesTable).where(eq(notesTable.id, noteId))
-    if (result.rowCount) {
-      try {
-        await petRepo.logAction('delete_note')
-      } catch {
-        // Logging error shouldn't block primary user flow
-      }
-    }
+
     return result.rowCount
   }
 
@@ -166,13 +135,7 @@ export function repository({ db }: DBType) {
       .values({ note_id: noteId, tag_id: tagId })
       .onConflictDoNothing()
       .returning()
-    if (res.length > 0) {
-      try {
-        await petRepo.logAction('add_tag')
-      } catch {
-        // Logging error shouldn't block primary user flow
-      }
-    }
+
     return res
   }
 
@@ -180,6 +143,7 @@ export function repository({ db }: DBType) {
     const result = await db
       .delete(noteTagsTable)
       .where(and(eq(noteTagsTable.note_id, noteId), eq(noteTagsTable.tag_id, tagId)))
+
     return result.rowCount
   }
 

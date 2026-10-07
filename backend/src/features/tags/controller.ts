@@ -1,6 +1,5 @@
 import type { Request, Response } from 'express'
 import type { TagCreateIn, Tag, TagPutIn, TagPatchIn } from '@app/shared/tags/types'
-import { HttpStatus } from '@app/shared/constants/httpStatus'
 
 interface RepositoryType {
   repo: {
@@ -30,7 +29,7 @@ export function controller({ repo }: RepositoryType) {
         : undefined
     const tags = await getTagsFromDB(search)
 
-    return res.status(HttpStatus.OK).json({ tags })
+    return res.status(200).json({ tags })
   }
 
   const getTagById = async (req: Request<{ id: string }>, res: Response) => {
@@ -38,10 +37,10 @@ export function controller({ repo }: RepositoryType) {
     const tag = await getTagByIdFromDB(tagId)
 
     if (!tag) {
-      return res.status(HttpStatus.NOT_FOUND).json({ error: 'Not found' })
+      return res.status(404).json({ error: 'Not found' })
     }
 
-    return res.status(HttpStatus.OK).json({ tag })
+    return res.status(200).json({ tag })
   }
 
   const createTag = async (req: Request, res: Response) => {
@@ -49,10 +48,10 @@ export function controller({ repo }: RepositoryType) {
 
     const tag = await createTagFromDB(tagData)
     if (!tag) {
-      return res.status(HttpStatus.BAD_REQUEST).json({ error: 'Bad request' })
+      return res.status(400).json({ error: 'Bad request' })
     }
 
-    return res.status(HttpStatus.CREATED).json({ tag })
+    return res.status(201).json({ tag })
   }
 
   const putTag = async (req: Request<{ id: string }>, res: Response) => {
@@ -61,10 +60,10 @@ export function controller({ repo }: RepositoryType) {
     const tag = await putTagFromDB(tagId, tagData)
 
     if (!tag) {
-      return res.status(HttpStatus.NOT_FOUND).json({ error: 'Not found' })
+      return res.status(404).json({ error: 'Not found' })
     }
 
-    return res.status(HttpStatus.OK).json({ tag })
+    return res.status(200).json({ tag })
   }
 
   const patchTag = async (req: Request<{ id: string }>, res: Response) => {
@@ -73,10 +72,10 @@ export function controller({ repo }: RepositoryType) {
     const tag = await patchTagFromDB(tagId, tagData)
 
     if (!tag) {
-      return res.status(HttpStatus.NOT_FOUND).json({ error: 'Not found' })
+      return res.status(404).json({ error: 'Not found' })
     }
 
-    return res.status(HttpStatus.OK).json({ tag })
+    return res.status(200).json({ tag })
   }
 
   const deleteTag = async (req: Request<{ id: string }>, res: Response) => {
@@ -84,10 +83,10 @@ export function controller({ repo }: RepositoryType) {
     const deletedRowCount = await deleteTagFromDB(tagId)
 
     if (deletedRowCount && deletedRowCount > 0) {
-      return res.status(HttpStatus.OK).json({ message: 'Success' })
+      return res.status(200).json({ message: 'Success' })
     }
 
-    return res.status(HttpStatus.BAD_REQUEST).json({ error: 'Bad request' })
+    return res.status(400).json({ error: 'Bad request' })
   }
 
   return { getTags, getTagById, createTag, putTag, patchTag, deleteTag }
