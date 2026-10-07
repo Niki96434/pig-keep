@@ -1,10 +1,8 @@
 import 'dotenv/config'
-import dotenv from 'dotenv'
-import path from 'path'
+import * as dotenv from 'dotenv'
+dotenv.config({ path: '../.env' })
 import { Pool } from 'pg'
 import { drizzle } from 'drizzle-orm/node-postgres'
-
-dotenv.config({ path: path.resolve(process.cwd(), './../../../.env') })
 
 export const pool = new Pool({
   connectionString: process.env.DATABASE_URL,

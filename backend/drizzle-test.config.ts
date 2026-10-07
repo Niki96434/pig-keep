@@ -1,4 +1,5 @@
-import dotenv from 'dotenv'
+import * as dotenv from 'dotenv'
+dotenv.config({ path: '../.env.test' })
 import path from 'node:path'
 import { defineConfig } from 'drizzle-kit'
 
