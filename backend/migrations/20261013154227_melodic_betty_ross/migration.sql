@@ -1,0 +1,1 @@
+CREATE INDEX "idx_note_tags" ON "noteTags" ("note_id");

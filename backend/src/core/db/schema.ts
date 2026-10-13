@@ -27,7 +27,7 @@ export const tagsTable = pgTable('tags', {
   id: uuid('id')
     .primaryKey()
     .default(sql`gen_random_uuid()`),
-  name: text().notNull(),
+  name: text().notNull().unique(),
 })
 
 export const noteTagsTable = pgTable(
@@ -40,7 +40,10 @@ export const noteTagsTable = pgTable(
       .notNull()
       .references(() => tagsTable.id, { onDelete: 'cascade' }),
   },
-  (table) => [primaryKey({ columns: [table.tag_id, table.note_id] })]
+  (table) => [
+    primaryKey({ columns: [table.tag_id, table.note_id] }),
+    index('idx_note_tags').on(table.note_id),
+  ]
 )
 
 export const noteTagsRelations = defineRelations({ tagsTable, notesTable, noteTagsTable }, (r) => ({
