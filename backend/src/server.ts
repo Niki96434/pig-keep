@@ -14,6 +14,7 @@ const bootstrap = async () => {
     migrationsTable: 'migrations_table',
     migrationsSchema: 'migrations_schema',
   })
+
   app.listen(port)
 }
 

@@ -1,18 +1,27 @@
-import { boolean, pgTable, primaryKey, text, uuid } from 'drizzle-orm/pg-core'
+import { boolean, index, pgTable, primaryKey, text, uuid } from 'drizzle-orm/pg-core'
 import { defineRelations, sql } from 'drizzle-orm'
 
-export const notesTable = pgTable('notes', {
-  id: uuid('id')
-    .primaryKey()
-    .default(sql`gen_random_uuid()`),
-  user_id: uuid()
-    .default(sql`gen_random_uuid()`)
-    .notNull(),
-  title: text().default('').notNull(),
-  content: text().default('').notNull(),
-  isArchive: boolean().default(false),
-  isDeleted: boolean().default(false),
-})
+export const notesTable = pgTable(
+  'notes',
+  {
+    id: uuid('id')
+      .primaryKey()
+      .default(sql`gen_random_uuid()`),
+    user_id: uuid()
+      .default(sql`gen_random_uuid()`)
+      .notNull(),
+    title: text().default('').notNull(),
+    content: text().default('').notNull(),
+    isArchive: boolean().default(false),
+    isDeleted: boolean().default(false),
+  },
+  (table) => [
+    index('search_index').using(
+      'gin',
+      sql`to_tsvector('russian', coalesce(${table.title}, '') || ' ' || coalesce(${table.content}`
+    ),
+  ]
+)
 
 export const tagsTable = pgTable('tags', {
   id: uuid('id')
