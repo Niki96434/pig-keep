@@ -29,7 +29,6 @@ export const handlers = [
       {
         note: {
           id: '01928d73-d8ed-7211-a314-7081d763282b',
-          user_id: '12345678-28d73-d8ed-7211-a314-7081d763282d',
           requestBody,
         },
       },

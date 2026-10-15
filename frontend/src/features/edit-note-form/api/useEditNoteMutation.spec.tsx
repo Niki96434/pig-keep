@@ -21,7 +21,6 @@ describe('edit note mutation', () => {
         return HttpResponse.json({
           note: {
             id: params.id,
-            user_id: '01928d73-d8ed-7211-a314-7081d763271a',
             title: body.title,
             content: body.content,
           },
@@ -52,7 +51,6 @@ describe('edit note mutation', () => {
         return HttpResponse.json({
           note: {
             id: params.id,
-            user_id: '01928d73-d8ed-7211-a314-7081d763271a',
             title: body.title,
             content: body.content,
           },

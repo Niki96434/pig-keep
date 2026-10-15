@@ -1,7 +1,7 @@
 import type { NoteCreateIn, NotePatchIn, NotePutIn } from '@app/shared/notes/types'
 import { db } from '../../core/db/'
 import { notesTable, noteTagsTable, tagsTable } from '../../core/db/schema'
-import { and, eq, sql } from 'drizzle-orm'
+import { and, eq, sql, desc } from 'drizzle-orm'
 
 interface DBType {
   db: typeof db
@@ -12,6 +12,16 @@ export interface GetNotesParams {
   tagId?: string
   isArchive?: boolean
   isDeleted?: boolean
+}
+
+const noteSelectFields = {
+  id: notesTable.id,
+  title: notesTable.title,
+  content: notesTable.content,
+  isArchive: notesTable.isArchive,
+  isDeleted: notesTable.isDeleted,
+  createdAt: notesTable.createdAt,
+  updatedAt: notesTable.updatedAt,
 }
 
 export function repository({ db }: DBType) {
@@ -38,17 +48,11 @@ export function repository({ db }: DBType) {
       conditions.push(eq(noteTagsTable.tag_id, tagId))
 
       const query = db
-        .select({
-          id: notesTable.id,
-          user_id: notesTable.user_id,
-          title: notesTable.title,
-          content: notesTable.content,
-          isArchive: notesTable.isArchive,
-          isDeleted: notesTable.isDeleted,
-        })
+        .select(noteSelectFields)
         .from(notesTable)
         .innerJoin(noteTagsTable, eq(notesTable.id, noteTagsTable.note_id))
         .where(conditions.length > 1 ? and(...conditions) : conditions[0])
+        .orderBy(desc(notesTable.updatedAt))
 
       if (search) {
         return await query.limit(10)
@@ -58,9 +62,10 @@ export function repository({ db }: DBType) {
 
     if (conditions.length > 0) {
       const query = db
-        .select()
+        .select(noteSelectFields)
         .from(notesTable)
         .where(conditions.length > 1 ? and(...conditions) : conditions[0])
+        .orderBy(desc(notesTable.updatedAt))
 
       if (search) {
         return await query.limit(10)
@@ -68,11 +73,14 @@ export function repository({ db }: DBType) {
       return await query
     }
 
-    return await db.select().from(notesTable)
+    return await db.select(noteSelectFields).from(notesTable).orderBy(desc(notesTable.updatedAt))
   }
 
   const getNoteByIdFromDB = async (noteId: string) => {
-    const [note] = await db.select().from(notesTable).where(eq(notesTable.id, noteId))
+    const [note] = await db
+      .select(noteSelectFields)
+      .from(notesTable)
+      .where(eq(notesTable.id, noteId))
 
     return note
   }
@@ -88,7 +96,10 @@ export function repository({ db }: DBType) {
 
   const putNoteFromDB = async (noteId: string, noteData: NotePutIn) => {
     if (Object.keys(noteData).length === 0) {
-      const [note] = await db.select().from(notesTable).where(eq(notesTable.id, noteId))
+      const [note] = await db
+        .select(noteSelectFields)
+        .from(notesTable)
+        .where(eq(notesTable.id, noteId))
       return note
     }
 
@@ -103,7 +114,10 @@ export function repository({ db }: DBType) {
 
   const patchNoteFromDB = async (noteId: string, noteData: NotePutIn | NotePatchIn) => {
     if (Object.keys(noteData).length === 0) {
-      const [note] = await db.select().from(notesTable).where(eq(notesTable.id, noteId))
+      const [note] = await db
+        .select(noteSelectFields)
+        .from(notesTable)
+        .where(eq(notesTable.id, noteId))
       return note
     }
     const [note] = await db

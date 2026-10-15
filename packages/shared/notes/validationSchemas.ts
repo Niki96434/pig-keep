@@ -44,11 +44,12 @@ export const NoteIdSchema = z.object({
 
 export const NoteSchema = z.object({
   id: z.uuid(),
-  user_id: z.uuid(),
   title: z.string().max(MAX_NOTE_TITLE_LENGTH),
   content: z.string().max(MAX_NOTE_CONTENT_LENGTH),
   isArchive: z.boolean().nullable().optional(),
   isDeleted: z.boolean().nullable().optional(),
+  createdAt: z.iso.datetime({offset: true}),
+  updatedAt: z.iso.datetime({offset: true})
 });
 
 export const SearchQuerySchema = z
