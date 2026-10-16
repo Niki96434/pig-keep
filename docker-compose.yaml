@@ -28,5 +28,8 @@ services:
       - /var/lib/postgres/data
     env_file:
       - .env.test
+  # healthcheck:
+  # добавить проверку на эндпоинт api/v1/health
+
 volumes:
   postgres_data:
