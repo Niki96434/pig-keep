@@ -1,42 +1,18 @@
 import type { Request, Response } from 'express'
-import type {
-  NoteCreateIn,
-  Note,
-  NotePutIn,
-  NotePatchIn,
-  SearchQuery,
-} from '@app/shared/notes/types'
+import type { SearchQuery } from '@app/shared/notes/types'
+import type { RepositoryType } from './repository'
 
-interface RepositoryType {
-  repo: {
-    getNotesFromDB: (params?: {
-      search?: string | undefined
-      tagId?: string | undefined
-      isArchive?: boolean | undefined
-      isDeleted?: boolean | undefined
-    }) => Promise<Note[]>
-    getNoteByIdFromDB: (noteId: string) => Promise<Note | undefined>
-    createNoteFromDB: (noteData: NoteCreateIn) => Promise<Note | undefined>
-    putNoteFromDB: (noteId: string, noteData: NotePutIn) => Promise<Note | undefined>
-    patchNoteFromDB: (noteId: string, noteData: NotePatchIn) => Promise<Note | undefined>
-    deleteNoteFromDB: (noteId: string) => Promise<number | null>
-    getNoteTagsFromDB: (noteId: string) => Promise<{ id: string; name: string }[]>
-    addTagToNoteInDB: (
-      noteId: string,
-      tagId: string
-    ) => Promise<{ note_id: string; tag_id: string }[]>
-    removeTagFromNoteInDB: (noteId: string, tagId: string) => Promise<number | null>
-  }
+interface ControllerProps {
+  repo: RepositoryType
 }
 
-export function controller({ repo }: RepositoryType) {
+export function controller({ repo }: ControllerProps) {
   const {
     getNotesFromDB,
     getNoteByIdFromDB,
     createNoteFromDB,
     putNoteFromDB,
     patchNoteFromDB,
-    deleteNoteFromDB,
     getNoteTagsFromDB,
     addTagToNoteInDB,
     removeTagFromNoteInDB,
@@ -95,17 +71,6 @@ export function controller({ repo }: RepositoryType) {
     return res.status(200).json({ note })
   }
 
-  const deleteNote = async (req: Request<{ id: string }>, res: Response) => {
-    const noteId = req.params.id
-    const deletedRowCount = await deleteNoteFromDB(noteId)
-
-    if (deletedRowCount && deletedRowCount > 0) {
-      return res.status(200).json({ message: 'Success' })
-    }
-
-    return res.status(400).json({ error: 'Bad request' })
-  }
-
   const getNoteTags = async (req: Request<{ id: string }>, res: Response) => {
     const noteId = req.params.id
     const tags = await getNoteTagsFromDB(noteId)
@@ -130,7 +95,6 @@ export function controller({ repo }: RepositoryType) {
     createNote,
     putNote,
     patchNote,
-    deleteNote,
     getNoteTags,
     addTagToNote,
     removeTagFromNote,

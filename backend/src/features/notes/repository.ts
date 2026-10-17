@@ -8,10 +8,10 @@ interface DBType {
 }
 
 export interface GetNotesParams {
-  search?: string
-  tagId?: string
-  isArchive?: boolean
-  isDeleted?: boolean
+  search?: string | undefined
+  tagId?: string | undefined
+  isArchive?: boolean | undefined
+  isDeleted?: boolean | undefined
 }
 
 const noteSelectFields = {
@@ -23,6 +23,8 @@ const noteSelectFields = {
   createdAt: notesTable.createdAt,
   updatedAt: notesTable.updatedAt,
 }
+
+export type RepositoryType = ReturnType<typeof repository>
 
 export function repository({ db }: DBType) {
   const getNotesFromDB = async (params?: GetNotesParams) => {
@@ -129,12 +131,6 @@ export function repository({ db }: DBType) {
     return note
   }
 
-  const deleteNoteFromDB = async (noteId: string) => {
-    const result = await db.delete(notesTable).where(eq(notesTable.id, noteId))
-
-    return result.rowCount
-  }
-
   const getNoteTagsFromDB = async (noteId: string) => {
     return await db
       .select({ id: tagsTable.id, name: tagsTable.name })
@@ -167,7 +163,6 @@ export function repository({ db }: DBType) {
     createNoteFromDB,
     putNoteFromDB,
     patchNoteFromDB,
-    deleteNoteFromDB,
     getNoteTagsFromDB,
     addTagToNoteInDB,
     removeTagFromNoteInDB,
