@@ -3,7 +3,7 @@ import { eq, sql } from 'drizzle-orm'
 import request from 'supertest'
 import { app } from '../../app'
 import { test_db, test_pool } from '../../core/db/test_db'
-import { notesTable } from '../../core/db/schema'
+import { notesTable, noteTagsTable, tagsTable } from '../../core/db/schema'
 
 const BASE_URL = '/api/v1/notes'
 const VALIDATION_ERROR = 'Validation error'
@@ -21,11 +21,18 @@ const seedNote = async (data: Partial<typeof notesTable.$inferInsert> = {}) => {
     })
     .returning()
 
+  if (!note) throw new Error('Failed to seed note')
   return note
 }
 
+const seedTag = async (name = 'Тестовый тег') => {
+  const [tag] = await test_db.insert(tagsTable).values({ name }).returning()
+  if (!tag) throw new Error('Failed to seed tag')
+  return tag
+}
+
 beforeEach(async () => {
-  await test_db.execute(sql`TRUNCATE TABLE ${notesTable} CASCADE`)
+  await test_db.execute(sql`TRUNCATE TABLE ${notesTable}, ${tagsTable} CASCADE`)
 })
 
 afterAll(async () => await test_pool.end())
@@ -160,9 +167,24 @@ describe('GET /api/v1/notes', () => {
     })
 
     it('should return deleted notes including those that were archived', async () => {
-      const deletedArchived = await seedNote({ title: 'Удаленная архивная', content: 'Текст', isArchive: true, isDeleted: true })
-      const deletedRegular = await seedNote({ title: 'Удаленная обычная', content: 'Текст', isArchive: false, isDeleted: true })
-      await seedNote({ title: 'Активная архивная', content: 'Текст', isArchive: true, isDeleted: false })
+      const deletedArchived = await seedNote({
+        title: 'Удаленная архивная',
+        content: 'Текст',
+        isArchive: true,
+        isDeleted: true,
+      })
+      const deletedRegular = await seedNote({
+        title: 'Удаленная обычная',
+        content: 'Текст',
+        isArchive: false,
+        isDeleted: true,
+      })
+      await seedNote({
+        title: 'Активная архивная',
+        content: 'Текст',
+        isArchive: true,
+        isDeleted: false,
+      })
 
       const res = await request(app).get(`${BASE_URL}?isDeleted=true`)
 
@@ -303,9 +325,7 @@ describe('PATCH /api/v1/notes/:id', () => {
   it('should change isArchive field', async () => {
     const note = await seedNote({ isArchive: false })
 
-    const res = await request(app)
-      .patch(`${BASE_URL}/${note?.id}`)
-      .send({ isArchive: true })
+    const res = await request(app).patch(`${BASE_URL}/${note?.id}`).send({ isArchive: true })
 
     expect(res.status).toBe(200)
     expect(res.body.note).toMatchObject({
@@ -317,9 +337,7 @@ describe('PATCH /api/v1/notes/:id', () => {
   it('should change isDeleted field', async () => {
     const note = await seedNote({ isDeleted: false })
 
-    const res = await request(app)
-      .patch(`${BASE_URL}/${note?.id}`)
-      .send({ isDeleted: true })
+    const res = await request(app).patch(`${BASE_URL}/${note?.id}`).send({ isDeleted: true })
 
     expect(res.status).toBe(200)
     expect(res.body.note).toMatchObject({
@@ -428,18 +446,67 @@ describe('PATCH /api/v1/notes/trash/:id/restore', () => {
 })
 
 describe('DELETE /api/v1/notes/trash', () => {
-  it('should clear all notes from trash and return 200', async () => {
-    await seedNote({ isDeleted: true })
-    await seedNote({ isDeleted: true })
-    const activeNote = await seedNote({ isDeleted: false })
+  it('should clear only trashed notes and preserve all alive notes', async () => {
+    await seedNote({ title: 'Активная заметка', isDeleted: false, isArchive: false })
+    await seedNote({ title: 'Архивная заметка', isDeleted: false, isArchive: true })
+    await seedNote({ title: 'В корзине 1', isDeleted: true })
+    await seedNote({ title: 'В корзине 2', isDeleted: true })
 
     const res = await request(app).delete(`${BASE_URL}/trash`)
 
     expect(res.status).toBe(200)
-    expect(res.body.message).toBe('Success')
+    expect(res.body).toEqual({ message: 'Success' })
 
     const notesInDb = await test_db.select().from(notesTable)
-    expect(notesInDb).toHaveLength(1)
-    expect(notesInDb[0]?.id).toBe(activeNote?.id)
+    expect(notesInDb).toHaveLength(2)
+  })
+
+  it('should be idempotent and return 200 when clearing trash multiple times', async () => {
+    await seedNote({ isDeleted: true })
+
+    const firstRes = await request(app).delete(`${BASE_URL}/trash`)
+    expect(firstRes.status).toBe(200)
+
+    const secondRes = await request(app).delete(`${BASE_URL}/trash`)
+
+    expect(secondRes.status).toBe(200)
+    expect(secondRes.body).toEqual({ message: 'Success' })
+
+    const trashedNotesInDb = await test_db
+      .select()
+      .from(notesTable)
+      .where(eq(notesTable.isDeleted, true))
+    expect(trashedNotesInDb).toHaveLength(0)
+  })
+
+  it('should cascade delete relations from noteTags table when trashed notes are cleared', async () => {
+    const tag = await seedTag('Важный тег')
+    const activeNote = await seedNote({ title: 'Живая заметка', isDeleted: false })
+    const trashedNote = await seedNote({ title: 'Удаленная заметка', isDeleted: true })
+
+    await test_db.insert(noteTagsTable).values([
+      { note_id: activeNote.id, tag_id: tag.id },
+      { note_id: trashedNote.id, tag_id: tag.id },
+    ])
+
+    const res = await request(app).delete(`${BASE_URL}/trash`)
+
+    expect(res.status).toBe(200)
+    expect(res.body).toEqual({ message: 'Success' })
+
+    const trashedNoteTags = await test_db
+      .select()
+      .from(noteTagsTable)
+      .where(eq(noteTagsTable.note_id, trashedNote.id))
+    expect(trashedNoteTags).toHaveLength(0)
+
+    const activeNoteTags = await test_db
+      .select()
+      .from(noteTagsTable)
+      .where(eq(noteTagsTable.note_id, activeNote.id))
+    expect(activeNoteTags).toHaveLength(1)
+
+    const tagInDb = await test_db.select().from(tagsTable).where(eq(tagsTable.id, tag.id))
+    expect(tagInDb).toHaveLength(1)
   })
 })

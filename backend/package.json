@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "test": "vitest",
-    "test:api": "cross-env DATABASE_URL=postgres://nika:nikakika2004@localhost:5432/notes_test vitest",
+    "test:api": "cross-env NODE_ENV=test vitest",
     "typecheck": "tsc --noEmit",
     "build:dev": "tsc ./src -p tsconfig.json",
     "build:prod": "tsup src/server.ts --out-dir build --format esm --clean",
