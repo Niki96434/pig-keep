@@ -11,9 +11,6 @@ import {
   NotePatchInSchema,
   SearchQuerySchema,
 } from '@app/shared/notes/validationSchemas'
-import { trashController } from './trashController'
-import { trashRepository } from './trashRepository'
-
 export const notesRouter = express.Router()
 
 const repo = repository({ db })
@@ -23,13 +20,14 @@ const {
   createNote,
   putNote,
   patchNote,
+  deleteNote,
+  clearTrash,
+  restoreNote,
+  deleteByIdForever,
   getNoteTags,
   addTagToNote,
   removeTagFromNote,
 } = controller({ repo })
-
-const trashRepo = trashRepository({ db })
-const { clearTrash, restoreNote, deleteByIdForever } = trashController({ trashRepo })
 
 notesRouter
   .get('/', validateSchemas({ query: SearchQuerySchema }), (req: Request, res: Response) =>
@@ -47,6 +45,7 @@ notesRouter
   .get(validateSchemas({ params: NoteIdSchema }), getNoteById)
   .put(validateSchemas({ params: NoteIdSchema, body: NotePutInSchema }), putNote)
   .patch(validateSchemas({ params: NoteIdSchema, body: NotePatchInSchema }), patchNote)
+  .delete(validateSchemas({ params: NoteIdSchema }), deleteNote)
 
 notesRouter
   .get('/:id/tags', validateSchemas({ params: NoteIdSchema }), getNoteTags)

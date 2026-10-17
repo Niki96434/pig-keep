@@ -131,6 +131,38 @@ export function repository({ db }: DBType) {
     return note
   }
 
+  const deleteNoteFromDB = async (noteId: string) => {
+    const result = await db
+      .update(notesTable)
+      .set({ isDeleted: true })
+      .where(and(eq(notesTable.id, noteId), eq(notesTable.isDeleted, false)))
+
+    return result.rowCount ?? 0
+  }
+
+  const clearTrashFromDB = async () => {
+    const result = await db.delete(notesTable).where(eq(notesTable.isDeleted, true))
+
+    return result.rowCount ?? 0
+  }
+
+  const restoreNoteFromDB = async (id: string) => {
+    const result = await db
+      .update(notesTable)
+      .set({ isDeleted: false })
+      .where(and(eq(notesTable.id, id), eq(notesTable.isDeleted, true)))
+
+    return result.rowCount ?? 0
+  }
+
+  const deleteByIdForeverFromDB = async (id: string) => {
+    const result = await db
+      .delete(notesTable)
+      .where(and(eq(notesTable.id, id), eq(notesTable.isDeleted, true)))
+
+    return result.rowCount ?? 0
+  }
+
   const getNoteTagsFromDB = async (noteId: string) => {
     return await db
       .select({ id: tagsTable.id, name: tagsTable.name })
@@ -163,6 +195,10 @@ export function repository({ db }: DBType) {
     createNoteFromDB,
     putNoteFromDB,
     patchNoteFromDB,
+    deleteNoteFromDB,
+    clearTrashFromDB,
+    restoreNoteFromDB,
+    deleteByIdForeverFromDB,
     getNoteTagsFromDB,
     addTagToNoteInDB,
     removeTagFromNoteInDB,

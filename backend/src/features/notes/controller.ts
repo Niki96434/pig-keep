@@ -13,6 +13,10 @@ export function controller({ repo }: ControllerProps) {
     createNoteFromDB,
     putNoteFromDB,
     patchNoteFromDB,
+    deleteNoteFromDB,
+    clearTrashFromDB,
+    restoreNoteFromDB,
+    deleteByIdForeverFromDB,
     getNoteTagsFromDB,
     addTagToNoteInDB,
     removeTagFromNoteInDB,
@@ -71,6 +75,44 @@ export function controller({ repo }: ControllerProps) {
     return res.status(200).json({ note })
   }
 
+  const deleteNote = async (req: Request<{ id: string }>, res: Response) => {
+    const noteId = req.params.id
+    const deletedRowCount = await deleteNoteFromDB(noteId)
+
+    if (deletedRowCount && deletedRowCount > 0) {
+      return res.status(200).json({ message: 'Success' })
+    }
+
+    return res.status(400).json({ error: 'Bad request' })
+  }
+
+  const clearTrash = async (_req: Request, res: Response) => {
+    await clearTrashFromDB()
+    return res.status(200).json({ message: 'Success' })
+  }
+
+  const restoreNote = async (req: Request<{ id: string }>, res: Response) => {
+    const noteId = req.params.id
+    const result = await restoreNoteFromDB(noteId)
+
+    if (result === 1) {
+      return res.status(200).json({ message: 'Success' })
+    }
+
+    return res.status(404).json({ error: 'Not found' })
+  }
+
+  const deleteByIdForever = async (req: Request<{ id: string }>, res: Response) => {
+    const noteId = req.params.id
+    const deletedCount = await deleteByIdForeverFromDB(noteId)
+
+    if (deletedCount === 1) {
+      return res.status(200).json({ message: 'Success' })
+    }
+
+    return res.status(404).json({ error: 'Not found' })
+  }
+
   const getNoteTags = async (req: Request<{ id: string }>, res: Response) => {
     const noteId = req.params.id
     const tags = await getNoteTagsFromDB(noteId)
@@ -95,6 +137,10 @@ export function controller({ repo }: ControllerProps) {
     createNote,
     putNote,
     patchNote,
+    deleteNote,
+    clearTrash,
+    restoreNote,
+    deleteByIdForever,
     getNoteTags,
     addTagToNote,
     removeTagFromNote,

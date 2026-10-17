@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto'
-import { sql } from 'drizzle-orm'
+import { eq, sql } from 'drizzle-orm'
 import request from 'supertest'
 import { app } from '../../app'
 import { test_db, test_pool } from '../../core/db/test_db'
@@ -357,15 +357,15 @@ describe('PATCH /api/v1/notes/:id', () => {
 })
 
 describe('DELETE /api/v1/notes/:id', () => {
-  it('should delete note and return 200', async () => {
-    const note = await seedNote()
+  it('should soft-delete note by setting isDeleted to true and return 200', async () => {
+    const note = await seedNote({ isDeleted: false })
     const res = await request(app).delete(`${BASE_URL}/${note?.id}`)
 
     expect(res.status).toBe(200)
     expect(res.body.message).toBe('Success')
 
-    const notesInDb = await test_db.select().from(notesTable)
-    expect(notesInDb).toHaveLength(0)
+    const [noteInDb] = await test_db.select().from(notesTable).where(eq(notesTable.id, note!.id))
+    expect(noteInDb?.isDeleted).toBe(true)
   })
 
   it('should return a 400 status code if the id is not of type UUID', async () => {
@@ -375,12 +375,71 @@ describe('DELETE /api/v1/notes/:id', () => {
     expect(res.body.error).toBe(VALIDATION_ERROR)
   })
 
-  it('should return status code 400 if note does not exist', async () => {
+  it('should return status code 400 if note does not exist or is already deleted', async () => {
     const id = randomUUID()
 
     const res = await request(app).delete(`${BASE_URL}/${id}`)
 
     expect(res.status).toBe(400)
     expect(res.body.error).toBe('Bad request')
+  })
+})
+
+describe('DELETE /api/v1/notes/trash/:id', () => {
+  it('should permanently delete note from trash and return 200', async () => {
+    const note = await seedNote({ isDeleted: true })
+    const res = await request(app).delete(`${BASE_URL}/trash/${note?.id}`)
+
+    expect(res.status).toBe(200)
+    expect(res.body.message).toBe('Success')
+
+    const notesInDb = await test_db.select().from(notesTable).where(eq(notesTable.id, note!.id))
+    expect(notesInDb).toHaveLength(0)
+  })
+
+  it('should return 404 if note is not in trash', async () => {
+    const note = await seedNote({ isDeleted: false })
+    const res = await request(app).delete(`${BASE_URL}/trash/${note?.id}`)
+
+    expect(res.status).toBe(404)
+    expect(res.body.error).toBe('Not found')
+  })
+})
+
+describe('PATCH /api/v1/notes/trash/:id/restore', () => {
+  it('should restore note from trash and return 200', async () => {
+    const note = await seedNote({ isDeleted: true })
+    const res = await request(app).patch(`${BASE_URL}/trash/${note?.id}/restore`)
+
+    expect(res.status).toBe(200)
+    expect(res.body.message).toBe('Success')
+
+    const [noteInDb] = await test_db.select().from(notesTable).where(eq(notesTable.id, note!.id))
+    expect(noteInDb?.isDeleted).toBe(false)
+  })
+
+  it('should return 404 if note is not in trash', async () => {
+    const note = await seedNote({ isDeleted: false })
+    const res = await request(app).patch(`${BASE_URL}/trash/${note?.id}/restore`)
+
+    expect(res.status).toBe(404)
+    expect(res.body.error).toBe('Not found')
+  })
+})
+
+describe('DELETE /api/v1/notes/trash', () => {
+  it('should clear all notes from trash and return 200', async () => {
+    await seedNote({ isDeleted: true })
+    await seedNote({ isDeleted: true })
+    const activeNote = await seedNote({ isDeleted: false })
+
+    const res = await request(app).delete(`${BASE_URL}/trash`)
+
+    expect(res.status).toBe(200)
+    expect(res.body.message).toBe('Success')
+
+    const notesInDb = await test_db.select().from(notesTable)
+    expect(notesInDb).toHaveLength(1)
+    expect(notesInDb[0]?.id).toBe(activeNote?.id)
   })
 })
