@@ -12,6 +12,7 @@
     "build:prod": "tsup src/server.ts --out-dir build --format esm --clean",
     "start": "node src/server.js",
     "dev": "tsx --watch src/server.ts",
+    "openapi:generate": "tsx src/contracts/openapi.ts",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier .",
@@ -21,7 +22,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@app/shared": "*",
+    "@asteasolutions/zod-to-openapi": "^9.1.0",
     "cors": "^2.8.6",
     "dotenv": "^17.4.2",
     "drizzle-orm": "^1.0.0-rc.4",

@@ -6,7 +6,7 @@ import {
   NotePatchInSchema,
   NoteIdSchema,
   NoteSchema,
-} from '@app/shared/notes/validationSchemas'
+} from './validationSchemas'
 
 describe('NoteCreateInSchema', () => {
   it('should succeed with valid data and trim whitespace', () => {

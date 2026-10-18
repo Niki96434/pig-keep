@@ -6,7 +6,7 @@ import {
   useUpdateTagMutation,
   useDeleteTagMutation,
 } from '@/entities/tag'
-import type { Tag } from '@shared/tags/types'
+import type { Tag } from '@/shared/api'
 
 export function useManageTagsModal() {
   const { isOpen, close } = useTagsModalStore()

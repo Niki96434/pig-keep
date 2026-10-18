@@ -4,7 +4,7 @@ import { AddNoteForm } from './AddNoteForm'
 import { renderWithProviders } from '@/shared/testing/test-utils'
 import { http, HttpResponse } from 'msw'
 import { server } from '@/shared/testing/msw/node'
-import type { NoteCreateIn } from '@shared/notes/types'
+import type { NoteCreateIn } from '@/shared/api'
 
 async function setupForm() {
   const { user } = renderWithProviders(<AddNoteForm />)

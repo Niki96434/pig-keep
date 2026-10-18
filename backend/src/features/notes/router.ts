@@ -10,7 +10,7 @@ import {
   NoteIdSchema,
   NotePatchInSchema,
   SearchQuerySchema,
-} from '@app/shared/notes/validationSchemas'
+} from './validationSchemas'
 export const notesRouter = express.Router()
 
 const repo = repository({ db })

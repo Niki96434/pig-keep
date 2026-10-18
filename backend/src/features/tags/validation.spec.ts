@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto'
 import { describe, expect, it } from 'vitest'
-import { TagCreateInSchema, TagIdSchema, TagSchema } from '@app/shared/tags/validationSchemas'
+import { TagCreateInSchema, TagIdSchema, TagSchema } from './validationSchemas'
 
 describe('TagCreateInSchema', () => {
   it('should succeed with valid name and trim whitespace', () => {

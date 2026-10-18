@@ -2,7 +2,7 @@ import { waitFor } from '@testing-library/react'
 import { server } from '@/shared/testing/msw/node'
 import { http, HttpResponse } from 'msw'
 import { renderHookWithProviders } from '@/shared/testing/test-utils'
-import type { NotePutIn } from '@shared/notes/types'
+import type { NotePutIn } from '@/shared/api'
 import { useEditNoteMutation } from './useEditNoteMutation'
 
 describe('edit note mutation', () => {

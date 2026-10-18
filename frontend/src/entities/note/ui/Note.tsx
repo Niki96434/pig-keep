@@ -1,4 +1,4 @@
-import type { Note as NoteType } from '@shared/notes/types'
+import type { Note as NoteType } from '@/shared/api'
 import styles from './Note.module.css'
 import menuIcon from './../assets/three-dots.png'
 import { Archive, ArchiveRestore, PencilIcon, Trash2, TrashIcon } from 'lucide-react'

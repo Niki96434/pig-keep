@@ -1,4 +1,4 @@
-import type { NoteCreateIn, NotePatchIn, NotePutIn } from '@app/shared/notes/types'
+import type { NoteCreateIn, NotePatchIn, NotePutIn } from './types'
 import { db } from '../../core/db/'
 import { notesTable, noteTagsTable, tagsTable } from '../../core/db/schema'
 import { and, eq, sql, desc } from 'drizzle-orm'

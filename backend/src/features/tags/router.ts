@@ -9,8 +9,8 @@ import {
   TagPutInSchema,
   TagIdSchema,
   TagPatchInSchema,
-} from '@app/shared/tags/validationSchemas'
-import type { TagSearchQuery } from '@app/shared/tags/types'
+} from './validationSchemas'
+import type { TagSearchQuery } from './types'
 
 export const tagsRouter = express.Router()
 

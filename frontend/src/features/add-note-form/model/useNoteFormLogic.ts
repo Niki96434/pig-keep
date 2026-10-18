@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from 'react'
 import { useParams } from 'react-router'
 import { useOnClickOutside } from '../model/useOnClickOutside'
-import { NoteCreateInSchema } from '@shared/notes/validationSchemas'
+import { NoteCreateInSchema } from './schema'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'

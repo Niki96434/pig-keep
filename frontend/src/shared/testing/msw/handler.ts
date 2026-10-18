@@ -1,7 +1,7 @@
 import { http, HttpResponse } from 'msw'
 import { notes } from './mockData'
 
-const url = `http://localhost:${import.meta.env.VITE_SERVER_PORT}`
+const url = `http://localhost:${import.meta.env.VITE_SERVER_PORT || 3000}`
 const noteId = '01928d73-d8ed-7211-a314-7081d763272c'
 export const handlers = [
   http.get(`${url}/api/v1/notes`, () => {

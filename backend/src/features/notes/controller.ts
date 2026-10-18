@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express'
-import type { SearchQuery } from '@app/shared/notes/types'
+import type { SearchQuery } from './types'
 import type { RepositoryType } from './repository'
 
 interface ControllerProps {

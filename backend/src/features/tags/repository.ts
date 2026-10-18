@@ -1,4 +1,4 @@
-import type { TagCreateIn, TagPatchIn, TagPutIn } from '@app/shared/tags/types'
+import type { TagCreateIn, TagPatchIn, TagPutIn } from './types'
 import { db } from '../../core/db/'
 import { tagsTable } from '../../core/db/schema'
 import { eq, sql } from 'drizzle-orm'

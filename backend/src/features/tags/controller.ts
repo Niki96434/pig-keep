@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express'
-import type { TagCreateIn, Tag, TagPutIn, TagPatchIn } from '@app/shared/tags/types'
+import type { TagCreateIn, Tag, TagPutIn, TagPatchIn } from './types'
 
 interface RepositoryType {
   repo: {

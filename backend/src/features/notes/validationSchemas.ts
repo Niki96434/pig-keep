@@ -1,7 +1,7 @@
-import * as z from "zod";
+import * as z from 'zod'
 
-export const MAX_NOTE_TITLE_LENGTH = 255;
-export const MAX_NOTE_CONTENT_LENGTH = 1_000;
+export const MAX_NOTE_TITLE_LENGTH = 255
+export const MAX_NOTE_CONTENT_LENGTH = 1_000
 
 export const NoteCreateInSchema = z
   .object({
@@ -11,14 +11,14 @@ export const NoteCreateInSchema = z
   .refine(
     (data) => Boolean(data.title?.trim()) || Boolean(data.content?.trim()),
     {
-      message: "At least one field must be specified: title or content",
-    },
-  );
+      message: 'At least one field must be specified: title or content',
+    }
+  )
 
 export const NotePutInSchema = z.object({
   title: z.string().trim().max(MAX_NOTE_TITLE_LENGTH),
   content: z.string().trim().max(MAX_NOTE_CONTENT_LENGTH),
-});
+})
 
 export const NotePatchInSchema = z
   .object({
@@ -34,13 +34,13 @@ export const NotePatchInSchema = z
       data.isArchive !== undefined ||
       data.isDeleted !== undefined,
     {
-      message: "At least one field must be specified",
-    },
-  );
+      message: 'At least one field must be specified',
+    }
+  )
 
 export const NoteIdSchema = z.object({
   id: z.uuid(),
-});
+})
 
 export const NoteSchema = z.object({
   id: z.uuid(),
@@ -48,9 +48,9 @@ export const NoteSchema = z.object({
   content: z.string().max(MAX_NOTE_CONTENT_LENGTH),
   isArchive: z.boolean().nullable().optional(),
   isDeleted: z.boolean().nullable().optional(),
-  createdAt: z.iso.datetime({offset: true}),
-  updatedAt: z.iso.datetime({offset: true})
-});
+  createdAt: z.iso.datetime({ offset: true }),
+  updatedAt: z.iso.datetime({ offset: true }),
+})
 
 export const SearchQuerySchema = z
   .object({
@@ -62,6 +62,4 @@ export const SearchQuerySchema = z
     isArchive: z.coerce.boolean().optional(),
     isDeleted: z.coerce.boolean().optional(),
   })
-  .readonly();
-
-
+  .readonly()
