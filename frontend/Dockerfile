@@ -1,7 +1,13 @@
-FROM node:22-alpine AS build
+FROM node:24.21.0-bookworm-slim AS build
 WORKDIR /app
 COPY package*.json ./
 RUN npm ci
 COPY . .
 RUN npm run build
 
+FROM caddy:2-alpine
+COPY Caddyfile /etc/caddy/Caddyfile
+COPY --from=build /app/dist /srv
+RUN adduser -D -H nika
+USER nika
+EXPOSE 8080
