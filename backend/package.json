@@ -8,7 +8,6 @@
     "test": "vitest",
     "test:api": "cross-env NODE_ENV=test vitest",
     "typecheck": "tsc --noEmit",
-    "build:dev": "tsc ./src -p tsconfig.json",
     "build:prod": "tsup src/server.ts --out-dir build --format esm --clean",
     "start": "node src/server.js",
     "dev": "tsx --watch src/server.ts",
