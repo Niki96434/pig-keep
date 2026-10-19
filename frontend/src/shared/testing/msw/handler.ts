@@ -35,7 +35,7 @@ export const handlers = [
       { status: 201 }
     )
   }),
-  http.delete<{ id: string }>(`${url}/api/v1/notes/${noteId}`, async () => {
+  http.delete<{ id: string }>(`${url}/api/v1/notes/trash/${noteId}`, async () => {
     return HttpResponse.json({ message: 'Success' }, { status: 200 })
   }),
   http.get(`${url}/api/v1/tags`, () => {

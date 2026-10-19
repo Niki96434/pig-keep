@@ -127,7 +127,7 @@ describe('Note component', () => {
   it('should permanently delete note when clicking delete forever button on deleted note', async () => {
     let deleted = false
     server.use(
-      http.delete<{ id: string }>(`*/api/v1/notes/:id`, () => {
+      http.delete<{ id: string }>(`*/api/v1/notes/trash/:id`, () => {
         deleted = true
         return HttpResponse.json({ message: 'Success' })
       })

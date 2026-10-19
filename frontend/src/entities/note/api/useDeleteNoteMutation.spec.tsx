@@ -14,7 +14,7 @@ describe('deleting notes', () => {
     const invalidateSpy = vi.spyOn(queryClient, 'invalidateQueries')
 
     server.use(
-      http.delete<{ id?: string }>(`*/api/v1/notes/:id`, async ({ params }) => {
+      http.delete<{ id?: string }>(`*/api/v1/notes/trash/:id`, async ({ params }) => {
         deleteHandler(params.id)
         return HttpResponse.json({ message: 'Success' })
       })
@@ -30,7 +30,7 @@ describe('deleting notes', () => {
     const { result } = renderHookWithProviders(useDeleteNoteMutation)
 
     server.use(
-      http.delete<{ id: string }>(`*/api/v1/notes/:id`, async () => {
+      http.delete<{ id: string }>(`*/api/v1/notes/trash/:id`, async () => {
         return HttpResponse.json({ error: 'server' }, { status: 500 })
       })
     )

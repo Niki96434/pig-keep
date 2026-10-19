@@ -63,7 +63,7 @@ Pig Keep - оптимизированное local-hosted веб-приложен
    ```bash
    docker compose down
    ```
-Сервис будет доступен на `http://localhost:5432`
+Сервис будет доступен на `http://localhost:5173`
 
 ## Особенности реализации
 
