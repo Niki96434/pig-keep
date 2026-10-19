@@ -24,7 +24,7 @@ async function start() {
     await bootstrap()
     server = app.listen(port)
   } catch (err) {
-    console.log(`the server terminated with ${err}`)
+    console.error('the server terminated with', err)
     process.exit(1)
   }
 }

@@ -1,7 +1,6 @@
 services:
   db_dev:
     image: postgres:18-bookworm
-    profiles: [dev]
     container_name: postgres-dev
     environment:
       POSTGRES_USER: ${PGUSER}
@@ -10,7 +9,12 @@ services:
     ports:
       - "${PGPORT:-5432}:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/18/docker
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${PGUSER} -d ${PGDATABASE}"]
+      interval: 3s
+      timeout: 5s
+      retries: 5
 
   db_test:
     image: postgres:18-bookworm
@@ -23,16 +27,16 @@ services:
     ports:
       - "${TEST_PGPORT:-5433}:5432"
     tmpfs:
-      - /var/lib/postgresql/data
+      - /var/lib/postgresql
     env_file:
       - .env.test
-  # healthcheck:
-  # добавить проверку на эндпоинт api/v1/health
 
   web:
     build: ./frontend
     ports:
       - "${WEB_PORT:-5173}:8080"
+    depends_on:
+      - server
 
   server:
     build: ./backend
@@ -40,5 +44,9 @@ services:
       - "${PORT:-3000}:3000"
     env_file:
       - .env
+    depends_on:
+      db_dev:
+        condition: service_healthy
+
 volumes:
   postgres_data:
