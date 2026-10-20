@@ -26,13 +26,10 @@ services:
     env_file:
       - .env.test
 
-  web:
-    build: ./frontend
-    ports:
-      - "${WEB_PORT:-5173}:8080"
-
   server:
-    build: ./backend
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "${PORT:-3000}:3000"
     env_file:

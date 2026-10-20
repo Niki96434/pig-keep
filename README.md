@@ -4,16 +4,16 @@ Pig Keep - local-hosted веб-приложение для ведения зам
 
 ## Основной функционал MVP:
   Создание, редактирование, архивация и удаление заметок с
-  их организацией с помощью тегов.
+  их организацией с помощью тегов.\
   Помимо этого в приложение встроен быстрый полнотекстовый поиск на базе PostgreSQL с поддержкой русской локализации по содержимому.
 
 ## Документация
 
-- Тестирование: [docs/TESTING.md](https://github.com/Niki96434/google-keep/blob/main/docs/TESTING.md)
+- Особенности реализации: [docs/SPECS.md](https://github.com/Niki96434/google-keep/blob/main/docs/DETAILS.md)
 - Документация по бэкенду: [backend/README.md](https://github.com/Niki96434/google-keep/blob/main/backend/README.md)
-- Особенности реализации: [docs/SPECS.md](https://github.com/Niki96434/google-keep/blob/main/docs/SPECS.md)
+- Тестирование: [docs/TESTING.md](https://github.com/Niki96434/google-keep/blob/main/docs/TESTING.md)
 
-## Перечень используемых технологий (с их обоснованием)
+## Перечень используемых технологий
 
 - React 19, Typescript, Vite, Eslint, Prettier, Vitest, RTL, MSW, RTQuery, Zod, Zustand
 - Express.js, Supertest, Drizzle ORM
@@ -69,10 +69,7 @@ Pig Keep - local-hosted веб-приложение для ведения зам
 ### Скриншоты
 
 #### Главный экран (свернутое меню)
-![Главный экран (свернутое меню)](docs/screenshots/home-1.png)
-
-#### Главный экран (развернутое меню)
-![Главный экран (развернутое меню)](docs/screenshots/home-2.png)
+![Главный экран (свернутое меню)](docs/screenshots/home.png)
 
 #### Создание и редактирование заметки
 ![Создание и редактирование заметки](docs/screenshots/form.png)
