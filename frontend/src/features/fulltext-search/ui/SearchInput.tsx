@@ -20,7 +20,7 @@ export function SearchInput() {
     <InputGroup
       className={cn(
         'relative flex items-center w-full h-11 md:h-12 px-3 rounded-xl',
-        'bg-background border border-transparent shadow-sm hover:shadow-md focus-within:shadow-md transition-all duration-200',
+        'bg-[#efefef] hover:bg-[#e2e2e2] focus-within:bg-[#e2e2e2] transition-colors duration-200',
         'has-[[data-slot=input-group-control]:focus-visible]:border-transparent has-[[data-slot=input-group-control]:focus-visible]:ring-0 outline-none focus:outline-none focus:ring-0'
       )}
     >
