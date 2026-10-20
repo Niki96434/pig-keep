@@ -5,7 +5,7 @@
   justify-content: space-between;
   padding: 14px;
   background-color: var(--card-color);
-  width: 173px;
+  width: 100%;
   min-height: 96px;
   border-radius: 16px;
   border: var(--border);
@@ -106,7 +106,7 @@
 
 @media (width >= 768px) {
   .container {
-    width: 200px;
+    width: 100%;
     height: fit-content;
     min-height: 120px;
     gap: 16px;
@@ -129,7 +129,7 @@
 
 @media (width >= 1024px) {
   .container {
-    width: 295px;
+    width: 100%;
     height: fit-content;
     min-height: 130px;
     gap: 16px;

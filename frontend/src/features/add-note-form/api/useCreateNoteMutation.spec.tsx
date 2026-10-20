@@ -2,7 +2,7 @@ import { waitFor } from '@testing-library/react'
 import { server } from '@/shared/testing/msw/node'
 import { http, HttpResponse } from 'msw'
 import { renderHookWithProviders } from '@/shared/testing/test-utils'
-import type { NoteCreateIn } from '@shared/notes/types'
+import type { NoteCreateIn } from '@/shared/api'
 import { useCreateNoteMutation } from './useCreateNoteMutation'
 
 describe('create note mutation', () => {
@@ -19,7 +19,6 @@ describe('create note mutation', () => {
         return HttpResponse.json({
           note: {
             id: '01928d73-d8ed-7211-a314-7081d763282b',
-            user_id: '01928d73-d8ed-7211-a314-7081d763271a',
             title: body.title,
             content: body.content,
           },
@@ -71,7 +70,6 @@ describe('create note mutation', () => {
         return HttpResponse.json({
           note: {
             id: createdNoteId,
-            user_id: '01928d73-d8ed-7211-a314-7081d763271a',
             title: body.title,
             content: body.content,
           },
@@ -99,4 +97,3 @@ describe('create note mutation', () => {
     expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: ['notes'] })
   })
 })
-

@@ -15,7 +15,7 @@ export default defineConfig([
       },
     },
     rules: {
-      'no-console': 'warn',
+      'no-console': 'off',
       'no-else-return': 'warn',
       eqeqeq: 'warn',
       'no-unused-vars': 'off',

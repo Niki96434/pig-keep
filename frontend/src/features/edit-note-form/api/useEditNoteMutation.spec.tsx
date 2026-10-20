@@ -2,7 +2,7 @@ import { waitFor } from '@testing-library/react'
 import { server } from '@/shared/testing/msw/node'
 import { http, HttpResponse } from 'msw'
 import { renderHookWithProviders } from '@/shared/testing/test-utils'
-import type { NotePutIn } from '@shared/notes/types'
+import type { NotePutIn } from '@/shared/api'
 import { useEditNoteMutation } from './useEditNoteMutation'
 
 describe('edit note mutation', () => {
@@ -21,7 +21,6 @@ describe('edit note mutation', () => {
         return HttpResponse.json({
           note: {
             id: params.id,
-            user_id: '01928d73-d8ed-7211-a314-7081d763271a',
             title: body.title,
             content: body.content,
           },
@@ -52,7 +51,6 @@ describe('edit note mutation', () => {
         return HttpResponse.json({
           note: {
             id: params.id,
-            user_id: '01928d73-d8ed-7211-a314-7081d763271a',
             title: body.title,
             content: body.content,
           },

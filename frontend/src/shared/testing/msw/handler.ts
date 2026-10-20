@@ -1,8 +1,7 @@
 import { http, HttpResponse } from 'msw'
-import { HttpStatus } from '@shared/constants/httpStatus'
 import { notes } from './mockData'
 
-const url = `http://localhost:${import.meta.env.VITE_SERVER_PORT}`
+const url = `http://localhost:${import.meta.env.VITE_SERVER_PORT || 3000}`
 const noteId = '01928d73-d8ed-7211-a314-7081d763272c'
 export const handlers = [
   http.get(`${url}/api/v1/notes`, () => {
@@ -10,7 +9,7 @@ export const handlers = [
       {
         notes: notes,
       },
-      { status: HttpStatus.OK }
+      { status: 200 }
     )
   }),
   http.get<{ id: string }>(`${url}/api/v1/notes/:id`, ({ params }) => {
@@ -18,10 +17,10 @@ export const handlers = [
     const note = notes.find((item) => item.id === id)
 
     if (!note) {
-      return HttpResponse.json({ error: 'Not found' }, { status: HttpStatus.NOT_FOUND })
+      return HttpResponse.json({ error: 'Not found' }, { status: 404 })
     }
 
-    return HttpResponse.json({ note }, { status: HttpStatus.OK })
+    return HttpResponse.json({ note }, { status: 200 })
   }),
   http.post<{ id: string }>(`${url}/api/v1/:id`, async ({ request }) => {
     const requestBody = await request.json()
@@ -30,26 +29,25 @@ export const handlers = [
       {
         note: {
           id: '01928d73-d8ed-7211-a314-7081d763282b',
-          user_id: '12345678-28d73-d8ed-7211-a314-7081d763282d',
           requestBody,
         },
       },
-      { status: HttpStatus.CREATED }
+      { status: 201 }
     )
   }),
-  http.delete<{ id: string }>(`${url}/api/v1/notes/${noteId}`, async () => {
-    return HttpResponse.json({ message: 'Success' }, { status: HttpStatus.OK })
+  http.delete<{ id: string }>(`${url}/api/v1/notes/trash/${noteId}`, async () => {
+    return HttpResponse.json({ message: 'Success' }, { status: 200 })
   }),
   http.get(`${url}/api/v1/tags`, () => {
-    return HttpResponse.json({ tags: [] }, { status: HttpStatus.OK })
+    return HttpResponse.json({ tags: [] }, { status: 200 })
   }),
   http.get<{ id: string }>(`${url}/api/v1/notes/:id/tags`, () => {
-    return HttpResponse.json({ tags: [] }, { status: HttpStatus.OK })
+    return HttpResponse.json({ tags: [] }, { status: 200 })
   }),
   http.post<{ id: string; tagId: string }>(`${url}/api/v1/notes/:id/tags/:tagId`, () => {
-    return HttpResponse.json({ message: 'Success' }, { status: HttpStatus.OK })
+    return HttpResponse.json({ message: 'Success' }, { status: 200 })
   }),
   http.delete<{ id: string; tagId: string }>(`${url}/api/v1/notes/:id/tags/:tagId`, () => {
-    return HttpResponse.json({ message: 'Success' }, { status: HttpStatus.OK })
+    return HttpResponse.json({ message: 'Success' }, { status: 200 })
   }),
 ]

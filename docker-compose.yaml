@@ -1,52 +1,41 @@
 services:
-  db:
-    image: postgres:18.4
+  db_dev:
+    image: postgres:18-bookworm
+    container_name: postgres-dev
+    environment:
+      POSTGRES_USER: ${PGUSER}
+      POSTGRES_PASSWORD: ${PGPASSWORD}
+      POSTGRES_DB: ${PGDATABASE}
     ports:
       - "${PGPORT:-5432}:5432"
-    environment:
-      POSTGRES_USER: ${PGUSER:-google_keep}
-      POSTGRES_DB: ${PGDATABASE:-google_keepdb}
-      POSTGRES_PASSWORD_FILE: /run/secrets/pg-password
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
     volumes:
-      - db-data:/var/lib/postgresql
-    env_file:
-      - ./backend/.env
-    secrets:
-      - pg-password
+      - postgres_data:/var/lib/postgresql/18/docker
 
-  backend:
+  db_test:
+    image: postgres:18-bookworm
+    profiles: [test]
+    container_name: postgres-test
+    environment:
+      POSTGRES_USER: ${TEST_USER:-nika}
+      POSTGRES_PASSWORD: ${TEST_PASSWORD:-nikakika2004}
+      POSTGRES_DB: ${TEST_DB:-notes_test}
+    ports:
+      - "${TEST_PGPORT:-5433}:5432"
+    tmpfs:
+      - /var/lib/postgresql
+    env_file:
+      - .env.test
+
+  server:
     build:
       context: .
-      dockerfile: backend/Dockerfile
+      dockerfile: Dockerfile
     ports:
       - "${PORT:-3000}:3000"
     env_file:
-      - ./backend/.env
-    environment:
-      - PORT=3000
-      - ORIGIN=${ORIGIN:-http://localhost:8080}
-      - DATABASE_URL=postgres://${PGUSER:-google_keep}:${PGPASSWORD:-p@ssw0rd}@db:5432/${PGDATABASE:-google_keepdb}
+      - .env
     depends_on:
-      db:
-        condition: service_healthy
-
-  frontend:
-    build:
-      context: .
-      dockerfile: frontend/Dockerfile
-    ports:
-      - "8080:8080"
-    depends_on:
-      - backend
+      - db_dev
 
 volumes:
-  db-data:
-
-secrets:
-  pg-password:
-    file: ./backend/db_password.txt
+  postgres_data:

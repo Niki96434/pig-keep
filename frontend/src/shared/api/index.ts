@@ -1,15 +1,23 @@
-import { notesApi } from './notesApi'
-import { tagsApi } from './tagsApi'
-import { petsApi } from './petsApi'
+import type { components, paths } from './generated/schema'
 
-export { axiosInstance } from './axiosInstance'
+export { apiClient } from './client'
 export { queryClient } from './queryClient'
-export { notesApi, type GetNotesParams } from './notesApi'
-export { tagsApi } from './tagsApi'
-export { petsApi } from './petsApi'
+export type { components, paths }
 
-export const api = {
-  notes: notesApi,
-  tags: tagsApi,
-  pets: petsApi,
+export type Note = components['schemas']['Note']
+export type NoteCreateIn = components['schemas']['NoteCreateIn']
+export type NotePutIn = components['schemas']['NotePutIn']
+export type NotePatchIn = components['schemas']['NotePatchIn']
+
+export type Tag = components['schemas']['Tag']
+export type TagCreateIn = components['schemas']['TagCreateIn']
+export type TagPutIn = components['schemas']['TagPutIn']
+export type TagPatchIn = components['schemas']['TagPatchIn']
+
+export type NotesGetOut = {
+  notes: Note[]
+}
+
+export type TagsGetOut = {
+  tags: Tag[]
 }

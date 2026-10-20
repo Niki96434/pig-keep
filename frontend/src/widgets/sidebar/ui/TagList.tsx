@@ -3,7 +3,11 @@ import { Bookmark } from 'lucide-react'
 import { useGetTagsQuery } from '@/entities/tag'
 import { SidebarMenuItem, SidebarMenuButton } from '@/shared/ui/sidebar/sidebar'
 
-export function TagList() {
+interface TagListProps {
+  onTagClick?: () => void
+}
+
+export function TagList({ onTagClick }: TagListProps = {}) {
   const { data } = useGetTagsQuery()
 
   if (!data?.tags?.length) {
@@ -16,9 +20,10 @@ export function TagList() {
         <SidebarMenuItem key={tag.id}>
           <SidebarMenuButton
             tooltip={tag.name}
+            onClick={onTagClick}
             render={<Link to={`/tags/${tag.id}`} className="font-medium" />}
           >
-            <Bookmark className="size-4" />
+            <Bookmark className="size-5.5 shrink-0" />
             <span>{tag.name}</span>
           </SidebarMenuButton>
         </SidebarMenuItem>

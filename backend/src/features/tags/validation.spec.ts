@@ -1,19 +1,13 @@
 import { randomUUID } from 'node:crypto'
 import { describe, expect, it } from 'vitest'
-import {
-  TagCreateInSchema,
-  TagIdSchema,
-  TagSchema,
-} from '@app/shared/tags/validationSchemas'
+import { TagCreateInSchema, TagIdSchema, TagSchema } from './validationSchemas'
 
 describe('TagCreateInSchema', () => {
   it('should succeed with valid name and trim whitespace', () => {
     const result = TagCreateInSchema.safeParse({ name: '  Работа  ' })
 
     expect(result.success).toBe(true)
-    if (result.success) {
-      expect(result.data.name).toBe('Работа')
-    }
+    expect(result.data?.name).toBe('Работа')
   })
 
   it('should fail when name is empty, whitespace only, or missing', () => {
@@ -41,8 +35,6 @@ describe('TagSchema', () => {
     const result = TagSchema.safeParse(input)
 
     expect(result.success).toBe(true)
-    if (result.success) {
-      expect(result.data).toEqual(input)
-    }
+    expect(result.data).toEqual(input)
   })
 })

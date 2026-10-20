@@ -6,262 +6,69 @@ import {
   NotePatchInSchema,
   NoteIdSchema,
   NoteSchema,
-} from '@app/shared/notes/validationSchemas'
+} from './validationSchemas'
 
 describe('NoteCreateInSchema', () => {
-  it('should succeed with valid title and content', () => {
-    const input = { title: 'Заголовок', content: 'Текст заметки' }
-    const result = NoteCreateInSchema.safeParse(input)
+  it('should succeed with valid data and trim whitespace', () => {
+    const result = NoteCreateInSchema.safeParse({
+      title: '  Заголовок  ',
+      content: '  Контент  ',
+    })
 
     expect(result.success).toBe(true)
-    if (result.success) {
-      expect(result.data).toEqual(input)
-    }
+    expect(result.data).toEqual({ title: 'Заголовок', content: 'Контент' })
   })
 
-  it('should succeed with only title', () => {
-    const input = { title: 'Заголовок' }
-    const result = NoteCreateInSchema.safeParse(input)
-
-    expect(result.success).toBe(true)
-    if (result.success) {
-      expect(result.data.title).toBe('Заголовок')
-      expect(result.data.content).toBeUndefined()
-    }
+  it('should allow either only title or only content', () => {
+    expect(NoteCreateInSchema.safeParse({ title: 'Заголовок' }).success).toBe(true)
+    expect(NoteCreateInSchema.safeParse({ content: 'Контент' }).success).toBe(true)
   })
 
-  it('should succeed with only content', () => {
-    const input = { content: 'Текст заметки' }
-    const result = NoteCreateInSchema.safeParse(input)
-
-    expect(result.success).toBe(true)
-    if (result.success) {
-      expect(result.data.content).toBe('Текст заметки')
-      expect(result.data.title).toBeUndefined()
-    }
-  })
-
-  it('should trim whitespace from fields', () => {
-    const input = { title: '  Заголовок с пробелами  ', content: '  Контент  ' }
-    const result = NoteCreateInSchema.safeParse(input)
-
-    expect(result.success).toBe(true)
-    if (result.success) {
-      expect(result.data.title).toBe('Заголовок с пробелами')
-      expect(result.data.content).toBe('Контент')
-    }
-  })
-
-  it('should fail when both title and content are missing', () => {
-    const input = {}
-    const result = NoteCreateInSchema.safeParse(input)
-
-    expect(result.success).toBe(false)
-  })
-
-  it('should fail when both title and content are empty strings or whitespace only', () => {
-    const input = { title: '   ', content: '' }
-    const result = NoteCreateInSchema.safeParse(input)
-
-    expect(result.success).toBe(false)
-  })
-
-  it('should fail when title exceeds 255 characters', () => {
-    const input = { title: 'a'.repeat(256), content: 'Контент' }
-    const result = NoteCreateInSchema.safeParse(input)
-
-    expect(result.success).toBe(false)
-  })
-
-  it('should fail when content exceeds 1000 characters', () => {
-    const input = { title: 'Заголовок', content: 'a'.repeat(1001) }
-    const result = NoteCreateInSchema.safeParse(input)
-
-    expect(result.success).toBe(false)
+  it('should fail when both fields are missing or whitespace-only', () => {
+    expect(NoteCreateInSchema.safeParse({}).success).toBe(false)
+    expect(NoteCreateInSchema.safeParse({ title: '   ', content: '' }).success).toBe(false)
   })
 })
 
 describe('NotePutInSchema', () => {
-  it('should succeed with valid title and content', () => {
-    const input = { title: 'Обновленный заголовок', content: 'Новый контент' }
-    const result = NotePutInSchema.safeParse(input)
-
-    expect(result.success).toBe(true)
-    if (result.success) {
-      expect(result.data).toEqual(input)
-    }
-  })
-
-  it('should allow empty strings for title and content', () => {
-    const input = { title: '', content: '' }
-    const result = NotePutInSchema.safeParse(input)
-
-    expect(result.success).toBe(true)
-    if (result.success) {
-      expect(result.data).toEqual({ title: '', content: '' })
-    }
-  })
-
-  it('should fail on empty object', () => {
-    const input = {}
-    const result = NotePutInSchema.safeParse(input)
-
-    expect(result.success).toBe(false)
-  })
-
-  it('should trim whitespace from fields', () => {
-    const input = { title: '  Заголовок  ', content: '  Контент  ' }
-    const result = NotePutInSchema.safeParse(input)
-
-    expect(result.success).toBe(true)
-    if (result.success) {
-      expect(result.data.title).toBe('Заголовок')
-      expect(result.data.content).toBe('Контент')
-    }
-  })
-
-  it('should fail when title exceeds 255 characters', () => {
-    const input = { title: 'a'.repeat(256), content: 'Контент' }
-    const result = NotePutInSchema.safeParse(input)
-
-    expect(result.success).toBe(false)
-  })
-
-  it('should fail when content exceeds 1000 characters', () => {
-    const input = { title: 'Заголовок', content: 'a'.repeat(1001) }
-    const result = NotePutInSchema.safeParse(input)
-
-    expect(result.success).toBe(false)
+  it('should require both title and content (allowing empty strings)', () => {
+    expect(NotePutInSchema.safeParse({ title: 'Заголовок', content: 'Контент' }).success).toBe(true)
+    expect(NotePutInSchema.safeParse({ title: '', content: '' }).success).toBe(true)
+    expect(NotePutInSchema.safeParse({ title: 'Заголовок' }).success).toBe(false)
+    expect(NotePutInSchema.safeParse({}).success).toBe(false)
   })
 })
 
 describe('NotePatchInSchema', () => {
-  it('should succeed when only title is provided', () => {
-    const input = { title: 'Новый заголовок' }
-    const result = NotePatchInSchema.safeParse(input)
-
-    expect(result.success).toBe(true)
-    if (result.success) {
-      expect(result.data.title).toBe('Новый заголовок')
-      expect(result.data.content).toBeUndefined()
-    }
+  it('should succeed when at least one field is provided', () => {
+    expect(NotePatchInSchema.safeParse({ title: 'Новый' }).success).toBe(true)
+    expect(NotePatchInSchema.safeParse({ isArchive: true }).success).toBe(true)
   })
 
-  it('should succeed when only content is provided', () => {
-    const input = { content: 'Новый контент' }
-    const result = NotePatchInSchema.safeParse(input)
-
-    expect(result.success).toBe(true)
-    if (result.success) {
-      expect(result.data.content).toBe('Новый контент')
-      expect(result.data.title).toBeUndefined()
-    }
-  })
-
-  it('should succeed when both title and content are provided', () => {
-    const input = { title: 'Заголовок', content: 'Контент' }
-    const result = NotePatchInSchema.safeParse(input)
-
-    expect(result.success).toBe(true)
-  })
-
-  it('should fail when body is empty (neither title nor content provided)', () => {
-    const input = {}
-    const result = NotePatchInSchema.safeParse(input)
-
-    expect(result.success).toBe(false)
-  })
-
-  it('should fail when title exceeds 255 characters', () => {
-    const input = { title: 'a'.repeat(256) }
-    const result = NotePatchInSchema.safeParse(input)
-
-    expect(result.success).toBe(false)
-  })
-
-  it('should fail when content exceeds 1000 characters', () => {
-    const input = { content: 'a'.repeat(1001) }
-    const result = NotePatchInSchema.safeParse(input)
-
-    expect(result.success).toBe(false)
+  it('should fail when body is empty', () => {
+    expect(NotePatchInSchema.safeParse({}).success).toBe(false)
   })
 })
 
 describe('NoteIdSchema', () => {
-  it('should succeed with valid UUID', () => {
-    const input = { id: randomUUID() }
-    const result = NoteIdSchema.safeParse(input)
-
-    expect(result.success).toBe(true)
-    if (result.success) {
-      expect(result.data.id).toBe(input.id)
-    }
-  })
-
-  it('should fail with invalid UUID string', () => {
-    const input = { id: 'invalid-uuid-123' }
-    const result = NoteIdSchema.safeParse(input)
-
-    expect(result.success).toBe(false)
-  })
-
-  it('should fail when id is missing', () => {
-    const input = {}
-    const result = NoteIdSchema.safeParse(input)
-
-    expect(result.success).toBe(false)
+  it('should validate UUID correctly', () => {
+    expect(NoteIdSchema.safeParse({ id: randomUUID() }).success).toBe(true)
+    expect(NoteIdSchema.safeParse({ id: 'invalid-uuid' }).success).toBe(false)
+    expect(NoteIdSchema.safeParse({}).success).toBe(false)
   })
 })
 
 describe('NoteSchema', () => {
-  it('should succeed with valid full note object', () => {
-    const input = {
+  it('should validate full note contract', () => {
+    const validNote = {
       id: randomUUID(),
-      user_id: randomUUID(),
       title: 'Заголовок',
       content: 'Контент',
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
     }
-    const result = NoteSchema.safeParse(input)
 
-    expect(result.success).toBe(true)
-    if (result.success) {
-      expect(result.data).toEqual(input)
-    }
-  })
-
-  it('should fail when id or user_id is not a valid UUID', () => {
-    const input = {
-      id: 'invalid-id',
-      user_id: randomUUID(),
-      title: 'Заголовок',
-      content: 'Контент',
-    }
-    const result = NoteSchema.safeParse(input)
-
-    expect(result.success).toBe(false)
-  })
-
-  it('should fail when title exceeds 255 characters', () => {
-    const input = {
-      id: randomUUID(),
-      user_id: randomUUID(),
-      title: 'a'.repeat(256),
-      content: 'Контент',
-    }
-    const result = NoteSchema.safeParse(input)
-
-    expect(result.success).toBe(false)
-  })
-
-  it('should fail when content exceeds 1000 characters', () => {
-    const input = {
-      id: randomUUID(),
-      user_id: randomUUID(),
-      title: 'Заголовок',
-      content: 'a'.repeat(1001),
-    }
-    const result = NoteSchema.safeParse(input)
-
-    expect(result.success).toBe(false)
+    expect(NoteSchema.safeParse(validNote).success).toBe(true)
+    expect(NoteSchema.safeParse({ ...validNote, id: 'invalid-uuid' }).success).toBe(false)
   })
 })

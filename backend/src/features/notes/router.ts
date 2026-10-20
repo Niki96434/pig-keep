@@ -10,8 +10,7 @@ import {
   NoteIdSchema,
   NotePatchInSchema,
   SearchQuerySchema,
-} from '@app/shared/notes/validationSchemas'
-
+} from './validationSchemas'
 export const notesRouter = express.Router()
 
 const repo = repository({ db })
@@ -22,16 +21,24 @@ const {
   putNote,
   patchNote,
   deleteNote,
+  clearTrash,
+  restoreNote,
+  deleteByIdForever,
   getNoteTags,
   addTagToNote,
   removeTagFromNote,
 } = controller({ repo })
 
-notesRouter.get('/', validateSchemas({ query: SearchQuerySchema }), (req: Request, res: Response) =>
-  getNotes(req, res)
-)
+notesRouter
+  .get('/', validateSchemas({ query: SearchQuerySchema }), (req: Request, res: Response) =>
+    getNotes(req, res)
+  )
+  .post('/', validateSchemas({ body: NoteCreateInSchema }), createNote)
 
-notesRouter.post('/', validateSchemas({ body: NoteCreateInSchema }), createNote)
+notesRouter
+  .delete('/trash', clearTrash)
+  .delete('/trash/:id', validateSchemas({ params: NoteIdSchema }), deleteByIdForever)
+  .patch('/trash/:id/restore', validateSchemas({ params: NoteIdSchema }), restoreNote)
 
 notesRouter
   .route('/:id')
@@ -40,6 +47,7 @@ notesRouter
   .patch(validateSchemas({ params: NoteIdSchema, body: NotePatchInSchema }), patchNote)
   .delete(validateSchemas({ params: NoteIdSchema }), deleteNote)
 
-notesRouter.get('/:id/tags', validateSchemas({ params: NoteIdSchema }), getNoteTags)
-notesRouter.post('/:id/tags/:tagId', addTagToNote)
-notesRouter.delete('/:id/tags/:tagId', removeTagFromNote)
+notesRouter
+  .get('/:id/tags', validateSchemas({ params: NoteIdSchema }), getNoteTags)
+  .post('/:id/tags/:tagId', addTagToNote)
+  .delete('/:id/tags/:tagId', removeTagFromNote)

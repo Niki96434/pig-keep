@@ -1,6 +1,5 @@
-import { api } from '@/shared/api'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import type { Note, NotePatchIn } from '@shared/notes/types'
+import { apiClient, type Note, type NotePatchIn } from '@/shared/api'
 
 export interface PatchNoteParams {
   id: Note['id']
@@ -10,7 +9,14 @@ export interface PatchNoteParams {
 export function usePatchNoteMutation() {
   const client = useQueryClient()
   return useMutation({
-    mutationFn: ({ id, data }: PatchNoteParams) => api.notes.patchNote(id, data),
+    mutationFn: async ({ id, data }: PatchNoteParams) => {
+      const res = await apiClient.PATCH('/api/v1/notes/{id}', {
+        params: { path: { id } },
+        body: data,
+      })
+      if (res.error) throw res.error
+      return res.data
+    },
     onSuccess: () => client.invalidateQueries({ queryKey: ['notes'] }),
   })
 }

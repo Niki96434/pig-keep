@@ -11,7 +11,7 @@ import {
 describe('useNoteTags', () => {
   const noteId = '01928d73-d8ed-7211-a314-7081d763271c'
   const tagId = '01928d73-d8ed-7211-a314-7081d763271d'
-  const mockTags = [{ id: tagId, name: 'Срочно', user_id: 'user-1' }]
+  const mockTags = [{ id: tagId, name: 'Срочно' }]
 
   it('should fetch note tags', async () => {
     server.use(

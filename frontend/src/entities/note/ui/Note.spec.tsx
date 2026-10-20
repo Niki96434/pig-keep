@@ -7,8 +7,8 @@ import { Note } from './Note'
 describe('Note component', () => {
   const noteId = '01928d73-d8ed-7211-a314-7081d763271c'
   const mockTags = [
-    { id: 'tag-1', name: 'Работа', user_id: 'user-1' },
-    { id: 'tag-2', name: 'Дом', user_id: 'user-1' },
+    { id: 'tag-1', name: 'Работа' },
+    { id: 'tag-2', name: 'Дом' },
   ]
 
   beforeEach(() => {
@@ -127,7 +127,7 @@ describe('Note component', () => {
   it('should permanently delete note when clicking delete forever button on deleted note', async () => {
     let deleted = false
     server.use(
-      http.delete<{ id: string }>(`*/api/v1/notes/:id`, () => {
+      http.delete<{ id: string }>(`*/api/v1/notes/trash/:id`, () => {
         deleted = true
         return HttpResponse.json({ message: 'Success' })
       })
@@ -145,4 +145,3 @@ describe('Note component', () => {
     })
   })
 })
-

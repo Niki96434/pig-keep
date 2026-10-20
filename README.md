@@ -1,26 +1,19 @@
-# Pig Keep
+# 🐷 Pig Keep
 
-MVP веб-приложение с виртуальным питомцем, основной продукт которого - приложение заметок. За активность пользователь получает награды в виде XP и HP, повышает уровень питомца и вместе с тем помогает ему повышать шкалу удовольствия.
+Pig Keep - local-hosted веб-приложение для ведения заметок.
 
-## Сценарий
-
-1.Регистрация: пользователь регистрируется в приложении, используя почту/логин и пароль.В этот момент за ним закрепляется питомец с базовыми показателями.\
-2.Базовый прогресс: активность пользователя за день подсчитывается и пользователь получает XP, отвечающее за уровень удовольствия питомца и HP для поддержания жизни питомца.\
-3.Активность: при использовании основного функционала (создание, редактирование, архивация заметок) у питомца растет скрытый параметр - индекс удовольствия.\
-4.Если пользователь активно использует приложение, то у него есть возможность попасть в лидерборд, глобальный топ "самых довольных питомцев". Пользователи видят свою позицию в рейтинге, суммарный XP и аватар своего питомца.\
-5.Если пользователь совсем не использует приложение заметок(основной продукт),то питомец теряет свои HP, вплоть до того, что питомец может умереть.
+## Основной функционал MVP:
+  Создание, редактирование, архивация и удаление заметок с
+  их организацией с помощью тегов.\
+  Помимо этого в приложение встроен быстрый полнотекстовый поиск на базе PostgreSQL с поддержкой русской локализации по содержимому.
 
 ## Документация
 
-- Описание решения: [docs/SOLUTION.md](https://github.com/Niki96434/google-keep/blob/main/docs/SOLUTION.md)
-- Пользовательский путь: [docs/RULES.md](https://github.com/Niki96434/google-keep/blob/main/docs/RULES.md)
-- Тестирование: [docs/TESTING.md](https://github.com/Niki96434/google-keep/blob/main/docs/TESTING.md)
-- Руководство по работе с Docker: [docs/DOCKER.md](https://github.com/Niki96434/google-keep/blob/main/docs/DOCKER.md)
-- Полнотекстовый поиск с функциями PostgreSQL: [docs/FULLTEXT-SEARCH.md](https://github.com/Niki96434/google-keep/blob/main/docs/FULLTEXT-SEARCH.md)
-- Документация по фронтенду: [frontend/README.md](https://github.com/Niki96434/google-keep/blob/main/frontend/README.md)
+- Особенности реализации: [docs/SPECS.md](https://github.com/Niki96434/google-keep/blob/main/docs/DETAILS.md)
 - Документация по бэкенду: [backend/README.md](https://github.com/Niki96434/google-keep/blob/main/backend/README.md)
+- Тестирование: [docs/TESTING.md](https://github.com/Niki96434/google-keep/blob/main/docs/TESTING.md)
 
-## Перечень используемых технологий (с их обоснованием)
+## Перечень используемых технологий
 
 - React 19, Typescript, Vite, Eslint, Prettier, Vitest, RTL, MSW, RTQuery, Zod, Zustand
 - Express.js, Supertest, Drizzle ORM
@@ -28,28 +21,26 @@ MVP веб-приложение с виртуальным питомцем, ос
 
 ## Структура проекта
 
-- apps/frontend/src - React-приложение
-- apps/backend/core - Инициализация базы данных, глобальный обработчик ошибок, мидлвары
-- apps/backend/features - feature-based модульная архитектура
-- apps/backend/migrations - миграции PostgreSQL
-- apps/packages/shared - общие типы и схемы контракта
-- apps/docs - таблица с описанием эндпоинтов(REST), описание решения, диаграммы компонентов и развёртывания, скриншоты дизайна мобильного интерфейса, на планшете и десктоп
+- frontend/src - React-приложение
+- backend/core - Инициализация базы данных, глобальный обработчик ошибок, мидлвары
+- backend/features - feature-based модульная архитектура
+- backend/migrations - миграции PostgreSQL
+- packages/shared - общие типы и схемы контракта
+- docs - особенности решения, тестирование, скриншоты дизайна мобильного и десктоп интерфейсов
 
-## Запуск проекта (Локально)
+## Запуск проекта (local-hosted)
 
-### 1. Запуск всех сервисов в Docker (рекомендуемый способ)
-
-Стек полностью контейнеризирован (PostgreSQL, Express backend, Nginx frontend). Для запуска убедитесь, что у вас установлен Docker и плагин `docker compose`.
+Для запуска убедитесь, что у вас установлен Docker и плагин `docker compose`.
 
 1. Убедитесь в наличии конфигурации переменных окружения:
    ```bash
-   cp backend/.env.example backend/.env
+   cp .env.example .env
    ```
-2. Запустите все 3 контейнера в фоновом режиме со сборкой:
+2. Запустите контейнер с базой данных в фоновом режиме:
    ```bash
-   docker compose up -d --build
+   docker compose up -d
    ```
-3. Проверьте статус контейнеров:
+3. Проверьте статус контейнера:
    ```bash
    docker compose ps
    ```
@@ -57,56 +48,11 @@ MVP веб-приложение с виртуальным питомцем, ос
    ```bash
    docker compose logs -f
    ```
-5. Остановка контейнеров:
+5. Остановка контейнера:
    ```bash
    docker compose down
    ```
-
-**Доступные сервисы после запуска:**
-* **Фронтенд**: [http://localhost:8080](http://localhost:8080)
-* **Бэкенд API**: [http://localhost:3000](http://localhost:3000) (проверка: `curl http://localhost:3000/api/v1/notes`)
-* **PostgreSQL**: `localhost:5432`
-
----
-
-### 2. Запуск в режиме разработки (Dev-режим на хосте)
-
-1. Установите зависимости монорепозитория:
-   ```bash
-   npm ci
-   ```
-2. Запустите контейнер базы данных:
-   ```bash
-   docker compose up -d db
-   ```
-3. Запустите сервисы разработки:
-   * **Бэкенд** (порт 3000):
-     ```bash
-     npm run dev:back
-     ```
-   * **Фронтенд** (порт 5173):
-     ```bash
-     npm run dev:front
-     ```
-4. Запуск тестов:
-   ```bash
-   npm run test
-   ```
-
-## Особенности реализации
-
-1. Backend:
-
-- Codebase-first подход для изменения схем БД(миграции) с помощью drizzle-kit.(Схема как источник истины).
-  Создается схема Drizzle для TS, с помощью `drizzle-kit generate` создается migration.sql на основе обновленной схемы. Чтобы применить её к самой БД, используется `drizzle-kit migrate`.
-
-- Multi-staged сборка для Dockerfile. Она изменяет размер конечного образа за счет избавления от зависимостей, нужных для сборки приложения.
-
-- Full-text search(полнотекстовый поиск). Он реализован для более гибкого поиска(не по точному совпадению) с помощью встроенных функций PostgreSQL. В отличие от ILIKE(LIKE), полнотекстовый поиск в PG поддерживает словоформы, упорядочивает список по релевантности и из-за отсутствия индексов(приходится проверять весь список) обычно медленнее.
-
-2. Frontend
-
-- Реализован [api-модуль](https://github.com/Niki96434/google-keep/blob/main/frontend/src/shared/api/notesApi.ts) для инкапсуляции сетевых запросов и изоляции логики работы с сетью от UI.(Separation of Concerns)
+Сервис будет доступен на `http://localhost:5173`
 
 ## Использование сниппетов
 
@@ -115,8 +61,22 @@ MVP веб-приложение с виртуальным питомцем, ос
 - Simple React snippets
 - Vitest Snippets
 
-### Главный экран
+### Дизайн
 
-![Десктоп](https://github.com/Niki96434/google-keep/blob/dev/docs/design-template/pigkeep-dashboard.pdf)\
-![Мобильный](https://github.com/Niki96434/google-keep/blob/dev/docs/design-template/pigkeep-mobile.pdf)
+![Десктоп](https://github.com/Niki96434/google-keep/blob/main/docs/design-template/pigkeep-dashboard.pdf)\
+![Мобильный](https://github.com/Niki96434/google-keep/blob/main/docs/design-template/pigkeep-mobile.pdf)\
+
+### Скриншоты
+
+#### Главный экран (свернутое меню)
+![Главный экран (свернутое меню)](docs/screenshots/home.png)
+
+#### Создание и редактирование заметки
+![Создание и редактирование заметки](docs/screenshots/form.png)
+
+#### Создание и редактирование тегов
+![Создание и редактирование тегов](docs/screenshots/crud-tag.png)
+
+#### Мобильный интерфейс
+![Мобильный интерфейс](docs/screenshots/mobile.png)
 

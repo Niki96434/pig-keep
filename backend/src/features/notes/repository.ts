@@ -1,8 +1,7 @@
-import type { NoteCreateIn, NotePatchIn, NotePutIn } from '@app/shared/notes/types'
+import type { NoteCreateIn, NotePatchIn, NotePutIn } from './types'
 import { db } from '../../core/db/'
 import { notesTable, noteTagsTable, tagsTable } from '../../core/db/schema'
-import { and, eq, sql } from 'drizzle-orm'
-import { repository as petsRepository } from '../pets/repository'
+import { and, eq, sql, desc } from 'drizzle-orm'
 
 interface DBType {
   db: typeof db
@@ -14,6 +13,18 @@ export interface GetNotesParams {
   isArchive?: boolean | undefined
   isDeleted?: boolean | undefined
 }
+
+const noteSelectFields = {
+  id: notesTable.id,
+  title: notesTable.title,
+  content: notesTable.content,
+  isArchive: notesTable.isArchive,
+  isDeleted: notesTable.isDeleted,
+  createdAt: notesTable.createdAt,
+  updatedAt: notesTable.updatedAt,
+}
+
+export type RepositoryType = ReturnType<typeof repository>
 
 export function repository({ db }: DBType) {
   const getNotesFromDB = async (params?: GetNotesParams) => {
@@ -39,17 +50,11 @@ export function repository({ db }: DBType) {
       conditions.push(eq(noteTagsTable.tag_id, tagId))
 
       const query = db
-        .select({
-          id: notesTable.id,
-          user_id: notesTable.user_id,
-          title: notesTable.title,
-          content: notesTable.content,
-          isArchive: notesTable.isArchive,
-          isDeleted: notesTable.isDeleted,
-        })
+        .select(noteSelectFields)
         .from(notesTable)
         .innerJoin(noteTagsTable, eq(notesTable.id, noteTagsTable.note_id))
         .where(conditions.length > 1 ? and(...conditions) : conditions[0])
+        .orderBy(desc(notesTable.updatedAt))
 
       if (search) {
         return await query.limit(10)
@@ -59,9 +64,10 @@ export function repository({ db }: DBType) {
 
     if (conditions.length > 0) {
       const query = db
-        .select()
+        .select(noteSelectFields)
         .from(notesTable)
         .where(conditions.length > 1 ? and(...conditions) : conditions[0])
+        .orderBy(desc(notesTable.updatedAt))
 
       if (search) {
         return await query.limit(10)
@@ -69,55 +75,51 @@ export function repository({ db }: DBType) {
       return await query
     }
 
-    return await db.select().from(notesTable)
+    return await db.select(noteSelectFields).from(notesTable).orderBy(desc(notesTable.updatedAt))
   }
 
   const getNoteByIdFromDB = async (noteId: string) => {
-    const [note] = await db.select().from(notesTable).where(eq(notesTable.id, noteId))
+    const [note] = await db
+      .select(noteSelectFields)
+      .from(notesTable)
+      .where(eq(notesTable.id, noteId))
+
     return note
   }
-
-  const petRepo = petsRepository({ db })
 
   const createNoteFromDB = async (noteData: NoteCreateIn) => {
     const [note] = await db
       .insert(notesTable)
       .values({ ...noteData })
       .returning()
-    if (note) {
-      try {
-        await petRepo.logAction('create_note')
-      } catch {
-        // Logging error shouldn't block primary user flow
-      }
-    }
+
     return note
   }
 
   const putNoteFromDB = async (noteId: string, noteData: NotePutIn) => {
     if (Object.keys(noteData).length === 0) {
-      const [note] = await db.select().from(notesTable).where(eq(notesTable.id, noteId))
+      const [note] = await db
+        .select(noteSelectFields)
+        .from(notesTable)
+        .where(eq(notesTable.id, noteId))
       return note
     }
+
     const [note] = await db
       .update(notesTable)
       .set({ ...noteData })
       .where(eq(notesTable.id, noteId))
       .returning()
 
-    if (note) {
-      try {
-        await petRepo.logAction('update_note')
-      } catch {
-        // Logging error shouldn't block primary user flow
-      }
-    }
     return note
   }
 
   const patchNoteFromDB = async (noteId: string, noteData: NotePutIn | NotePatchIn) => {
     if (Object.keys(noteData).length === 0) {
-      const [note] = await db.select().from(notesTable).where(eq(notesTable.id, noteId))
+      const [note] = await db
+        .select(noteSelectFields)
+        .from(notesTable)
+        .where(eq(notesTable.id, noteId))
       return note
     }
     const [note] = await db
@@ -126,30 +128,39 @@ export function repository({ db }: DBType) {
       .where(eq(notesTable.id, noteId))
       .returning()
 
-    if (note) {
-      try {
-        const action =
-          'isArchive' in noteData && noteData.isArchive !== undefined
-            ? 'archive_note'
-            : 'update_note'
-        await petRepo.logAction(action)
-      } catch {
-        // Logging error shouldn't block primary user flow
-      }
-    }
     return note
   }
 
   const deleteNoteFromDB = async (noteId: string) => {
-    const result = await db.delete(notesTable).where(eq(notesTable.id, noteId))
-    if (result.rowCount) {
-      try {
-        await petRepo.logAction('delete_note')
-      } catch {
-        // Logging error shouldn't block primary user flow
-      }
-    }
-    return result.rowCount
+    const result = await db
+      .update(notesTable)
+      .set({ isDeleted: true })
+      .where(and(eq(notesTable.id, noteId), eq(notesTable.isDeleted, false)))
+
+    return result.rowCount ?? 0
+  }
+
+  const clearTrashFromDB = async () => {
+    const result = await db.delete(notesTable).where(eq(notesTable.isDeleted, true))
+
+    return result.rowCount ?? 0
+  }
+
+  const restoreNoteFromDB = async (id: string) => {
+    const result = await db
+      .update(notesTable)
+      .set({ isDeleted: false })
+      .where(and(eq(notesTable.id, id), eq(notesTable.isDeleted, true)))
+
+    return result.rowCount ?? 0
+  }
+
+  const deleteByIdForeverFromDB = async (id: string) => {
+    const result = await db
+      .delete(notesTable)
+      .where(and(eq(notesTable.id, id), eq(notesTable.isDeleted, true)))
+
+    return result.rowCount ?? 0
   }
 
   const getNoteTagsFromDB = async (noteId: string) => {
@@ -166,13 +177,7 @@ export function repository({ db }: DBType) {
       .values({ note_id: noteId, tag_id: tagId })
       .onConflictDoNothing()
       .returning()
-    if (res.length > 0) {
-      try {
-        await petRepo.logAction('add_tag')
-      } catch {
-        // Logging error shouldn't block primary user flow
-      }
-    }
+
     return res
   }
 
@@ -180,6 +185,7 @@ export function repository({ db }: DBType) {
     const result = await db
       .delete(noteTagsTable)
       .where(and(eq(noteTagsTable.note_id, noteId), eq(noteTagsTable.tag_id, tagId)))
+
     return result.rowCount
   }
 
@@ -190,6 +196,9 @@ export function repository({ db }: DBType) {
     putNoteFromDB,
     patchNoteFromDB,
     deleteNoteFromDB,
+    clearTrashFromDB,
+    restoreNoteFromDB,
+    deleteByIdForeverFromDB,
     getNoteTagsFromDB,
     addTagToNoteInDB,
     removeTagFromNoteInDB,
