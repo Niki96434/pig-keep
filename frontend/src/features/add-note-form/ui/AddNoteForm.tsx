@@ -6,7 +6,7 @@ function AddNoteForm() {
   const { formRef, isOpenForm, openForm, handleSubmit, onSubmit, control } = useNoteFormLogic()
 
   return (
-    <div ref={formRef} className="w-full max-w-150 mx-auto my-8 text-left">
+    <div ref={formRef} className="w-full max-w-[600px] mx-auto my-6 self-center text-left">
       {isOpenForm === false && (
         <div className="rounded-md border border-transparent bg-white shadow-sm hover:shadow-md transition-shadow p-1 cursor-pointer">
           <Textarea

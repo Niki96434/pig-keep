@@ -1,5 +1,5 @@
 import { screen, waitFor } from '@testing-library/react'
-import SearchInput from './SearchInput'
+import { SearchInput } from './SearchInput'
 import { NoteList } from '@/widgets/notelist/NoteList'
 import { renderWithProviders } from '@/shared/testing/test-utils'
 import { useSearchStore } from '@/stores/fulltext-search/searchStore'

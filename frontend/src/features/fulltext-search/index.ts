@@ -1,1 +1,1 @@
-export { SearchInput, default as SearchInputDefault } from './ui/SearchInput'
+export { SearchInput } from './ui/SearchInput'
