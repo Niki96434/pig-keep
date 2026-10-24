@@ -1,0 +1,42 @@
+name: Frontend CI
+
+on:
+  push:
+    branches:
+    - main
+    - dev
+    - 'feature/'
+    - 'fix/'
+    paths:
+    - 'frontend/**'
+
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  frontend-quality:
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        node-version: [24.x]
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run lint
+    - run: npm run prettier:check
+    - run: npm run test
+    - run: npm run build
+    - run: npm run typecheck
+
+    defaults:
+      run:
+        working-directory: frontend

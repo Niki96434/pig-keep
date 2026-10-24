@@ -8,7 +8,6 @@ coursework
 dist
 dist-ssr
 *.local
-.github
 
 # Logs
 logs
