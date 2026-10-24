@@ -5,13 +5,16 @@ on:
     branches:
     - main
     - dev
-    - 'feature/'
-    - 'fix/'
+    - 'feature/**'
+    - 'fix/**'
     paths:
     - 'frontend/**'
+    - '.github/workflows/frontend.yml'
 
   pull_request:
     branches: [ main ]
+
+  workflow_dispatch:
 
 jobs:
   frontend-quality:
