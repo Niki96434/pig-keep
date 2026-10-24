@@ -1,0 +1,109 @@
+@startuml c4_component_backend
+!theme plain
+skinparam defaultFontName "Arial"
+skinparam shadowing false
+skinparam roundCorner 8
+skinparam packageStyle rectangle
+
+' Стилизация в палитре C4
+skinparam rectangle<<boundary>> {
+    BackgroundColor #F7FAFC
+    BorderColor #718096
+    BorderStyle dashed
+    FontColor #2D3748
+    FontStyle bold
+}
+
+skinparam rectangle<<subboundary>> {
+    BackgroundColor #EDF2F7
+    BorderColor #CBD5E0
+    FontColor #2D3748
+    FontStyle bold
+}
+
+skinparam rectangle<<container>> {
+    BackgroundColor #1168BD
+    BorderColor #0B4884
+    FontColor #FFFFFF
+    FontStyle bold
+}
+
+skinparam database<<database>> {
+    BackgroundColor #1168BD
+    BorderColor #0B4884
+    FontColor #FFFFFF
+    FontStyle bold
+}
+
+skinparam component<<component>> {
+    BackgroundColor #438DD5
+    BorderColor #2E6295
+    FontColor #FFFFFF
+}
+
+skinparam component<<core_component>> {
+    BackgroundColor #2B6CB0
+    BorderColor #1A365D
+    FontColor #FFFFFF
+}
+
+skinparam arrow {
+    Color #0B4884
+    FontColor #2D3748
+    FontSize 11
+}
+
+title **Диаграмма компонентов (C4 Component Level 3) — Pig Keep Backend**
+
+' Внешние контейнеры
+rectangle "==Frontend SPA\n<size:10>[Container: React 19, Vite, TanStack Query]</size>\n\nИнтерфейс пользователя, отправляет REST API запросы" as spa <<container>>
+database "==PostgreSQL 18\n<size:10>[Container: Database]</size>\n\nХранение заметок, тегов, связей M:N, GIN-индекс полнотекстового поиска" as db <<database>>
+
+' Контейнер бэкенда
+rectangle "Backend API Application\n<size:11>[Container: Node.js / Express 5]</size>" as backend_api <<boundary>> {
+
+    rectangle "Core & Infrastructure Layer\n<size:10>[core/]</size>" as core_layer <<subboundary>> {
+        component "==validateSchemas\n<size:10>[Express Middleware]</size>\n\nВалидирует params, body, query по схемам Zod" as val_mw <<core_component>>
+        component "==globalErrorHandler\n<size:10>[Express Error Handler]</size>\n\nПерехватчик: ZodError (400), DatabaseError (500)" as err_handler <<core_component>>
+        component "==Database Context & Schema\n<size:10>[Drizzle ORM / pg.Pool]</size>\n\nПул соединений (max: 20), схемы notes, tags, note_tags" as db_ctx <<core_component>>
+    }
+
+    rectangle "Feature: Notes\n<size:10>[features/notes/]</size>" as notes_feature <<subboundary>> {
+        component "==Notes Router\n<size:10>[Express Router]</size>\n\nМаршрутизация /api/v1/notes, связывание схем и контроллера" as notes_router <<component>>
+        component "==Notes Validation Schemas\n<size:10>[Zod Schemas]</size>\n\nСхемы валидации: Create, Put, Patch, Search, Id" as notes_schemas <<component>>
+        component "==Notes Controller\n<size:10>[TypeScript Module]</size>\n\nОбработка HTTP-запросов заметок, архива и корзины" as notes_ctrl <<component>>
+        component "==Notes Repository\n<size:10>[Drizzle ORM DAL]</size>\n\nSQL-запросы, GIN FTS поиск, soft/hard delete, связи M:N" as notes_repo <<component>>
+    }
+
+    rectangle "Feature: Tags\n<size:10>[features/tags/]</size>" as tags_feature <<subboundary>> {
+        component "==Tags Router\n<size:10>[Express Router]</size>\n\nМаршрутизация /api/v1/tags, привязка валидации и контроллера" as tags_router <<component>>
+        component "==Tags Validation Schemas\n<size:10>[Zod Schemas]</size>\n\nСхемы валидации: TagCreate, TagPut, TagPatch, TagId" as tags_schemas <<component>>
+        component "==Tags Controller\n<size:10>[TypeScript Module]</size>\n\nОбработка HTTP-запросов тегов и формирование ответов" as tags_ctrl <<component>>
+        component "==Tags Repository\n<size:10>[Drizzle ORM DAL]</size>\n\nCRUD-операции над тегами, поиск по лексемам" as tags_repo <<component>>
+    }
+}
+
+' Связи между компонентами
+spa --> notes_router : "HTTP REST API\n[/api/v1/notes/*]"
+spa --> tags_router : "HTTP REST API\n[/api/v1/tags/*]"
+
+notes_router ..> notes_schemas : "передает схемы"
+notes_router --> val_mw : "вызывает валидацию"
+val_mw --> notes_ctrl : "валидированные данные"
+notes_ctrl --> notes_repo : "вызов операций"
+notes_repo --> db_ctx : "Drizzle SQL query"
+
+tags_router ..> tags_schemas : "передает схемы"
+tags_router --> val_mw : "вызывает валидацию"
+val_mw --> tags_ctrl : "валидированные данные"
+tags_ctrl --> tags_repo : "вызов операций"
+tags_repo --> db_ctx : "Drizzle SQL query"
+
+val_mw ..> err_handler : "ZodError (400)"
+notes_ctrl ..> err_handler : "неперехваченные сбои"
+tags_ctrl ..> err_handler : "неперехваченные сбои"
+db_ctx ..> err_handler : "DatabaseError (500)"
+
+db_ctx --> db : "SQL / TCP:5432"
+
+@enduml

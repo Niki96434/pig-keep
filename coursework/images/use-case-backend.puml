@@ -1,0 +1,115 @@
+@startuml use_case_backend_architecture
+!theme plain
+skinparam backgroundColor #FFFFFF
+skinparam handwritten false
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+
+skinparam actor {
+    BackgroundColor #2D3748
+    BorderColor #1A202C
+    FontColor #1A202C
+    FontStyle bold
+}
+
+skinparam usecase {
+    BackgroundColor #EBF8FF
+    BorderColor #3182CE
+    ArrowColor #2B6CB0
+    ActorBorderColor #2D3748
+}
+
+skinparam rectangle {
+    BorderColor #A0AEC0
+    BackgroundColor #F7FAFC
+    FontColor #2D3748
+    FontStyle bold
+}
+
+' Акторы системы
+actor "Пользователь / SPA-клиент\n(Frontend React 19)" as User
+actor "PostgreSQL 18\n(FTS Engine & RDBMS)" as DB << Secondary System >>
+
+rectangle "Серверная система: Pig Keep Backend (Express 5 + Drizzle ORM)" {
+
+    rectangle "Модуль заметок (Notes Feature - /api/v1/notes)" as NotesMod {
+        usecase "Создать заметку" as UC_CreateNote
+        usecase "Получить список заметок" as UC_GetNotes
+        usecase "Полнотекстовый поиск заметок" as UC_SearchNotes
+        usecase "Фильтровать заметки\n(по тегу, архиву, корзине)" as UC_FilterNotes
+        usecase "Получить заметку по ID" as UC_GetNoteById
+        usecase "Обновить заметку\n(PUT / PATCH)" as UC_UpdateNote
+        usecase "Архивировать / разархивировать" as UC_ArchiveNote
+        usecase "Переместить заметку в корзину\n(Soft Delete)" as UC_SoftDeleteNote
+        usecase "Управление корзиной заметок" as UC_ManageTrash
+        usecase "Восстановить из корзины" as UC_RestoreTrash
+        usecase "Удалить навсегда /\nОчистить корзину" as UC_PurgeTrash
+        usecase "Управление тегами заметки\n(Привязка/Отвязка M:N)" as UC_ManageNoteTags
+    }
+
+    rectangle "Модуль тегов (Tags Feature - /api/v1/tags)" as TagsMod {
+        usecase "Создать новый тег" as UC_CreateTag
+        usecase "Получить список тегов / Поиск" as UC_GetTags
+        usecase "Получить тег по ID" as UC_GetTagById
+        usecase "Обновить имя тега\n(PUT / PATCH)" as UC_UpdateTag
+        usecase "Удалить тег" as UC_DeleteTag
+    }
+
+    rectangle "Сквозные сервисы бэкенда (Core / DB / Middleware)" as CoreMod {
+        usecase "Валидация контракта Zod\n(Body, Query, Params)" as UC_ValidateZod #FEFCBF;line:D69E2E;text:744210
+        usecase "Морфологический поиск (Russian FTS)\nGIN-индекс по tsvector" as UC_FTSIndexing #FEFCBF;line:D69E2E;text:744210
+        usecase "Каскадное удаление связей\n(ON DELETE CASCADE)" as UC_CascadeEnforce #FEFCBF;line:D69E2E;text:744210
+        usecase "Централизованная обработка ошибок\n(globalErrorHandler)" as UC_GlobalErrors #FEFCBF;line:D69E2E;text:744210
+    }
+}
+
+' Ассоциации пользователя с модулем заметок
+User --> UC_CreateNote
+User --> UC_GetNotes
+User --> UC_GetNoteById
+User --> UC_UpdateNote
+User --> UC_SoftDeleteNote
+User --> UC_ManageTrash
+User --> UC_ManageNoteTags
+
+' Ассоциации пользователя с модулем тегов
+User --> UC_CreateTag
+User --> UC_GetTags
+User --> UC_GetTagById
+User --> UC_UpdateTag
+User --> UC_DeleteTag
+
+' Отношения расширения (<<extend>>)
+UC_SearchNotes .> UC_GetNotes : <<extend>>
+UC_FilterNotes .> UC_GetNotes : <<extend>>
+UC_ArchiveNote .> UC_UpdateNote : <<extend>>
+UC_RestoreTrash .> UC_ManageTrash : <<extend>>
+UC_PurgeTrash .> UC_ManageTrash : <<extend>>
+
+' Отношения включения (<<include>>) - Сквозная валидация
+UC_CreateNote ..> UC_ValidateZod : <<include>>
+UC_UpdateNote ..> UC_ValidateZod : <<include>>
+UC_GetNoteById ..> UC_ValidateZod : <<include>>
+UC_GetNotes ..> UC_ValidateZod : <<include>>
+UC_CreateTag ..> UC_ValidateZod : <<include>>
+UC_UpdateTag ..> UC_ValidateZod : <<include>>
+UC_GetTagById ..> UC_ValidateZod : <<include>>
+UC_ManageNoteTags ..> UC_ValidateZod : <<include>>
+
+' Отношения включения (<<include>>) - СУБД и ядро
+UC_SearchNotes ..> UC_FTSIndexing : <<include>>
+UC_GetTags ..> UC_FTSIndexing : <<include>>
+UC_DeleteTag ..> UC_CascadeEnforce : <<include>>
+UC_PurgeTrash ..> UC_CascadeEnforce : <<include>>
+
+' Ошибки валидации
+UC_ValidateZod ..> UC_GlobalErrors : <<extend>>\n(400 Bad Request)
+
+' Связи с вторичным актором БД
+UC_FTSIndexing -- DB
+UC_CascadeEnforce -- DB
+UC_GlobalErrors . DB
+
+@enduml
