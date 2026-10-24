@@ -25,7 +25,6 @@ Pig Keep - local-hosted веб-приложение для ведения зам
 - backend/core - Инициализация базы данных, глобальный обработчик ошибок, мидлвары
 - backend/features - feature-based модульная архитектура
 - backend/migrations - миграции PostgreSQL
-- packages/shared - общие типы и схемы контракта
 - docs - особенности решения, тестирование, скриншоты дизайна мобильного и десктоп интерфейсов
 
 ## Запуск проекта (local-hosted)
@@ -64,7 +63,7 @@ Pig Keep - local-hosted веб-приложение для ведения зам
 ### Дизайн
 
 ![Десктоп](https://github.com/Niki96434/google-keep/blob/main/docs/design-template/pigkeep-dashboard.pdf)\
-![Мобильный](https://github.com/Niki96434/google-keep/blob/main/docs/design-template/pigkeep-mobile.pdf)\
+![Мобильный](https://github.com/Niki96434/google-keep/blob/main/docs/design-template/pigkeep-mobile.pdf)
 
 ### Скриншоты
 
