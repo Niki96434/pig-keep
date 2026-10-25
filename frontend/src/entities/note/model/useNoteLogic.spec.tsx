@@ -68,13 +68,10 @@ describe('useNoteLogic hook', () => {
       const addTagSpy = vi.fn()
 
       server.use(
-        http.post<{ id: string; tagId: string }>(
-          '*/api/v1/notes/:id/tags/:tagId',
-          ({ params }) => {
-            addTagSpy({ noteId: params.id, tagId: params.tagId })
-            return HttpResponse.json({ message: 'Success' })
-          }
-        )
+        http.post<{ id: string; tagId: string }>('*/api/v1/notes/:id/tags/:tagId', ({ params }) => {
+          addTagSpy({ noteId: params.id, tagId: params.tagId })
+          return HttpResponse.json({ message: 'Success' })
+        })
       )
 
       const { result } = renderHookWithProviders(() =>

@@ -179,8 +179,9 @@ describe('ManageTagsModal component', () => {
     const cancelButton = screen.getByRole('button', { name: /отменить редактирование/i })
     await user.click(cancelButton)
 
-    expect(screen.queryByRole('textbox', { name: /редактировать название тега/i })).not.toBeInTheDocument()
+    expect(
+      screen.queryByRole('textbox', { name: /редактировать название тега/i })
+    ).not.toBeInTheDocument()
     expect(screen.getByText('Старое имя')).toBeInTheDocument()
   })
 })
-

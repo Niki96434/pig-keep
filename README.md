@@ -18,6 +18,7 @@ Pig Keep - local-hosted веб-приложение для ведения зам
 - React 19, Typescript, Vite, Eslint, Prettier, Vitest, RTL, MSW, RTQuery, Zod, Zustand
 - Express.js, Supertest, Drizzle ORM
 - PostgreSQL 18
+- Docker
 
 ## Структура проекта
 

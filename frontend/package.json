@@ -8,12 +8,13 @@
     "build": "tsc -b && vite build",
     "api:generate": "openapi-typescript ../backend/openapi.json -o ./src/shared/api/generated/schema.d.ts",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint .",
+    "lint": "eslint . --max-warnings=0",
     "lint:fix": "eslint . --fix",
     "prettier:check": "prettier --check .",
     "prettier:fix": "prettier --write .",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest",
+    "test:ci": "vitest run"
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
