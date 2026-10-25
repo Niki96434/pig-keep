@@ -1,7 +1,7 @@
 import React from 'react'
 import { useContext } from 'react'
 
-/* eslint-disable no-unused-vars */
+ 
 export type SidebarContextProps = {
   state: 'expanded' | 'collapsed'
   open: boolean
