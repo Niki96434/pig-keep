@@ -29,7 +29,7 @@ export default defineConfig([
         'error',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
-      'no-unused-vars': 'warn',
+      'no-unused-vars': 'off',
     },
   },
 ])
