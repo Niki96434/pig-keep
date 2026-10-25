@@ -26,7 +26,7 @@ permissions:
 jobs:
   frontend-quality:
 
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
