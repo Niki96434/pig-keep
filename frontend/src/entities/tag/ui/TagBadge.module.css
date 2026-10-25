@@ -35,7 +35,9 @@
   width: 14px;
   height: 14px;
   flex-shrink: 0;
-  transition: background-color 0.2s, color 0.2s;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
 }
 
 .deleteBtn:hover {

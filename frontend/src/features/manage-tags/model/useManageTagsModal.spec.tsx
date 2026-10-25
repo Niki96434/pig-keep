@@ -242,4 +242,3 @@ describe('useManageTagsModal hook', () => {
     expect(result.current.editingTagId).toBeNull()
   })
 })
-

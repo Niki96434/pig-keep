@@ -29,7 +29,6 @@ export const renderWithProviders = (ui: React.ReactElement) => {
   }
 }
 
- 
 export function renderHookWithProviders<Result, Props = unknown>(hook: (props: Props) => Result) {
   const testQueryClient = createTestQueryClient()
 

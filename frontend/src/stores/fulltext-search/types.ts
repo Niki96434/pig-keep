@@ -3,7 +3,6 @@ export interface defaultStateType {
 }
 
 export interface SearchActionsType {
-   
   setSearchValue: (search: string) => void
   setClearSearch: () => void
 }
