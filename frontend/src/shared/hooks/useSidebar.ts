@@ -1,7 +1,6 @@
 import React from 'react'
 import { useContext } from 'react'
 
- 
 export type SidebarContextProps = {
   state: 'expanded' | 'collapsed'
   open: boolean
