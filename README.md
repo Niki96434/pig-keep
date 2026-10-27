@@ -38,7 +38,7 @@ Pig Keep - local-hosted веб-приложение для ведения зам
    ```
 2. Запустите контейнер с базой данных в фоновом режиме:
    ```bash
-   docker compose up -d
+   docker compose up -d --build
    ```
 3. Проверьте статус контейнера:
    ```bash
@@ -52,14 +52,18 @@ Pig Keep - local-hosted веб-приложение для ведения зам
    ```bash
    docker compose down
    ```
-Сервис будет доступен на `http://localhost:5173`
+Сервис будет доступен на `http://localhost:3000`
 
 ## Использование сниппетов
 
 Для ускоренной разработки я использую данные сниппеты для написания шаблонного кода:
 
-- Simple React snippets
-- Vitest Snippets
+- (Simple React snippets)[https://marketplace.visualstudio.com/items?itemName=burkeholland.simple-react-snippets]
+- (Vitest Snippets)[https://marketplace.visualstudio.com/items?itemName=deinsoftware.vitest-snippets]
+
+Для проверки пакетов перед установкой, чтобы не засорять бандл, я использовала:
+
+- (Bundlephobia)[https://bundlephobia.com]
 
 ### Дизайн
 
