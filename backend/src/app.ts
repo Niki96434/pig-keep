@@ -17,12 +17,17 @@ app.use(express.json())
 app.use(cors(corsOptions))
 app.use('/api/v1/notes', notesRouter)
 app.use('/api/v1/tags', tagsRouter)
-app.use(globalErrorHandler)
 
 const staticBundlePath = path.join(process.cwd(), 'frontend/public')
 
 app.use(express.static(staticBundlePath))
 
-app.get('*', (_req: Request, res: Response) => {
-  res.sendFile(path.join(staticBundlePath, 'index.html'))
+app.get('{*splat}', (_req: Request, res: Response, next) => {
+  res.sendFile(path.join(staticBundlePath, 'index.html'), (err) => {
+    if (err) {
+      next(err)
+    }
+  })
 })
+
+app.use(globalErrorHandler)
