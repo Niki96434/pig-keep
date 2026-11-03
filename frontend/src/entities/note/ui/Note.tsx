@@ -1,7 +1,6 @@
 import type { Note as NoteType } from '@/shared/api'
 import styles from './Note.module.css'
-import menuIcon from './../assets/three-dots.png'
-import { Archive, ArchiveRestore, PencilIcon, Trash2, TrashIcon } from 'lucide-react'
+import { Archive, ArchiveRestore, MoreVertical, PencilIcon, Trash2, TrashIcon } from 'lucide-react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -94,8 +93,13 @@ export function Note({ id, title, content, isArchive, isDeleted }: NoteProps) {
               <DropdownMenu>
                 <DropdownMenuTrigger
                   render={
-                    <button className={styles.wrapper}>
-                      <img src={menuIcon} className={styles.menu} alt="Меню заметки" />
+                    <button
+                      type="button"
+                      className={styles.wrapper}
+                      aria-label="Меню заметки"
+                      title="Меню заметки"
+                    >
+                      <MoreVertical className={styles.icon} />
                     </button>
                   }
                 />
