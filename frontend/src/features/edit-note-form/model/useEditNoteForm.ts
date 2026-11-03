@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { NotePutInSchema } from './schema'
@@ -9,12 +9,16 @@ import { useGetNotesQuery } from '@/entities/note'
 
 export function useEditNoteForm() {
   const editMutation = useEditNoteMutation()
+
   const isOpenForm = useEditNoteStore((state) => state.isOpenEditForm)
   const id = useEditNoteStore((state) => state.noteId)
+  const isOpen = Boolean(isOpenForm && id)
+
   const actions = useEditNoteStore((state) => state.actions)
 
   const { data } = useGetNotesQuery()
   const currentNote = data?.notes.find((note) => note.id === id)
+  const snapshotRef = useRef<NotePutIn | null>(null)
 
   const { control, handleSubmit, reset } = useForm<NotePutIn>({
     resolver: zodResolver(NotePutInSchema),
@@ -25,42 +29,41 @@ export function useEditNoteForm() {
   })
 
   useEffect(() => {
-    if (currentNote) {
-      reset({
+    if (isOpen && currentNote) {
+      snapshotRef.current = {
         title: currentNote.title,
         content: currentNote.content,
+      }
+      reset(snapshotRef.current)
+    }
+  }, [currentNote, reset, isOpen])
+
+  const onSubmit: SubmitHandler<NotePutIn> = (formValues) => {
+    const snapshot = snapshotRef.current
+
+    const closeEditForm = () => {
+      actions.setCloseEditForm()
+      actions.removeId()
+    }
+
+    if (!id || !snapshot) {
+      closeEditForm()
+      return
+    }
+
+    const isChanged =
+      formValues.title.trim() !== snapshot.title.trim() ||
+      formValues.content.trim() !== snapshot.content.trim()
+
+    if (isChanged) {
+      editMutation.mutate({
+        id,
+        title: formValues.title?.trim() || '',
+        content: formValues.content?.trim() || '',
       })
     }
-  }, [currentNote, reset])
-
-  const closeEditForm = useCallback(() => {
-    actions.setCloseEditForm()
-    actions.removeId()
-  }, [actions])
-
-  const onSubmit: SubmitHandler<NotePutIn> = useCallback(
-    (formValues) => {
-      if (!id) {
-        closeEditForm()
-        return
-      }
-
-      const title = formValues.title.trim()
-      const content = formValues.content.trim()
-
-      if (title !== currentNote?.title.trim() || content !== currentNote?.content.trim()) {
-        editMutation.mutate({
-          id,
-          title: formValues.title?.trim() || '',
-          content: formValues.content?.trim() || '',
-        })
-      }
-      closeEditForm()
-    },
-    [id, editMutation, closeEditForm, currentNote]
-  )
-
-  const isOpen = Boolean(isOpenForm && id)
+    closeEditForm()
+  }
 
   return {
     isOpen,

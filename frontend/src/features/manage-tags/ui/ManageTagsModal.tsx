@@ -3,7 +3,7 @@ import { Button } from '@/shared/ui'
 import { useManageTagsModal } from '../model/useManageTagsModal'
 import styles from './ManageTagsModal.module.css'
 
-export function ManageTagsModal() {
+function ManageTagsModal() {
   const {
     isOpen,
     close,
@@ -146,3 +146,5 @@ export function ManageTagsModal() {
     </div>
   )
 }
+
+export { ManageTagsModal }
