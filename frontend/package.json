@@ -2,6 +2,9 @@
   "name": "google_keep",
   "private": true,
   "version": "0.0.0",
+  "sideEffects": [
+    "**/*.css"
+  ],
   "type": "module",
   "scripts": {
     "dev": "vite",
