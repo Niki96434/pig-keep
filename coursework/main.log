@@ -1,17 +1,17 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023/Debian) (preloaded format=xelatex 2026.10.5)  24 OCT 2026 22:28
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023/Debian) (preloaded format=xelatex 2026.10.5)  30 OCT 2026 10:18
 entering extended mode
  restricted \write18 enabled.
- file:line:error style messages enabled.
  %&-line parsing enabled.
-**/home/nikki/mdocs/repo/pig-keep/coursework/main
-(/home/nikki/mdocs/repo/pig-keep/coursework/main.tex
+**main.tex
+(./main.tex
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
 (/usr/share/texlive/texmf-dist/tex/latex/extsizes/extreport.cls
 Document Class: extreport 1996/10/08 v1.0 Non Standard LaTeX document class
 (/usr/share/texlive/texmf-dist/tex/latex/extsizes/size14.clo
 File: size14.clo 1999/11/11 v1.4a NON-Standard LaTeX file (size option)
-) (/usr/share/texlive/texmf-dist/tex/latex/base/exscale.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/exscale.sty
 Package: exscale 2018/09/24 v2.1i Standard LaTeX package exscale
 LaTeX Font Info:    Redeclaring symbol font `largesymbols' on input line 57.
 LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
@@ -32,9 +32,13 @@ LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
 \abovecaptionskip=\skip48
 \belowcaptionskip=\skip49
 \bibindent=\dimen141
-) (/usr/share/texlive/texmf-dist/tex/latex/fontspec/fontspec.sty (/usr/share/texlive/texmf-dist/tex/latex/l3packages/xparse/xparse.sty (/usr/share/texlive/texmf-dist/tex/latex/l3kernel/expl3.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/fontspec/fontspec.sty
+(/usr/share/texlive/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
+(/usr/share/texlive/texmf-dist/tex/latex/l3kernel/expl3.sty
 Package: expl3 2024-01-22 L3 programming layer (loader) 
- (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
+
+(/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
 File: l3backend-xetex.def 2024-01-04 L3 backend support: XeTeX
 \g__graphics_track_int=\count192
 \l__pdf_internal_box=\box51
@@ -45,8 +49,10 @@ File: l3backend-xetex.def 2024-01-04 L3 backend support: XeTeX
 Package: xparse 2023-10-10 L3 Experimental document command parser
 )
 Package: fontspec 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTeX
- (/usr/share/texlive/texmf-dist/tex/latex/fontspec/fontspec-xetex.sty
-Package: fontspec-xetex 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTeX
+
+(/usr/share/texlive/texmf-dist/tex/latex/fontspec/fontspec-xetex.sty
+Package: fontspec-xetex 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTe
+X
 \l__fontspec_script_int=\count196
 \l__fontspec_language_int=\count197
 \l__fontspec_strnum_int=\count198
@@ -61,9 +67,11 @@ Package: fontspec-xetex 2022/01/15 v2.8a Font selection for XeLaTeX and LuaLaTeX
 \l__fontspec_tmpa_dim=\dimen142
 \l__fontspec_tmpb_dim=\dimen143
 \l__fontspec_tmpc_dim=\dimen144
- (/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
-) (/usr/share/texlive/texmf-dist/tex/latex/fontspec/fontspec.cfg)))
+)
+(/usr/share/texlive/texmf-dist/tex/latex/fontspec/fontspec.cfg)))
 
 Package fontspec Info: Font family 'TimesNewRoman(0)' created for font 'Times
 (fontspec)             New Roman' with options [Ligatures=TeX].
@@ -87,7 +95,8 @@ Package fontspec Info: Font family 'TimesNewRoman(0)' created for font 'Times
 
 Package fontspec Info: Font family 'CourierNew(0)' created for font 'Courier
 (fontspec)             New' with options
-(fontspec)             [WordSpace={1,0,0},HyphenChar=None,PunctuationSpace=WordSpace].
+(fontspec)             [WordSpace={1,0,0},HyphenChar=None,PunctuationSpace=Word
+Space].
 (fontspec)              
 (fontspec)              This font family consists of the following NFSS
 (fontspec)             series/shapes:
@@ -145,30 +154,38 @@ Package fontspec Info: Font family 'Arial(0)' created for font 'Arial' with
 (fontspec)             <->"Arial/BI/OT:language=dflt;mapping=tex-text;"
 (fontspec)             - 'bold italic small caps'  (b/scit) with NFSS spec.: 
 
- (/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty
+
+(/usr/share/texlive/texmf-dist/tex/generic/babel/babel.sty
 Package: babel 2024/01/07 v24.1 The Babel package
 \babel@savecnt=\count273
 \U@D=\dimen145
 \l@unhyphenated=\language18
- (/usr/share/texlive/texmf-dist/tex/generic/babel/xebabel.def)
+
+(/usr/share/texlive/texmf-dist/tex/generic/babel/xebabel.def)
 \bbl@readstream=\read2
 \bbl@dirlevel=\count274
- (/usr/share/texlive/texmf-dist/tex/generic/babel-russian/russianb.ldf
+
+(/usr/share/texlive/texmf-dist/tex/generic/babel-russian/russianb.ldf
 File: russianb.ldf 2021/01/10 1.3m Russian support for the Babel system
 Language: russian 2020/09/09 1.3k Russian support for the Babel system
 Package babel Info: Making " an active character on input line 124.
 Package babel Info: Default for \cyrdash is provided on input line 163.
-)) (/usr/share/texlive/texmf-dist/tex/generic/babel/locale/ru/babel-russian.tex
+))
+(/usr/share/texlive/texmf-dist/tex/generic/babel/locale/ru/babel-russian.tex
 Package babel Info: Importing font and identification data for russian
 (babel)             from babel-ru.ini. Reported on input line 11.
-) (/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
- (/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
 Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
 \KV@toks@=\toks17
-) (/usr/share/texlive/texmf-dist/tex/generic/iftex/ifvtex.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
- (/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty
+
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty
 Package: iftex 2022/02/03 v1.0f TeX engine tests
 ))
 \Gm@cnth=\count275
@@ -183,31 +200,42 @@ Package: iftex 2022/02/03 v1.0f TeX engine tests
 \Gm@layouthoffset=\dimen152
 \Gm@layoutvoffset=\dimen153
 \Gm@dimlist=\toks18
-) (/usr/share/texlive/texmf-dist/tex/latex/tools/indentfirst.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/indentfirst.sty
 Package: indentfirst 2023/07/02 v1.03 Indent first paragraph (DPC)
-) (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/setspace/setspace.sty
+Package: setspace 2022/12/04 v6.7b set line spacing
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
- (/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
- (/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
-) (/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: xetex.def on input line 107.
- (/usr/share/texlive/texmf-dist/tex/latex/graphics-def/xetex.def
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/xetex.def
 File: xetex.def 2022/09/22 v5.0n Graphics/color driver for xetex
 ))
 \Gin@req@height=\dimen154
 \Gin@req@width=\dimen155
-) (/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
 Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \c@float@type=\count278
 \float@exts=\toks19
 \float@box=\box52
 \@float@everytoks=\toks20
 \@floatcapt=\box53
-) (/usr/share/texlive/texmf-dist/tex/latex/titlesec/titlesec.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/titlesec/titlesec.sty
 Package: titlesec 2023/10/27 v2.16 Sectioning titles
 \ttl@box=\box54
 \beforetitleunit=\skip50
@@ -218,7 +246,8 @@ Package: titlesec 2023/10/27 v2.16 Sectioning titles
 \titlewidth=\dimen158
 \titlewidthlast=\dimen159
 \titlewidthfirst=\dimen160
-) (/usr/share/texlive/texmf-dist/tex/latex/tocloft/tocloft.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tocloft/tocloft.sty
 Package: tocloft 2017/08/31 v2.3i parameterised ToC, etc., typesetting
 Package tocloft Info: The document has chapter divisions on input line 51.
 \cftparskip=\skip52
@@ -257,7 +286,8 @@ Package tocloft Info: The document has chapter divisions on input line 51.
 \cftbeforetabskip=\skip83
 \cfttabindent=\skip84
 \cfttabnumwidth=\skip85
-) (/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
 \lst@mode=\count281
 \lst@gtempboxa=\box55
 \lst@token=\toks22
@@ -270,22 +300,31 @@ Package tocloft Info: The document has chapter divisions on input line 51.
 \lst@newlines=\count285
 \lst@lineno=\count286
 \lst@maxwidth=\dimen164
- (/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2023/02/27 1.9 (Carsten Heinz)
 \c@lstnumber=\count287
 \lst@skipnumbers=\count288
 \lst@framebox=\box56
-) (/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
 File: listings.cfg 2023/02/27 1.9 listings configuration
 ))
 Package: listings 2023/02/27 1.9 (Carsten Heinz)
- (/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count289
+)
+(/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
 Package: xcolor 2023/11/15 v3.01 LaTeX color extensions (UK)
- (/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package xcolor Info: Driver file: xetex.def on input line 274.
- (/usr/share/texlive/texmf-dist/tex/latex/graphics/mathcolor.ltx)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/mathcolor.ltx)
 Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1350.
 Package xcolor Info: Model `RGB' extended on input line 1366.
 Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1368.
@@ -294,9 +333,11 @@ Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1370.
 Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1371.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1372.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1373.
-) (/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
 Package: caption 2023/08/05 v3.6o Customizing captions (AR)
- (/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
 Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
 \caption@tempdima=\dimen165
 \captionmargin=\dimen166
@@ -308,61 +349,77 @@ Package: caption3 2023/07/31 v2.4d caption3 kernel (AR)
 \caption@hangindent=\dimen172
 Package caption Info: Standard document class detected.
 )
-\c@caption@flags=\count289
-\c@continuedfloat=\count290
+\c@caption@flags=\count290
+\c@continuedfloat=\count291
 Package caption Info: float package is loaded.
 Package caption Info: listings package is loaded.
-) (/usr/share/texlive/texmf-dist/tex/latex/xurl/xurl.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/xurl/xurl.sty
 Package: xurl 2022/01/09 v 0.10 modify URL breaks
- (/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip16
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
-)) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
+))
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
 Package: hyperref 2024-01-20 v7.01h Hypertext links for LaTeX
- (/usr/share/texlive/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/kvsetkeys/kvsetkeys.sty
 Package: kvsetkeys 2022-10-05 v1.19 Key value parser (HO)
-) (/usr/share/texlive/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
 Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
-) (/usr/share/texlive/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pdfescape/pdfescape.sty
 Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
- (/usr/share/texlive/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+
+(/usr/share/texlive/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
 Package: ltxcmds 2023-12-04 v1.26 LaTeX kernel commands for general use (HO)
-) (/usr/share/texlive/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
-Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO)
- (/usr/share/texlive/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/share/texlive/texmf-dist/tex/generic/infwarerr/infwarerr.sty
 Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
 )
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode not found.
-)) (/usr/share/texlive/texmf-dist/tex/latex/hycolor/hycolor.sty
+))
+(/usr/share/texlive/texmf-dist/tex/latex/hycolor/hycolor.sty
 Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
-) (/usr/share/texlive/texmf-dist/tex/latex/auxhook/auxhook.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/auxhook/auxhook.sty
 Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
-) (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2023-11-26 v2.56 Cross-referencing by name of section
- (/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
 Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
-) (/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
- (/usr/share/texlive/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/kvoptions/kvoptions.sty
 Package: kvoptions 2022-06-15 v3.15 Key value format for package options (HO)
 ))
-\c@section@level=\count291
-) (/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
-Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count292
+\c@section@level=\count292
 )
 \@linkdim=\dimen173
 \Hy@linkcounter=\count293
 \Hy@pagecounter=\count294
- (/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2024-01-20 v7.01h Hyperref: PDFDocEncoding definition (HO)
-) (/usr/share/texlive/texmf-dist/tex/generic/intcalc/intcalc.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/intcalc/intcalc.sty
 Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 )
 \Hy@SavedSpaceFactor=\count295
- (/usr/share/texlive/texmf-dist/tex/latex/hyperref/puenc.def
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2024-01-20 v7.01h Hyperref: PDF Unicode definition (HO)
 )
 Package hyperref Info: Option `unicode' set `true' on input line 3165.
@@ -376,10 +433,13 @@ Package hyperref Info: Bookmarks ON on input line 4446.
 \c@Hy@tempcnt=\count296
 LaTeX Info: Redefining \url on input line 4784.
 \XeTeXLinkMargin=\dimen174
- (/usr/share/texlive/texmf-dist/tex/generic/bitset/bitset.sty
+
+(/usr/share/texlive/texmf-dist/tex/generic/bitset/bitset.sty
 Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
- (/usr/share/texlive/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
-Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
 ))
 \Fld@menulength=\count297
 \Field@Width=\dimen175
@@ -391,7 +451,8 @@ Package hyperref Info: backreferencing OFF on input line 6078.
 Package hyperref Info: Link coloring OFF on input line 6083.
 Package hyperref Info: Link coloring with OCG OFF on input line 6088.
 Package hyperref Info: PDF/A mode OFF on input line 6093.
- (/usr/share/texlive/texmf-dist/tex/latex/base/atbegshi-ltx.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/atbegshi-ltx.sty
 Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
 package with kernel methods
 )
@@ -400,42 +461,54 @@ package with kernel methods
 \c@Hfootnote=\count300
 )
 Package hyperref Info: Driver (autodetected): hxetex.
- (/usr/share/texlive/texmf-dist/tex/latex/hyperref/hxetex.def
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hxetex.def
 File: hxetex.def 2024-01-20 v7.01h Hyperref driver for XeTeX
- (/usr/share/texlive/texmf-dist/tex/generic/stringenc/stringenc.sty
-Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/stringenc/stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
+)
 )
 \pdfm@box=\box57
 \c@Hy@AnnotLevel=\count301
 \HyField@AnnotCount=\count302
 \Fld@listcount=\count303
 \c@bookmark@seq@number=\count304
- (/usr/share/texlive/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
 Package: rerunfilecheck 2022-07-10 v1.10 Rerun checks for auxiliary files (HO)
- (/usr/share/texlive/texmf-dist/tex/latex/base/atveryend-ltx.sty
-Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend package
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/atveryend-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
+kage
 with kernel methods
-) (/usr/share/texlive/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
+)
+(/usr/share/texlive/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
 Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
 )
-Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 285.
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+85.
 )
 \Hy@SectionHShift=\skip86
-) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2023/05/13 v2.17o AMS math features
 \@mathmargin=\skip87
 
 For additional information on amsmath, use the `?' option.
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2021/08/26 v2.01 AMS text
- (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks23
 \ex@=\dimen177
-)) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
+))
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 \pmbraise@=\dimen178
-) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2022/04/08 v2.04 operator names
 )
 \inf@bad=\count305
@@ -485,16 +558,19 @@ LaTeX Info: Redefining \Relbar on input line 971.
 \mathdisplay@stack=\toks27
 LaTeX Info: Redefining \[ on input line 2953.
 LaTeX Info: Redefining \] on input line 2954.
-) (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
- (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \symAMSa=\mathgroup4
 \symAMSb=\mathgroup5
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
-)) (/usr/share/texlive/texmf-dist/tex/latex/booktabs/booktabs.sty
+))
+(/usr/share/texlive/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \heavyrulewidth=\dimen186
 \lightrulewidth=\dimen187
@@ -513,9 +589,11 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \@thisruleclass=\count319
 \@lastruleclass=\count320
 \@thisrulewidth=\dimen198
-) (/usr/share/texlive/texmf-dist/tex/latex/tools/tabularx.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/tabularx.sty
 Package: tabularx 2023/07/08 v2.11c `tabularx' package (DPC)
- (/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
+
+(/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
 Package: array 2023/10/16 v2.5g Tabular extension package (FMi)
 \col@sep=\dimen199
 \ar@mcellbox=\box60
@@ -533,92 +611,104 @@ Package: array 2023/10/16 v2.5g Tabular extension package (FMi)
 \TX@cols=\count321
 \TX@ftn=\toks29
 )
-Package hyperref Info: Option `colorlinks' set `true' on input line 36.
+Package hyperref Info: Option `colorlinks' set `true' on input line 44.
 \mylen=\skip92
  (./main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 144.
-LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 144.
- (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 157.
+LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 1
+57.
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2023/04/13 v2.5m Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 144.
-LaTeX Font Info:    ... okay on input line 144.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 157.
+LaTeX Font Info:    ... okay on input line 157.
 
 Package fontspec Info: Adjusting the maths setup (use [no-math] to avoid
 (fontspec)             this).
 
 \symlegacymaths=\mathgroup6
 LaTeX Font Info:    Overwriting symbol font `legacymaths' in version `bold'
-(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 144.
-LaTeX Font Info:    Redeclaring math accent \acute on input line 144.
-LaTeX Font Info:    Redeclaring math accent \grave on input line 144.
-LaTeX Font Info:    Redeclaring math accent \ddot on input line 144.
-LaTeX Font Info:    Redeclaring math accent \tilde on input line 144.
-LaTeX Font Info:    Redeclaring math accent \bar on input line 144.
-LaTeX Font Info:    Redeclaring math accent \breve on input line 144.
-LaTeX Font Info:    Redeclaring math accent \check on input line 144.
-LaTeX Font Info:    Redeclaring math accent \hat on input line 144.
-LaTeX Font Info:    Redeclaring math accent \dot on input line 144.
-LaTeX Font Info:    Redeclaring math accent \mathring on input line 144.
-LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 144.
-LaTeX Font Info:    Redeclaring math symbol \Delta on input line 144.
-LaTeX Font Info:    Redeclaring math symbol \Theta on input line 144.
-LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 144.
-LaTeX Font Info:    Redeclaring math symbol \Xi on input line 144.
-LaTeX Font Info:    Redeclaring math symbol \Pi on input line 144.
-LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 144.
-LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 144.
-LaTeX Font Info:    Redeclaring math symbol \Phi on input line 144.
-LaTeX Font Info:    Redeclaring math symbol \Psi on input line 144.
-LaTeX Font Info:    Redeclaring math symbol \Omega on input line 144.
-LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 144.
-LaTeX Font Info:    Redeclaring symbol font `operators' on input line 144.
+(Font)                  OT1/cmr/m/n --> OT1/cmr/bx/n on input line 157.
+LaTeX Font Info:    Redeclaring math accent \acute on input line 157.
+LaTeX Font Info:    Redeclaring math accent \grave on input line 157.
+LaTeX Font Info:    Redeclaring math accent \ddot on input line 157.
+LaTeX Font Info:    Redeclaring math accent \tilde on input line 157.
+LaTeX Font Info:    Redeclaring math accent \bar on input line 157.
+LaTeX Font Info:    Redeclaring math accent \breve on input line 157.
+LaTeX Font Info:    Redeclaring math accent \check on input line 157.
+LaTeX Font Info:    Redeclaring math accent \hat on input line 157.
+LaTeX Font Info:    Redeclaring math accent \dot on input line 157.
+LaTeX Font Info:    Redeclaring math accent \mathring on input line 157.
+LaTeX Font Info:    Redeclaring math symbol \Gamma on input line 157.
+LaTeX Font Info:    Redeclaring math symbol \Delta on input line 157.
+LaTeX Font Info:    Redeclaring math symbol \Theta on input line 157.
+LaTeX Font Info:    Redeclaring math symbol \Lambda on input line 157.
+LaTeX Font Info:    Redeclaring math symbol \Xi on input line 157.
+LaTeX Font Info:    Redeclaring math symbol \Pi on input line 157.
+LaTeX Font Info:    Redeclaring math symbol \Sigma on input line 157.
+LaTeX Font Info:    Redeclaring math symbol \Upsilon on input line 157.
+LaTeX Font Info:    Redeclaring math symbol \Phi on input line 157.
+LaTeX Font Info:    Redeclaring math symbol \Psi on input line 157.
+LaTeX Font Info:    Redeclaring math symbol \Omega on input line 157.
+LaTeX Font Info:    Redeclaring math symbol \mathdollar on input line 157.
+LaTeX Font Info:    Redeclaring symbol font `operators' on input line 157.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `normal' on input line 144.
+(Font)              `operators' in the math version `normal' on input line 157.
+
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> TU/TimesNewRoman(0)/m/n on input line 144.
+(Font)                  OT1/cmr/m/n --> TU/TimesNewRoman(0)/m/n on input line 1
+57.
 LaTeX Font Info:    Encoding `OT1' has changed to `TU' for symbol font
-(Font)              `operators' in the math version `bold' on input line 144.
+(Font)              `operators' in the math version `bold' on input line 157.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> TU/TimesNewRoman(0)/m/n on input line 144.
+(Font)                  OT1/cmr/bx/n --> TU/TimesNewRoman(0)/m/n on input line 
+157.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  TU/TimesNewRoman(0)/m/n --> TU/TimesNewRoman(0)/m/n on input line 144.
+(Font)                  TU/TimesNewRoman(0)/m/n --> TU/TimesNewRoman(0)/m/n on 
+input line 157.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> TU/TimesNewRoman(0)/m/it on input line 144.
+(Font)                  OT1/cmr/m/it --> TU/TimesNewRoman(0)/m/it on input line
+ 157.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> TU/TimesNewRoman(0)/b/n on input line 144.
+(Font)                  OT1/cmr/bx/n --> TU/TimesNewRoman(0)/b/n on input line 
+157.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> TU/Arial(0)/m/n on input line 144.
+(Font)                  OT1/cmss/m/n --> TU/Arial(0)/m/n on input line 157.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> TU/CourierNew(0)/m/n on input line 144.
+(Font)                  OT1/cmtt/m/n --> TU/CourierNew(0)/m/n on input line 157
+.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  TU/TimesNewRoman(0)/m/n --> TU/TimesNewRoman(0)/b/n on input line 144.
+(Font)                  TU/TimesNewRoman(0)/m/n --> TU/TimesNewRoman(0)/b/n on 
+input line 157.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> TU/TimesNewRoman(0)/b/it on input line 144.
+(Font)                  OT1/cmr/bx/it --> TU/TimesNewRoman(0)/b/it on input lin
+e 157.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> TU/Arial(0)/b/n on input line 144.
+(Font)                  OT1/cmss/bx/n --> TU/Arial(0)/b/n on input line 157.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> TU/CourierNew(0)/b/n on input line 144.
-LaTeX Info: Redefining \th on input line 144.
+(Font)                  OT1/cmtt/m/n --> TU/CourierNew(0)/b/n on input line 157
+.
+LaTeX Info: Redefining \th on input line 157.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -658,305 +748,424 @@ LaTeX Info: Redefining \th on input line 144.
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: hyperref package is loaded.
 Package caption Info: End \AtBeginDocument code.
-Package hyperref Info: Link coloring ON on input line 144.
+Package hyperref Info: Link coloring ON on input line 157.
 (./main.out) (./main.out)
 \@outlinefile=\write3
 \openout3 = `main.out'.
 
 File: images/logo.png Graphic file (type bmp)
 <images/logo.png>
-LaTeX Font Info:    Trying to load font information for U+msa on input line 151.
- (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+LaTeX Font Info:    Trying to load font information for U+msa on input line 164
+.
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 151.
- (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
+LaTeX Font Info:    Trying to load font information for U+msb on input line 164
+.
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
-] (./main.toc)
+] [2] [3]
+Underfull \hbox (badness 2401) in paragraph at lines 319--324
+\TU/TimesNewRoman(0)/m/n/14.4 пользовательских интерфейсов React. В качестве да
+льнейших перспектив
+ []
+
+
+Underfull \hbox (badness 1048) in paragraph at lines 319--324
+\TU/TimesNewRoman(0)/m/n/14.4 развития проекта запланировано масштабирование ра
+зработанной системы
+ []
+
+
+Underfull \hbox (badness 1460) in paragraph at lines 319--324
+\TU/TimesNewRoman(0)/b/n/14.4 Ключевые слова: \TU/TimesNewRoman(0)/m/n/14.4 веб
+-приложение, управление контентом, геймификация,
+ []
+
+[4] (./main.toc
+Underfull \hbox (badness 10000) in paragraph at lines 5--5
+ [][] [][][]\TU/TimesNewRoman(0)/m/n/14.4 Паттерны чистой архитектуры и организ
+ация 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 11--11
+ [][] [][][]\TU/TimesNewRoman(0)/m/n/14.4 Проектирование программного интерфейс
+а и 
+ []
+
+
+Underfull \hbox (badness 1052) in paragraph at lines 12--12
+ [][] [][][]\TU/TimesNewRoman(0)/m/n/14.4 Проектирование динамических сценариев
+ взаимо- 
+ []
+
+)
 \tf@toc=\write4
 \openout4 = `main.toc'.
 
- [2]
-Underfull \hbox (badness 2221) in paragraph at lines 234--235
-\TU/TimesNewRoman(0)/m/n/14.4 и снижать уровень информационной тревожности. Однако традиционные
- []
-
-
-Underfull \hbox (badness 2245) in paragraph at lines 234--235
-\TU/TimesNewRoman(0)/m/n/14.4 использования из-за отсутствия мгновенной обратной связи, однообразия
- []
-
-
-Underfull \hbox (badness 7704) in paragraph at lines 238--239
-\TU/TimesNewRoman(0)/m/n/14.4 алгоритмов семантического автотегирования и кластеризации позволяет
- []
-
-[3
+ [5] [6
 
 ]
-Underfull \hbox (badness 6188) in paragraph at lines 248--249
-\TU/TimesNewRoman(0)/m/n/14.4 серверных архитектур, паттернов проектирования (SoC, Repository
- []
-
-
-Underfull \hbox (badness 3019) in paragraph at lines 248--249
-\TU/TimesNewRoman(0)/m/n/14.4 Pattern, Event Log) и методологии Feature-Sliced Design (FSD) для
- []
-
-
-Underfull \hbox (badness 2818) in paragraph at lines 249--250
-[]\TU/TimesNewRoman(0)/m/n/14.4 Провести сравнительный анализ и обосновать выбор современного
- []
-
-
-Underfull \hbox (badness 1742) in paragraph at lines 249--250
-\TU/TimesNewRoman(0)/m/n/14.4 (TypeScript, PostgreSQL 18, Drizzle ORM, Express 5, React 19, Vite,
- []
-
-
-Underfull \hbox (badness 1546) in paragraph at lines 252--253
-[]\TU/TimesNewRoman(0)/m/n/14.4 Реализовать серверную часть (валидацию на уровне middleware, аг-
- []
-
-
-Underfull \hbox (badness 2662) in paragraph at lines 252--253
-\TU/TimesNewRoman(0)/m/n/14.4 регацию прогресса с помощью обобщенных табличных выражений
- []
-
-
-Underfull \hbox (badness 4229) in paragraph at lines 258--259
-[]\TU/TimesNewRoman(0)/b/n/14.4 Предметом исследования \TU/TimesNewRoman(0)/m/n/14.4 являются программно-архитектурные ре-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 258--259
-\TU/TimesNewRoman(0)/m/n/14.4 шения, структуры данных реляционной СУБД, алгоритмы вычисления
- []
-
-
-Underfull \hbox (badness 7851) in paragraph at lines 258--259
-\TU/TimesNewRoman(0)/m/n/14.4 многомерных показателей продуктивности и механизмы синхронизации
- []
-
-[4] [5]
 Глава 1.
-Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on input line 279.
-[6
+
+Underfull \hbox (badness 1831) in paragraph at lines 349--350
+\TU/TimesNewRoman(0)/m/n/14.4 регулярности их использования; с другой стороны, 
+отсутствие элементов
+ []
+
+
+Underfull \hbox (badness 2495) in paragraph at lines 351--352
+\TU/TimesNewRoman(0)/m/n/14.4 ности и суверенности данных. Подавляющее большинс
+тво коммерческих
+ []
+
+
+Underfull \hbox (badness 1127) in paragraph at lines 351--352
+\TU/TimesNewRoman(0)/m/n/14.4 платформ функционируют исключительно по облачной 
+модели предостав-
+ []
+
+
+Underfull \hbox (badness 3078) in paragraph at lines 351--352
+\TU/TimesNewRoman(0)/m/n/14.4 ления программного обеспечения как услуги, что со
+пряжено с рисками
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 351--352
+\TU/TimesNewRoman(0)/m/n/14.4 несанкционированного доступа третьих лиц, утечек 
+конфиденциальной
+ []
+
+[7
 
 ]
-Underfull \hbox (badness 2970) in paragraph at lines 316--317
-[]\TU/TimesNewRoman(0)/m/n/14.4 Методология Feature-Sliced Design вводит строгую иерархию слоев
+Overfull \hbox (4.48097pt too wide) in paragraph at lines 388--388
+ []|\TU/TimesNewRoman(0)/b/n/10.5 Разрабатываемая 
  []
 
 
-Underfull \hbox (badness 7613) in paragraph at lines 321--322
-[]\TU/TimesNewRoman(0)/b/n/14.4 Features\TU/TimesNewRoman(0)/m/n/14.4 : Слой пользовательских сценариев, несущих конкретную
- []
-
-[7]
-Underfull \hbox (badness 10000) in paragraph at lines 322--323
-[]\TU/TimesNewRoman(0)/b/n/14.4 Entities\TU/TimesNewRoman(0)/m/n/14.4 : Слой бизнес-сущностей. Содержит интерфейсы данных,
- []
-
-File: images/fsd_layers.png Graphic file (type bmp)
-<images/fsd_layers.png>
-[8] [9]
-Underfull \hbox (badness 1226) in paragraph at lines 343--344
-\TU/TimesNewRoman(0)/m/n/14.4 (заметки, теги, связи между ними) носит ярко выраженный реляционный
+Overfull \hbox (4.2953pt too wide) in paragraph at lines 388--388
+ []|\TU/TimesNewRoman(0)/m/n/10.5 Ограниченный| 
  []
 
 
-Underfull \hbox (badness 2409) in paragraph at lines 343--344
-\TU/TimesNewRoman(0)/m/n/14.4 характер, требующий соблюдения ограничений внешних ключей (Foreign
+Overfull \hbox (15.6764pt too wide) in paragraph at lines 388--388
+ []|\TU/TimesNewRoman(0)/m/n/10.5 Ограниченный| 
  []
 
 
-Underfull \hbox (badness 1895) in paragraph at lines 347--348
-\TU/TimesNewRoman(0)/m/n/14.4 ORM [[]]. В экосистеме TypeScript исторически доминировал инструмент
+Overfull \hbox (8.65761pt too wide) in paragraph at lines 388--388
+ []|\TU/TimesNewRoman(0)/m/n/10.5 Реляционные 
  []
 
 
-Underfull \hbox (badness 4832) in paragraph at lines 347--348
-\TU/TimesNewRoman(0)/m/n/14.4 Prisma, однако в контексте архитектуры данного проекта Drizzle ORM
+Overfull \hbox (3.78188pt too wide) in paragraph at lines 388--388
+ []|\TU/TimesNewRoman(0)/m/n/10.5 Отсутствует| 
+ []
+
+[8] [9] [10]
+File: images/image2.png Graphic file (type bmp)
+<images/image2.png>
+File: images/image1.png Graphic file (type bmp)
+<images/image1.png>
+File: images/image3.png Graphic file (type bmp)
+<images/image3.png>
+ [11]
+File: images/image5.png Graphic file (type bmp)
+<images/image5.png>
+ [12]
+File: images/image6.png Graphic file (type bmp)
+<images/image6.png>
+ [13]
+File: images/image4.png Graphic file (type bmp)
+<images/image4.png>
+ [14]
+Underfull \hbox (badness 1509) in paragraph at lines 459--460
+\TU/TimesNewRoman(0)/m/n/14.4 стили, провайдеры контекста и конфигурация маршру
+тизации. Вышестоя-
  []
 
 
-Underfull \hbox (badness 3492) in paragraph at lines 347--348
-\TU/TimesNewRoman(0)/m/n/14.4 предоставляет неоспоримые преимущества. Prisma использует парадигму
+Underfull \hbox (badness 1609) in paragraph at lines 459--460
+\TU/TimesNewRoman(0)/m/n/14.4 щий слой Pages формирует полноценные пользователь
+ские экраны путем
  []
 
 
-Underfull \hbox (badness 1852) in paragraph at lines 347--348
-\TU/TimesNewRoman(0)/m/n/14.4 который создает типизированный клиент [[]]. Несмотря на удобство аб-
+Underfull \hbox (badness 1389) in paragraph at lines 459--460
+\TU/TimesNewRoman(0)/m/n/14.4 композиции сущностей, фич и виджетов. Слой Widget
+s объединяет круп-
  []
 
 
-Underfull \hbox (badness 1117) in paragraph at lines 347--348
-\TU/TimesNewRoman(0)/m/n/14.4 стракции, Prisma исторически опиралась на тяжеловесный runtime-движок
- []
-
-[10]
-Underfull \hbox (badness 2096) in paragraph at lines 405--406
-[]\TU/TimesNewRoman(0)/m/n/14.4 Серверная инфраструктура базируется на платформе Node.js и веб-
+Underfull \hbox (badness 3635) in paragraph at lines 459--460
+\TU/TimesNewRoman(0)/m/n/14.4 слой Shared, включающий переиспользуемые интерфей
+сные компоненты,
  []
 
 
-Underfull \hbox (badness 4621) in paragraph at lines 405--406
-\TU/TimesNewRoman(0)/m/n/14.4 фреймворке Express 5. Использование Node.js позволяет унифицировать
+Underfull \hbox (badness 3343) in paragraph at lines 459--460
+\TU/TimesNewRoman(0)/m/n/14.4 утилиты и конфигурации сетевых клиентов, независи
+мые от специфики
+ []
+
+[15]
+Underfull \hbox (badness 10000) in paragraph at lines 465--466
+[]\TU/TimesNewRoman(0)/m/n/14.4 В качестве системы хранения и управления данным
+и выбрана
  []
 
 
-Underfull \hbox (badness 2229) in paragraph at lines 405--406
-\TU/TimesNewRoman(0)/m/n/14.4 язык программирования (TypeScript) на всем стеке, обеспечивая возмож-
+Underfull \hbox (badness 2073) in paragraph at lines 467--468
+\TU/TimesNewRoman(0)/m/n/14.4 schema-first: структура базы данных декларируется
+ в специальном файле
  []
 
-[11] [12]
+
+Underfull \hbox (badness 2426) in paragraph at lines 467--468
+\TU/TimesNewRoman(0)/m/n/14.4 движка выполнения приводит к повышенному потребле
+нию оперативной
+ []
+
+
+Underfull \hbox (badness 1910) in paragraph at lines 467--468
+\TU/TimesNewRoman(0)/m/n/14.4 на парадигме codebase-first и SQL-first, где схем
+а БД описывается непо-
+ []
+
+
+Underfull \hbox (badness 2932) in paragraph at lines 467--468
+\TU/TimesNewRoman(0)/m/n/14.4 достоинством Drizzle ORM являются сведенные к мин
+имуму накладные
+ []
+
+Package hyperref Info: bookmark level for unknown lstlisting defaults to 0 on i
+nput line 471.
+[16] [17] [18]
+Underfull \hbox (badness 1215) in paragraph at lines 517--518
+\TU/TimesNewRoman(0)/m/n/14.4 валидации на сервере, так и для форм на клиенте. 
+Визуальная составля-
+ []
+
+[19]
 Глава 2.
-[13
+[20
 
 ]
-Underfull \hbox (badness 1097) in paragraph at lines 438--439
-[]\TU/TimesNewRoman(0)/m/n/14.4 Для практической реализации заявленной темы курсового проекта в
- []
+File: images/er-diagram.png Graphic file (type bmp)
+<images/er-diagram.png>
 
-[14] [15]
-Underfull \hbox (badness 2181) in paragraph at lines 520--521
-\TU/TimesNewRoman(0)/m/n/14.4 спроектированы составные покрывающие индексы. Они сконструированы
- []
-
-
-Underfull \hbox (badness 1331) in paragraph at lines 520--521
-\TU/TimesNewRoman(0)/m/n/14.4 планировщику PostgreSQL выполнять запросы в режиме Index-Only Scan.
+Underfull \hbox (badness 1107) in paragraph at lines 545--546
+\TU/TimesNewRoman(0)/m/n/14.4 пользовательский текст, заголовок и служебные мет
+аданные, необходимые
  []
 
 
-Underfull \hbox (badness 2521) in paragraph at lines 520--521
-\TU/TimesNewRoman(0)/m/n/14.4 расположенной в оперативной памяти, без необходимости ресурсоемкого
+Underfull \hbox (badness 1502) in paragraph at lines 545--546
+\TU/TimesNewRoman(0)/m/n/14.4 таблицу, реализующую отношение «многие ко многим»
+. Данное решение
  []
 
-[16] [17]
+
+Underfull \hbox (badness 1231) in paragraph at lines 545--546
+\TU/TimesNewRoman(0)/m/n/14.4 окончательном удалении заметки база данных автома
+тически ликвидирует
+ []
+
+[21]
+File: images/er-diagram-2.png Graphic file (type bmp)
+<images/er-diagram-2.png>
+ [22] [23]
+Underfull \hbox (badness 10000) in paragraph at lines 590--591
+[]\TU/TimesNewRoman(0)/m/n/14.4 В листинге [][]2.2[][] приведено описание табли
+цы журнала действий
+ []
+
+[24]
+Underfull \hbox (badness 1286) in paragraph at lines 625--626
+[]\TU/TimesNewRoman(0)/m/n/14.4 Поиск информации в массиве текстовых заметок яв
+ляется одной из
+ []
+
+
+Underfull \hbox (badness 2245) in paragraph at lines 625--626
+\TU/TimesNewRoman(0)/m/n/14.4 полностью отсутствует лингвистический анализ, пос
+кольку посимвольное
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 629--630
+[]\TU/TimesNewRoman(0)/m/n/14.4 Для формирования поискового документа применяет
+ся функция
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 629--630
+\TU/CourierNew(0)/m/n/14.4 to_tsvector\TU/TimesNewRoman(0)/m/n/14.4 , которая п
+реобразует конкатенацию заголовка и содер-
+ []
+
+
+Underfull \hbox (badness 3792) in paragraph at lines 629--630
+\TU/TimesNewRoman(0)/m/n/14.4 жимого заметки в вектор сортированных лексем с ук
+азанием их пози-
+ []
+
+
+Underfull \hbox (badness 4779) in paragraph at lines 629--630
+\TU/TimesNewRoman(0)/m/n/14.4 ций. Обработка пользовательской строки поиска вып
+олняется функцией
+ []
+
+[25] (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2023/02/27 1.9 listings language file
+) [26]
+[27] [28]
+Underfull \hbox (badness 1152) in paragraph at lines 707--708
+[]\TU/TimesNewRoman(0)/m/n/14.4 Для исключения видимой задержки интерфейса при 
+взаимодействии
+ []
+
+[29]
+Underfull \hbox (badness 2293) in paragraph at lines 719--720
+\TU/TimesNewRoman(0)/m/n/14.4 , когда при параллельном запуске нескольких экзем
+пляров сервера один
+ []
+
+
+Underfull \hbox (badness 1248) in paragraph at lines 719--720
+\TU/TimesNewRoman(0)/m/n/14.4 и тот же суточный журнал событий обрабатывается п
+овторно, приводя к
+ []
+
+
+Underfull \hbox (badness 1931) in paragraph at lines 721--722
+\TU/TimesNewRoman(0)/m/n/14.4 ционных рекомендательных блокировок базы данных: 
+функция \TU/CourierNew(0)/m/n/14.4 pg_try_
+ []
+
+
+Underfull \hbox (badness 1062) in paragraph at lines 725--726
+[]\TU/TimesNewRoman(0)/m/n/14.4 Если параллельный процесс уже удерживает данный
+ ключ, функция
+ []
+
+
+Underfull \hbox (badness 2418) in paragraph at lines 725--726
+\TU/TimesNewRoman(0)/m/n/14.4 немедленно возвращает отказ, после чего текущая т
+ранзакция безопасно
+ []
+
+
+Underfull \hbox (badness 2460) in paragraph at lines 725--726
+\TU/TimesNewRoman(0)/m/n/14.4 завершается откатом \TU/CourierNew(0)/m/n/14.4 RO
+LLBACK \TU/TimesNewRoman(0)/m/n/14.4 без ожидания и без блокировки потока
+ []
+
+
+Underfull \hbox (badness 1783) in paragraph at lines 729--730
+[]\TU/TimesNewRoman(0)/m/n/14.4 По завершении транзакции посредством команды \T
+U/CourierNew(0)/m/n/14.4 COMMIT \TU/TimesNewRoman(0)/m/n/14.4 рекомен-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 729--730
+\TU/TimesNewRoman(0)/m/n/14.4 дательная блокировка автоматически освобождается 
+ядром PostgreSQL,
+ []
+
+[30] [31]
+Underfull \hbox (badness 1755) in paragraph at lines 785--786
+\TU/TimesNewRoman(0)/m/n/14.4 кэша, после чего производит локальное обновление 
+данных, обеспечивая
+ []
+
+
+Underfull \hbox (badness 1755) in paragraph at lines 785--786
+\TU/TimesNewRoman(0)/m/n/14.4 немедленную перерисовку интерфейса без ожидания о
+твета сервера [[]].
+ []
+
+
+Underfull \hbox (badness 6825) in paragraph at lines 785--786
+\TU/TimesNewRoman(0)/m/n/14.4 который восстанавливает состояние интерфейса до р
+анее сохраненного
+ []
+
+
+Underfull \hbox (badness 2197) in paragraph at lines 785--786
+\TU/TimesNewRoman(0)/m/n/14.4 снимка. Контроль форм и их реактивность осуществл
+яются библиотекой
+ []
+
+[32]
 File: images/dashboard-1.png Graphic file (type bmp)
 <images/dashboard-1.png>
-
-Underfull \hbox (badness 1348) in paragraph at lines 589--590
-[]\TU/TimesNewRoman(0)/m/n/14.4 Безопасность параллельного выполнения фоновых задач обеспечива-
- []
-
-
-Underfull \hbox (badness 3679) in paragraph at lines 589--590
-\TU/TimesNewRoman(0)/m/n/14.4 в Kubernetes), существует риск, что несколько контейнеров попытаются
- []
-
-
-Underfull \hbox (badness 1715) in paragraph at lines 589--590
-\TU/TimesNewRoman(0)/m/n/14.4 выполнить ежедневный пересчет одновременно, что приведет к дублиро-
- []
-
-
-Underfull \hbox (badness 1127) in paragraph at lines 589--590
-\TU/TimesNewRoman(0)/m/n/14.4 ванию начисления опыта [[]]. Использование блокировок строк (SELECT
- []
-
-
-Underfull \hbox (badness 2103) in paragraph at lines 589--590
-\TU/TimesNewRoman(0)/m/n/14.4 ки могут еще не существовать [[]]. PostgreSQL предоставляет функцию
- []
-
-
-Underfull \hbox (badness 3668) in paragraph at lines 589--590
-\TU/CourierNew(0)/m/n/14.4 pg_advisory_xact_lock\TU/TimesNewRoman(0)/m/n/14.4 , которая создает логическую блокировку на
- []
-
-
-Underfull \hbox (badness 4303) in paragraph at lines 589--590
-\TU/TimesNewRoman(0)/m/n/14.4 блокировок уровня сессии (\TU/CourierNew(0)/m/n/14.4 pg_advisory_lock\TU/TimesNewRoman(0)/m/n/14.4 ), транзакционные бло-
- []
-
-
-Underfull \hbox (badness 1924) in paragraph at lines 589--590
-\TU/TimesNewRoman(0)/m/n/14.4 кировки (\TU/CourierNew(0)/m/n/14.4 pg_advisory_xact_lock\TU/TimesNewRoman(0)/m/n/14.4 ) автоматически освобождаются при
- []
-
-[18] (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+ [33] (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2023/02/27 1.9 listings language file
-) (/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2023/02/27 1.9 listings language file
-) [19]
-Underfull \hbox (badness 3386) in paragraph at lines 645--646
-\TU/TimesNewRoman(0)/m/n/14.4 плексном тестировании. Модульное тестирование алгоритмов (таких как
- []
-
-[20] [21] [22]
-Underfull \hbox (badness 1917) in paragraph at lines 724--725
-[]\TU/TimesNewRoman(0)/m/n/14.4 В ходе выполнения курсового проекта была спроектирована и раз-
+) [34]
+Underfull \hbox (badness 10000) in paragraph at lines 852--853
+[]\TU/TimesNewRoman(0)/m/n/14.4 Обеспечение качества программного обеспечения б
+азируется на
  []
 
 
-Underfull \hbox (badness 2285) in paragraph at lines 724--725
-\TU/TimesNewRoman(0)/m/n/14.4 работана многопользовательская блог-платформа (веб-приложение заметок
+Underfull \hbox (badness 3735) in paragraph at lines 852--853
+\TU/TimesNewRoman(0)/m/n/14.4 комплексном тестировании. Модульное тестирование 
+алгоритмов и схем
  []
 
 
-Underfull \hbox (badness 2173) in paragraph at lines 729--730
-\TU/TimesNewRoman(0)/m/n/14.4 типобезопасность (End-to-End Type Safety): платформа Node.js, веб-
+Underfull \hbox (badness 1584) in paragraph at lines 852--853
+\TU/TimesNewRoman(0)/m/n/14.4 библиотека Mock Service Worker. Она перехватывает
+ сетевые запросы на
  []
 
-
-Underfull \hbox (badness 1412) in paragraph at lines 730--731
-\TU/TimesNewRoman(0)/m/n/14.4 библиотека Drizzle ORM. Применение SQL-first подхода обеспечило
+[35]
+Underfull \hbox (badness 3460) in paragraph at lines 892--893
+\TU/TimesNewRoman(0)/m/n/14.4 Юнит-тестирование хуков гарантирует корректную ин
+валидацию кэша и
  []
 
-
-Underfull \hbox (badness 1817) in paragraph at lines 732--733
-\TU/TimesNewRoman(0)/m/n/14.4 покрывающие индексы, обеспечивающие выполнение аналитических
- []
-
-
-Underfull \hbox (badness 1248) in paragraph at lines 732--733
-\TU/TimesNewRoman(0)/m/n/14.4 выборок в режиме Index-Only Scan, а также механизм полнотексто-
- []
-
-
-Underfull \hbox (badness 3168) in paragraph at lines 732--733
-\TU/TimesNewRoman(0)/m/n/14.4 вого поиска PostgreSQL с векторизацией лексем и ранжированием
- []
-
-
-Underfull \hbox (badness 1838) in paragraph at lines 733--734
-\TU/TimesNewRoman(0)/m/n/14.4 ционными рекомендательными блокировками \TU/CourierNew(0)/m/n/14.4 pg_advisory_xact_
- []
-
-[23
+[36] [37] [38
 
 ]
-Underfull \hbox (badness 1205) in paragraph at lines 735--736
-[]\TU/TimesNewRoman(0)/m/n/14.4 Построена пирамида автоматизированного тестирования по паттерну
+Underfull \hbox (badness 1874) in paragraph at lines 945--946
+[]\TU/TimesNewRoman(0)/m/n/14.4 Мартин, Р. Чистая архитектура. Искусство разраб
+отки программного
  []
 
+[39
 
-Underfull \hbox (badness 5802) in paragraph at lines 735--736
-\TU/TimesNewRoman(0)/m/n/14.4 интеграционные тесты API с библиотекой Supertest, тестирование
- []
-
-[24] [25
-
-] [26] [27] (./main.aux)
+] [40] [41] (./main.aux)
  ***********
 LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-22>
  ***********
+
+
+LaTeX Font Warning: Size substitutions with differences
+(Font)              up to 0.45pt have occurred.
+
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: A234A9C3CAD60883982386C73EAF368F;4548.
+(rerunfilecheck)             Checksum: F3E0BB79435253FE5D2E2CD2A7BAE661;6852.
  ) 
 Here is how much of TeX's memory you used:
- 17802 strings out of 476104
- 332189 string characters out of 5795240
- 2242627 words of memory out of 5000000
- 39458 multiletter control sequences out of 15000+600000
- 566105 words of font info for 120 fonts, out of 8000000 for 9000
+ 18192 strings out of 476104
+ 338496 string characters out of 5795240
+ 2260627 words of memory out of 5000000
+ 39829 multiletter control sequences out of 15000+600000
+ 568984 words of font info for 137 fonts, out of 8000000 for 9000
  682 hyphenation exceptions out of 8191
- 79i,11n,93p,1124b,1875s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 79i,10n,93p,1408b,1344s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on main.pdf (27 pages).
+Output written on main.pdf (41 pages).
