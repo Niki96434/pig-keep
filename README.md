@@ -58,12 +58,12 @@ Pig Keep - local-hosted веб-приложение для ведения зам
 
 Для ускоренной разработки я использую данные сниппеты для написания шаблонного кода:
 
-- (Simple React snippets)[https://marketplace.visualstudio.com/items?itemName=burkeholland.simple-react-snippets]
-- (Vitest Snippets)[https://marketplace.visualstudio.com/items?itemName=deinsoftware.vitest-snippets]
+- [Simple React snippets](https://marketplace.visualstudio.com/items?itemName=burkeholland.simple-react-snippets)
+- [Vitest Snippets](https://marketplace.visualstudio.com/items?itemName=deinsoftware.vitest-snippets)
 
 Для проверки пакетов перед установкой, чтобы не засорять бандл, я использовала:
 
-- (Bundlephobia)[https://bundlephobia.com]
+- [Bundlephobia](https://bundlephobia.com)
 
 ### Дизайн
 
