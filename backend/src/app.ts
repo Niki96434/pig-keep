@@ -5,6 +5,7 @@ import { tagsRouter } from './features/tags/router'
 import { globalErrorHandler } from './core/globalErrorHandler'
 import cors from 'cors'
 import path from 'node:path'
+import helmet from 'helmet'
 
 export const app = express()
 
@@ -13,6 +14,7 @@ const corsOptions = {
   optionsSuccessStatus: 200,
 }
 
+app.use(helmet())
 app.use(express.json())
 app.use(cors(corsOptions))
 app.use('/api/v1/notes', notesRouter)
