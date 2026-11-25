@@ -54,22 +54,6 @@ Pig Keep - local-hosted веб-приложение для ведения зам
    ```
 Сервис будет доступен на `http://localhost:3000`
 
-## Использование сниппетов
-
-Для ускоренной разработки я использую данные сниппеты для написания шаблонного кода:
-
-- [Simple React snippets](https://marketplace.visualstudio.com/items?itemName=burkeholland.simple-react-snippets)
-- [Vitest Snippets](https://marketplace.visualstudio.com/items?itemName=deinsoftware.vitest-snippets)
-
-Для проверки пакетов перед установкой, чтобы не засорять бандл, я использовала:
-
-- [Bundlephobia](https://bundlephobia.com)
-
-### Дизайн
-
-![Десктоп](https://github.com/Niki96434/google-keep/blob/main/docs/design-template/pigkeep-dashboard.pdf)\
-![Мобильный](https://github.com/Niki96434/google-keep/blob/main/docs/design-template/pigkeep-mobile.pdf)
-
 ### Скриншоты
 
 #### Главный экран (свернутое меню)
