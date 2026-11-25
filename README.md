@@ -1,8 +1,8 @@
 # 🐷 Pig Keep
 
-Pig Keep - local-hosted веб-приложение для ведения заметок.
+Pig Keep - self-hosted веб-приложение для ведения заметок.
 
-## Основной функционал MVP:
+## Основной функционал:
   Создание, редактирование, архивация и удаление заметок с
   их организацией с помощью тегов.\
   Помимо этого в приложение встроен быстрый полнотекстовый поиск на базе PostgreSQL с поддержкой русской локализации по содержимому.
@@ -13,14 +13,14 @@ Pig Keep - local-hosted веб-приложение для ведения зам
 - Документация по бэкенду: [backend/README.md](https://github.com/Niki96434/google-keep/blob/main/backend/README.md)
 - Тестирование: [docs/TESTING.md](https://github.com/Niki96434/google-keep/blob/main/docs/TESTING.md)
 
-## Перечень используемых технологий
+## Из чего собрано
 
 - React 19, Typescript, Vite, Eslint, Prettier, Vitest, RTL, MSW, RTQuery, Zod, Zustand
 - Express.js, Supertest, Drizzle ORM
 - PostgreSQL 18
 - Docker
 
-## Структура проекта
+## Структура
 
 - frontend/src - React-приложение
 - backend/core - Инициализация базы данных, глобальный обработчик ошибок, мидлвары
@@ -28,31 +28,20 @@ Pig Keep - local-hosted веб-приложение для ведения зам
 - backend/migrations - миграции PostgreSQL
 - docs - особенности решения, тестирование, скриншоты дизайна мобильного и десктоп интерфейсов
 
-## Запуск проекта (local-hosted)
+## Старт
 
 Для запуска убедитесь, что у вас установлен Docker и плагин `docker compose`.
 
-1. Убедитесь в наличии конфигурации переменных окружения:
+1. Подготовьте .env:
    ```bash
    cp .env.example .env
    ```
-2. Запустите контейнер с базой данных в фоновом режиме:
+2. Собрать и поднять все в фоне:
    ```bash
    docker compose up -d --build
    ```
-3. Проверьте статус контейнера:
-   ```bash
-   docker compose ps
-   ```
-4. Просмотр логов:
-   ```bash
-   docker compose logs -f
-   ```
-5. Остановка контейнера:
-   ```bash
-   docker compose down
-   ```
-Сервис будет доступен на `http://localhost:3000`
+   
+Апка будет доступна на `http://localhost:3000`
 
 ### Скриншоты
 
